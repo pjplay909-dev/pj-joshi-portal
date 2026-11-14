@@ -19,17 +19,17 @@
       --primary: #059669; --primary-hover: #047857; --border: #a7f3d0;
     }
     * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
-    body { margin: 0; background: var(--bg); color: var(--text); padding: 16px; transition: background 0.2s, color 0.2s; }
+    body { margin: 0; background: var(--bg); color: var(--text); padding: 16px; transition: background 0.2s, color 0.2s; -webkit-tap-highlight-color: transparent; }
     .container { max-width: 960px; margin: 0 auto; }
     .header-card, .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 16px; box-shadow: 0 4px 14px rgba(0,0,0,0.04); position: relative; }
-    .header-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; position: relative; z-index: 5; }
+    .header-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; position: relative; z-index: 20; }
     .brand { display: flex; align-items: center; gap: 14px; }
     .logo-box { width: 52px; height: 52px; border-radius: 14px; background: var(--primary); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 20px; flex-shrink: 0; }
-    .subtle-car-btn { border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 22px; line-height: 1; padding: 10px 12px; border-radius: 12px; cursor: pointer; position: relative; z-index: 15; touch-action: manipulation; }
+    .subtle-car-btn { border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 22px; line-height: 1; padding: 12px 14px; border-radius: 12px; cursor: pointer; position: relative; z-index: 30; touch-action: manipulation; }
     h1, h2, h3, h4, p { margin: 0; }
     .subtitle { color: var(--muted); font-size: 14px; margin-top: 4px; }
-    .modes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-    .mode-btn { border: 1px solid var(--border); background: transparent; color: var(--text); padding: 8px 14px; border-radius: 999px; cursor: pointer; font-size: 13px; font-weight: 600; touch-action: manipulation; }
+    .modes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; position: relative; z-index: 20; }
+    .mode-btn { border: 1px solid var(--border); background: transparent; color: var(--text); padding: 10px 14px; border-radius: 999px; cursor: pointer; font-size: 13px; font-weight: 600; touch-action: manipulation; }
     .mode-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
     .form-group { margin-top: 14px; }
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
@@ -72,13 +72,13 @@
             <p class="subtitle" id="activeAdminLabel" style="font-size:12px;"></p>
           </div>
         </div>
-        <button type="button" id="carAdminBtn" class="subtle-car-btn" title="एडमिन">🚗</button>
+        <button type="button" id="carAdminBtn" class="subtle-car-btn" title="एडमिन" onclick="window.pjOpenAdmin && window.pjOpenAdmin()">🚗</button>
       </div>
       <div class="schedule-banner" id="globalScheduleBanner">परीक्षा समय सारणी लोड हो रही है...</div>
       <div class="modes">
-        <button type="button" class="mode-btn active" data-theme="clear">क्लियर मोड</button>
-        <button type="button" class="mode-btn" data-theme="dark">डार्क मोड</button>
-        <button type="button" class="mode-btn" data-theme="green">ग्रीन मोड</button>
+        <button type="button" class="mode-btn active" data-theme="clear" onclick="window.pjSetTheme && window.pjSetTheme('clear', this)">क्लियर मोड</button>
+        <button type="button" class="mode-btn" data-theme="dark" onclick="window.pjSetTheme && window.pjSetTheme('dark', this)">डार्क मोड</button>
+        <button type="button" class="mode-btn" data-theme="green" onclick="window.pjSetTheme && window.pjSetTheme('green', this)">ग्रीन मोड</button>
       </div>
     </div>
 
@@ -90,7 +90,7 @@
         <p class="subtitle" id="step1ScheduleStatus" style="margin-top:6px; font-weight:700;"></p>
       </div>
       <div class="form-group"><label>यूजर आईडी (User ID) *</label><input type="text" id="studentUserId" placeholder="अपनी User ID दर्ज करें" /></div>
-      <div class="form-group"><label id="studentPassLabel">पासवर्ड (Password) *</label><input type="password" id="studentUserPass" placeholder="अपना Password दर्ज करें" /></div>
+      <div class="form-group"><label id="studentPassLabel">पासवर्ड (Password) *</label><input type="password" id="studentUserPass" placeholder="Admin द्वारा तय Password दर्ज करें" /></div>
       <button type="button" class="btn" id="step1NextBtn">आगे बढ़ें</button>
       <div id="step1Msg" class="status"></div>
     </div>
@@ -127,14 +127,14 @@
       <div id="finalSummaryBox" class="summary-box hidden"></div>
     </div>
         <div class="card hidden" id="adminAuthCard">
-      <div class="top-bar"><h2>🔒 एडमिन लॉगिन</h2><button type="button" class="mode-btn close-admin-btn">वापस जाएं</button></div>
-      <div class="form-group"><label>एडमिन पिन / पासवर्ड</label><input type="password" id="adminPassInput" placeholder="एडमिन पिन या पासवर्ड दर्ज करें" /></div>
+      <div class="top-bar"><h2>🔒 एडमिन लॉगिन</h2><button type="button" class="mode-btn close-admin-btn" onclick="window.pjCloseAdmin && window.pjCloseAdmin()">वापस जाएं</button></div>
+      <div class="form-group"><label>एडमिन पासवर्ड</label><input type="password" id="adminPassInput" placeholder="एडमिन पासवर्ड दर्ज करें" /></div>
       <button type="button" class="btn" id="verifyAdminBtn">लॉगिन करें</button>
       <div id="adminAuthMsg" class="status"></div>
     </div>
 
     <div class="card hidden" id="adminDashboardCard">
-      <div class="top-bar"><h2>📊 एडमिन कंट्रोल पैनल</h2><button type="button" class="mode-btn close-admin-btn">बंद करें</button></div>
+      <div class="top-bar"><h2>📊 एडमिन कंट्रोल पैनल</h2><button type="button" class="mode-btn close-admin-btn" onclick="window.pjCloseAdmin && window.pjCloseAdmin()">बंद करें</button></div>
 
       <div class="section-box">
         <h3>📲 WhatsApp ग्रुप नोटिस बॉक्स (अपने आप अपडेट)</h3>
@@ -158,7 +158,7 @@
           <div><label>एडमिन पासवर्ड</label><input type="text" id="cfgAdminPassword" /></div>
           <div><label>एडमिन पिन</label><input type="text" id="cfgAdminPin" /></div>
           <div><label>तय User ID</label><input type="text" id="cfgStudentUserId" /></div>
-          <div><label>तय User Password *</label><input type="text" id="cfgStudentUserPass" /></div>
+          <div><label>तय User Password (जो यहाँ भरेंगे वही चलेगा) *</label><input type="text" id="cfgStudentUserPass" placeholder="यहाँ नया Password भरें" /></div>
         </div>
         <button type="button" class="btn" id="saveAdminCredBtn">क्रेडेंशियल सेव करें</button>
         <div id="adminCredMsg" class="status"></div>
@@ -203,7 +203,7 @@
   </div>
     <script>
     (function () {
-      const RECORDS_KEY = "pj_portal_rec_fix_v2", CONFIG_KEY = "pj_portal_cfg_fix_v2", QUEUE_KEY = "pj_portal_queue_fix_v2";
+      const RECORDS_KEY = "pj_portal_rec_adminonly_v7", CONFIG_KEY = "pj_portal_cfg_adminonly_v7", QUEUE_KEY = "pj_portal_queue_adminonly_v7";
 
       const GK_POOL = [
         { sub: "GK", q: "भारत की राजधानी क्या है?", options: ["मुंबई", "नई दिल्ली", "कोलकाता", "चेन्नई"], answer: 1 },
@@ -349,10 +349,10 @@
       function getCfg() {
         const d = {
           adminName: "PJ Joshi",
-          adminPassword: "PJ@Admin2026",
-          adminPin: "PJ@Admin2026",
+          adminPassword: "pj12",
+          adminPin: "pj12",
           studentUserId: "PJUser",
-          studentUserPass: "PJ@User2026",
+          studentUserPass: "",
           subject: "all100",
           count: 10,
           minutes: 15,
@@ -362,16 +362,55 @@
         try {
           const s = JSON.parse(localStorage.getItem(CONFIG_KEY));
           if (!s) return d;
+          const cleanId = (s.studentUserId !== undefined && String(s.studentUserId).trim()) ? String(s.studentUserId).trim() : "PJUser";
+          const cleanPass = (s.studentUserPass !== undefined) ? String(s.studentUserPass).trim() : "";
+          const cleanAdminPass = (s.adminPassword && String(s.adminPassword).trim()) ? String(s.adminPassword).trim() : "pj12";
+          const cleanAdminPin = (s.adminPin && String(s.adminPin).trim()) ? String(s.adminPin).trim() : cleanAdminPass;
           return {
             ...d,
             ...s,
-            studentUserPass: (s.studentUserPass && String(s.studentUserPass).trim()) ? String(s.studentUserPass).trim() : d.studentUserPass,
+            adminPassword: cleanAdminPass,
+            adminPin: cleanAdminPin,
+            studentUserId: cleanId,
+            studentUserPass: cleanPass,
             count: Math.min(100, Math.max(1, Number(s.count) || 10)),
             minutes: Math.min(180, Math.max(1, Number(s.minutes) || 15))
           };
         } catch { return d; }
       }
       function saveCfg(n) { localStorage.setItem(CONFIG_KEY, JSON.stringify(n)); refreshUI(); updateWhatsappBox(); }
+
+      window.pjSetTheme = function (mode, btn) {
+        document.body.classList.remove("dark", "green");
+        if (mode === "dark") document.body.classList.add("dark");
+        if (mode === "green") document.body.classList.add("green");
+        document.querySelectorAll(".mode-btn[data-theme]").forEach(b => b.classList.remove("active"));
+        if (btn) btn.classList.add("active");
+      };
+
+      window.pjOpenAdmin = function () {
+        clearInterval(timerInterval); clearInterval(scheduleWatchInterval); timerInterval = null;
+        ["step1Card", "step2Card", "step3Card", "adminDashboardCard"].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.classList.add("hidden");
+        });
+        const authCard = document.getElementById("adminAuthCard");
+        if (authCard) authCard.classList.remove("hidden");
+        const inp = document.getElementById("adminPassInput");
+        if (inp) inp.value = "";
+        const msg = document.getElementById("adminAuthMsg");
+        if (msg) msg.textContent = "";
+      };
+
+      window.pjCloseAdmin = function () {
+        ["adminAuthCard", "adminDashboardCard"].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.classList.add("hidden");
+        });
+        const s1 = document.getElementById("step1Card");
+        if (s1) s1.classList.remove("hidden");
+        refreshUI();
+      };
 
       function updateWhatsappBox() {
         const ta = document.getElementById("whatsappShareText");
@@ -382,7 +421,7 @@
         const minVal = Math.min(180, Math.max(1, Number(document.getElementById("adminExamMinutes")?.value) || saved.minutes));
         const startVal = document.getElementById("adminStartTime")?.value ?? saved.startTime;
         const endVal = document.getElementById("adminEndTime")?.value ?? saved.endTime;
-        const userIdVal = (document.getElementById("cfgStudentUserId")?.value ?? saved.studentUserId).trim();
+        const userIdVal = (document.getElementById("cfgStudentUserId")?.value ?? saved.studentUserId).trim() || "PJUser";
         const userPassVal = (document.getElementById("cfgStudentUserPass")?.value ?? saved.studentUserPass).trim();
         const adminVal = (document.getElementById("cfgAdminName")?.value ?? saved.adminName).trim() || saved.adminName;
         const modeLabel = modeVal === "gk" ? "केवल सामान्य ज्ञान (GK रैंडम)" : modeVal === "computer" ? "केवल कंप्यूटर (Computer रैंडम)" : "GK + Computer (रैंडम मिक्स)";
@@ -390,24 +429,19 @@
           `🎓 *${adminVal} — ऑनलाइन परीक्षा सूचना*`, `━━━━━━━━━━━━━━━━━━`,
           `📚 *विषय / मोड:* ${modeLabel}`, `❓ *कुल प्रश्न:* ${countVal} प्रश्न`,
           `⏱️ *परीक्षा अवधि:* ${minVal} मिनट`, `🟢 *परीक्षा शुरू होने का समय:* ${format12Hour(startVal)}`,
-          `🔴 *परीक्षा समाप्त होने का समय:* ${format12Hour(endVal)}`, `👤 *User ID:* ${userIdVal || "PJUser"}`,
-          `🔑 *Password:* ${userPassVal || "PJ@User2026"}`,
-          `📝 *निर्देश:* तय समय शुरू होने पर User ID व Password डालें, फिर नाम व पिता का नाम भरकर परीक्षा शुरू करें।`,
+          `🔴 *परीक्षा समाप्त होने का समय:* ${format12Hour(endVal)}`, `👤 *User ID:* ${userIdVal}`,
+          `🔑 *Password:* ${userPassVal || "(Admin से भरें)"}`,
+          `📝 *निर्देश:* तय समय शुरू होने पर User ID व Admin द्वारा तय Password डालें, फिर नाम व पिता का नाम भरकर परीक्षा शुरू करें।`,
           `🔗 *पोर्टल लिंक:* ${window.location.href}`
         ].join("\n");
       }
 
       function buildRandomSet(cfg) {
         const totalCount = Math.min(100, Math.max(1, Number(cfg.count) || 10));
-        let pool = [];
-        if (cfg.subject === "gk") {
-          pool = shuffle(GK_POOL);
-        } else if (cfg.subject === "computer") {
-          pool = shuffle(COMP_POOL);
-        } else {
+        let pool = cfg.subject === "gk" ? shuffle(GK_POOL) : cfg.subject === "computer" ? shuffle(COMP_POOL) : (() => {
           const half = Math.ceil(totalCount / 2);
-          pool = shuffle(shuffle(GK_POOL).slice(0, half).concat(shuffle(COMP_POOL).slice(0, totalCount - half)));
-        }
+          return shuffle(shuffle(GK_POOL).slice(0, half).concat(shuffle(COMP_POOL).slice(0, totalCount - half)));
+        })();
         const selected = pool.slice(0, totalCount).map((item, idx) => ({ ...item, q: `${idx + 1}. [${item.sub}] ${item.q}` }));
         localStorage.setItem(QUEUE_KEY, JSON.stringify({ generatedAt: nowStr(), mode: cfg.subject, count: selected.length, minutes: cfg.minutes, startTime: cfg.startTime, endTime: cfg.endTime, questions: selected }));
         renderAdminPreview(); return selected;
@@ -428,21 +462,13 @@
         const lbl = c.subject === "gk" ? "केवल GK" : c.subject === "computer" ? "केवल Computer" : "GK + Computer";
         document.getElementById("studentExamInfo").textContent = `परीक्षा: ${lbl} (${c.count} प्रश्न | ${c.minutes} मिनट)`;
         document.getElementById("activeAdminLabel").textContent = `एडमिन: ${c.adminName}`;
-        document.getElementById("studentPassLabel").textContent = "पासवर्ड (Password) *";
+        document.getElementById("studentPassLabel").textContent = c.studentUserPass ? "पासवर्ड (Admin द्वारा तय) *" : "पासवर्ड (Admin से सेट होना बाकी) *";
         const startTxt = c.startTime ? format12Hour(c.startTime) : "तय नहीं", endTxt = c.endTime ? format12Hour(c.endTime) : "तय नहीं";
         document.getElementById("globalScheduleBanner").textContent = `🕒 शुरू समय: ${startTxt} | 🏁 समाप्त समय: ${endTxt} — ${sched.statusText}`;
         document.getElementById("step1ScheduleStatus").textContent = sched.statusText;
         document.getElementById("step2ScheduleStatus").textContent = sched.statusText;
         document.getElementById("step3EndTimeLine").textContent = `तय समाप्ति समय: ${endTxt}`;
         if (!timerInterval) document.getElementById("examTimerDisplay").textContent = `बाकी समय: ${formatSec(c.minutes * 60)}`;
-      }
-
-      function setTheme(mode, btn) {
-        document.body.classList.remove("dark", "green");
-        if (mode === "dark") document.body.classList.add("dark");
-        if (mode === "green") document.body.classList.add("green");
-        document.querySelectorAll(".mode-btn[data-theme]").forEach(b => b.classList.remove("active"));
-        if (btn) btn.classList.add("active");
       }
 
       const getRecs = () => { try { return JSON.parse(localStorage.getItem(RECORDS_KEY) || "[]"); } catch { return []; } };
@@ -467,11 +493,16 @@
       document.getElementById("step1NextBtn").onclick = () => {
         const c = getCfg(), sched = getScheduleState(c), msg = document.getElementById("step1Msg");
         if (!sched.allowed) { msg.textContent = sched.statusText; msg.className = "status err"; return; }
+        if (!c.studentUserPass) {
+          msg.textContent = "अभी कोई Password सेट नहीं है! पहले Admin (🚗) में Password भरकर Save करें।";
+          msg.className = "status err";
+          return;
+        }
         const id = document.getElementById("studentUserId").value.trim(), pw = document.getElementById("studentUserPass").value.trim();
         if (!id) { msg.textContent = "कृपया User ID दर्ज करें।"; msg.className = "status err"; return; }
         if (!pw) { msg.textContent = "कृपया Password दर्ज करें।"; msg.className = "status err"; return; }
-        if (c.studentUserId && id !== c.studentUserId) { msg.textContent = "गलत User ID!"; msg.className = "status err"; return; }
-        if (pw !== c.studentUserPass) { msg.textContent = "गलत Password! सही Password दर्ज करें।"; msg.className = "status err"; return; }
+        if (id !== c.studentUserId) { msg.textContent = "गलत User ID!"; msg.className = "status err"; return; }
+        if (pw !== c.studentUserPass) { msg.textContent = "गलत Password! वही Password डालें जो Admin में भरा है।"; msg.className = "status err"; return; }
         userId = id; msg.textContent = "";
         document.getElementById("step1Card").classList.add("hidden");
         document.getElementById("step2Card").classList.remove("hidden");
@@ -481,6 +512,7 @@
       document.getElementById("step2NextBtn").onclick = () => {
         const c = getCfg(), sched = getScheduleState(c), msg = document.getElementById("step2Msg");
         if (!sched.allowed) { msg.textContent = sched.statusText; msg.className = "status err"; return; }
+        if (!userId || !c.studentUserPass) { msg.textContent = "बिना Admin Password लॉगिन के परीक्षा शुरू नहीं हो सकती।"; msg.className = "status err"; return; }
         const name = document.getElementById("studentName").value.trim(), father = document.getElementById("studentFatherName").value.trim();
         if (!name || !father) { msg.textContent = "कृपया छात्र का नाम और पिता का नाम दोनों भरें।"; msg.className = "status err"; return; }
         activeQ = buildRandomSet(c);
@@ -523,19 +555,14 @@
       }
 
       document.getElementById("submitExamBtn").onclick = () => submitExam(false);
-      document.getElementById("carAdminBtn").onclick = () => {
-        clearInterval(timerInterval); clearInterval(scheduleWatchInterval); timerInterval = null;
-        ["step1Card", "step2Card", "step3Card", "adminDashboardCard"].forEach(id => document.getElementById(id).classList.add("hidden"));
-        document.getElementById("adminAuthCard").classList.remove("hidden");
-        document.getElementById("adminPassInput").value = ""; document.getElementById("adminAuthMsg").textContent = "";
-      };
-      document.querySelectorAll(".close-admin-btn").forEach(b => b.onclick = () => {
-        ["adminAuthCard", "adminDashboardCard"].forEach(id => document.getElementById(id).classList.add("hidden"));
-        document.getElementById("step1Card").classList.remove("hidden"); refreshUI();
-      });
 
       document.getElementById("verifyAdminBtn").onclick = () => {
-        const c = getCfg(), v = document.getElementById("adminPassInput").value;
+        const c = getCfg(), v = document.getElementById("adminPassInput").value.trim();
+        if (!v) {
+          document.getElementById("adminAuthMsg").textContent = "कृपया एडमिन पासवर्ड दर्ज करें।";
+          document.getElementById("adminAuthMsg").className = "status err";
+          return;
+        }
         if (v === c.adminPin || v === c.adminPassword) {
           ["cfgAdminName", "cfgAdminPassword", "cfgAdminPin", "cfgStudentUserId", "cfgStudentUserPass", "adminSubjectSelect", "adminQuestionCount", "adminExamMinutes", "adminStartTime", "adminEndTime"].forEach(k => {
             const map = { cfgAdminName: c.adminName, cfgAdminPassword: c.adminPassword, cfgAdminPin: c.adminPin, cfgStudentUserId: c.studentUserId, cfgStudentUserPass: c.studentUserPass, adminSubjectSelect: c.subject, adminQuestionCount: c.count, adminExamMinutes: c.minutes, adminStartTime: c.startTime || "", adminEndTime: c.endTime || "" };
@@ -545,7 +572,7 @@
           document.getElementById("adminDashboardCard").classList.remove("hidden");
           updateWhatsappBox(); renderAdminPreview(); renderTable();
         } else {
-          document.getElementById("adminAuthMsg").textContent = "गलत पिन या पासवर्ड।";
+          document.getElementById("adminAuthMsg").textContent = "गलत पासवर्ड।";
           document.getElementById("adminAuthMsg").className = "status err";
         }
       };
@@ -564,10 +591,28 @@
       document.getElementById("generatePreviewSetBtn").onclick = () => buildRandomSet(getCfg());
       document.getElementById("saveAdminCredBtn").onclick = () => {
         const c = getCfg();
-        const newPass = document.getElementById("cfgStudentUserPass").value.trim() || c.studentUserPass;
-        saveCfg({ ...c, adminName: document.getElementById("cfgAdminName").value.trim() || c.adminName, adminPassword: document.getElementById("cfgAdminPassword").value.trim() || c.adminPassword, adminPin: document.getElementById("cfgAdminPin").value.trim() || c.adminPin, studentUserId: document.getElementById("cfgStudentUserId").value.trim() || "PJUser", studentUserPass: newPass });
+        const newPass = document.getElementById("cfgStudentUserPass").value.trim();
+        const newId = document.getElementById("cfgStudentUserId").value.trim() || "PJUser";
+        const newAdminPass = document.getElementById("cfgAdminPassword").value.trim() || c.adminPassword;
+        const newAdminPin = document.getElementById("cfgAdminPin").value.trim() || newAdminPass;
+        if (!newPass) {
+          document.getElementById("adminCredMsg").textContent = "कृपया तय User Password बॉक्स में Password भरें!";
+          document.getElementById("adminCredMsg").className = "status err";
+          return;
+        }
+        saveCfg({
+          ...c,
+          adminName: document.getElementById("cfgAdminName").value.trim() || c.adminName,
+          adminPassword: newAdminPass,
+          adminPin: newAdminPin,
+          studentUserId: newId,
+          studentUserPass: newPass
+        });
+        document.getElementById("cfgAdminPassword").value = newAdminPass;
+        document.getElementById("cfgAdminPin").value = newAdminPin;
+        document.getElementById("cfgStudentUserId").value = newId;
         document.getElementById("cfgStudentUserPass").value = newPass;
-        document.getElementById("adminCredMsg").textContent = "क्रेडेंशियल सेव हो गए और WhatsApp बॉक्स अपडेट हो गया।";
+        document.getElementById("adminCredMsg").textContent = `सेव हो गया! Student Password: "${newPass}" | Admin Password: "${newAdminPass}"`;
         document.getElementById("adminCredMsg").className = "status ok";
       };
 
@@ -579,7 +624,7 @@
         msgEl.textContent = `सेटिंग्स सेव हो गईं! प्रश्न: ${nextCfg.count} | शुरू: ${format12Hour(stVal)} | समाप्त: ${format12Hour(enVal)}`; msgEl.className = "status ok";
       };
 
-      functi renderTable() {
+      function renderTable() {
         const recs = getRecs();
         document.getElementById("adminTableBody").innerHTML = recs.length ? recs.map((r, i) => `<tr><td>${i+1}</td><td>${esc(r.name)}</td><td>${esc(r.father||"-")}</td><td>${esc(r.userId||"-")}</td><td>${esc(r.subject||"-")}</td><td>${r.correct}</td><td>${r.wrong}</td><td>${r.score}</td><td>${esc(r.duration||"-")}</td><td>${esc(r.submitTime||"-")}</td></tr>`).join("") : '<tr><td colspan="10">कोई रिकॉर्ड नहीं है।</td></tr>';
       }
@@ -592,7 +637,6 @@
       };
 
       document.getElementById("clearRecordsBtn").onclick = () => { localStorage.removeItem(RECORDS_KEY); renderTable(); };
-      document.querySelectorAll(".mode-btn[data-theme]").forEach(btn => { btn.onclick = () => setTheme(btn.dataset.theme, btn); });
 
       refreshUI(); updateWhatsappBox(); renderAdminPreview(); setInterval(refreshUI, 15000);
     })();
