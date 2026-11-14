@@ -39,7 +39,7 @@
 
     * {
       box-sizing: border-box;
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      font-family: system-ui, -apple-system, sans-serif;
     }
 
     body {
@@ -61,7 +61,7 @@
       border-radius: 16px;
       padding: 20px;
       margin-bottom: 16px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
     }
 
     .header-top {
@@ -90,13 +90,12 @@
       flex-shrink: 0;
     }
 
-    /* छोटा सा शांत हाथ का आइकन (Admin के लिए) */
     .subtle-hand-btn {
       border: none;
       background: transparent;
       color: var(--muted);
       opacity: 0.45;
-      font-size: 16px;
+      font-size: 24px;
       line-height: 1;
       padding: 6px;
       border-radius: 8px;
@@ -255,7 +254,6 @@
 </head>
 <body>
   <div class="container">
-    <!-- Header के अंदर ही छोटा सा हाथ (🖐) आइकन -->
     <div class="header-card">
       <div class="header-top">
         <div class="brand">
@@ -270,14 +268,14 @@
           type="button"
           class="subtle-hand-btn"
           onclick="openAdminPrompt()"
-          aria-label="Workspace control"
+          title="Admin Access"
         >🖐</button>
       </div>
 
       <div class="modes">
-        <button class="mode-btn active" onclick="setTheme('clear', this)">* क्लियर मोड</button>
-        <button class="mode-btn" onclick="setTheme('dark', this)">☾ डार्क मोड</button>
-        <button class="mode-btn" onclick="setTheme('green', this)">✿ ग्रीन मोड</button>
+        <button type="button" class="mode-btn active" onclick="setTheme('clear', this)">* क्लियर मोड</button>
+        <button type="button" class="mode-btn" onclick="setTheme('dark', this)">☾ डार्क मोड</button>
+        <button type="button" class="mode-btn" onclick="setTheme('green', this)">✿ ग्रीन मोड</button>
       </div>
     </div>
 
@@ -302,7 +300,7 @@
         <input type="text" id="studentUsername" placeholder="अपना यूज़रनेम दर्ज करें" />
       </div>
 
-      <button class="btn" onclick="startExam()">परीक्षा शुरू करें</button>
+      <button type="button" class="btn" onclick="startExam()">परीक्षा शुरू करें</button>
       <div id="loginMsg" class="status"></div>
     </div>
 
@@ -318,15 +316,15 @@
 
       <div id="questionsContainer"></div>
 
-      <button class="btn" onclick="submitExam()">परीक्षा सबमिट करें</button>
+      <button type="button" class="btn" onclick="submitExam()">परीक्षा सबमिट करें</button>
       <div id="examResult" class="status"></div>
     </div>
 
-    <!-- Admin Password Box (सिर्फ 🖐 आइकन दबाने पर खुलेगा) -->
+    <!-- Admin Password Box -->
     <div class="card hidden" id="adminAuthCard">
       <div class="top-bar">
         <h2>🔒 एडमिन लॉगिन</h2>
-        <button class="mode-btn" onclick="closeAdmin()">वापस</button>
+        <button type="button" class="mode-btn" onclick="closeAdmin()">वापस</button>
       </div>
       <p class="subtitle" style="margin-top:6px;">एडमिन पैनल खोलने के लिए पासवर्ड दर्ज करें।</p>
 
@@ -334,7 +332,7 @@
         <label>एडमिन पासवर्ड</label>
         <input type="password" id="adminPassInput" placeholder="एडमिन पासवर्ड दर्ज करें" />
       </div>
-      <button class="btn" onclick="verifyAdmin()">लॉगिन करें</button>
+      <button type="button" class="btn" onclick="verifyAdmin()">लॉगिन करें</button>
       <div id="adminAuthMsg" class="status"></div>
     </div>
 
@@ -342,39 +340,37 @@
     <div class="card hidden" id="adminDashboardCard">
       <div class="top-bar">
         <h2>📊 एडमिन डैशबोर्ड</h2>
-        <button class="mode-btn" onclick="closeAdmin()">बंद करें</button>
+        <button type="button" class="mode-btn" onclick="closeAdmin()">बंद करें</button>
       </div>
       <p class="subtitle" style="margin-top:6px;">
-        यहाँ से आप डिफ़ॉल्ट विषय और प्रश्नों की संख्या (10, 20 आदि) सेट कर सकते हैं तथा छात्रों का डेटा देख सकते हैं।
+        यहाँ से आप डिफ़ॉल्ट विषय और प्रश्नों की संख्या सेट कर सकते हैं तथा छात्रों का डेटा देख सकते हैं।
       </p>
 
-      <!-- Admin Exam Config -->
       <div class="question-box">
-        <h3>⚙️ डिफ़ॉल्ट परीक्षा सेटिंग (50 GK + 50 Computer बैंक से)</h3>
+        <h3>⚙️ डिफ़ॉल्ट परीक्षा सेटिंग</h3>
         <div class="grid-2" style="margin-top:12px;">
           <div>
-            <label>डिफ़ॉल्ट विषय (Subject)</label>
+            <label>डिफ़ॉल्ट विषय</label>
             <select id="adminSubjectSelect">
               <option value="gk">सामान्य ज्ञान (50 प्रश्न)</option>
               <option value="computer">कंप्यूटर (50 प्रश्न)</option>
             </select>
           </div>
           <div>
-            <label>कितने प्रश्न डिफ़ॉल्ट देने हैं? (1 से 50)</label>
+            <label>कितने प्रश्न देने हैं? (1 से 50)</label>
             <input type="number" id="adminQuestionCount" min="1" max="50" value="10" />
           </div>
         </div>
-        <button class="btn" onclick="saveExamConfig()">डिफ़ॉल्ट सेटिंग सेव करें</button>
+        <button type="button" class="btn" onclick="saveExamConfig()">डिफ़ॉल्ट सेटिंग सेव करें</button>
         <div id="configMsg" class="status"></div>
       </div>
 
-      <!-- Student Records -->
       <div style="margin-top:18px;">
         <div class="top-bar">
           <h3>छात्रों का डेटा (Student Data)</h3>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button class="mode-btn active" onclick="downloadCSV()">CSV डाउनलोड करें</button>
-            <button class="mode-btn" onclick="clearAllStudentData()">डेटा साफ़ करें</button>
+            <button type="button" class="mode-btn active" onclick="downloadCSV()">CSV डाउनलोड करें</button>
+            <button type="button" class="mode-btn" onclick="clearAllStudentData()">डेटा साफ़ करें</button>
           </div>
         </div>
 
@@ -402,69 +398,26 @@
     const RECORDS_KEY = "pj_joshi_portal_records_v2";
     const CONFIG_KEY = "pj_joshi_portal_config_v1";
 
-    // 50 सामान्य ज्ञान (GK) प्रश्न (हमेशा कोड में सेव)
     const GK_QUESTIONS = [
-      {
-        q: "1. भारत की राजधानी क्या है?",
-        options: ["मुंबई", "नई दिल्ली", "कोलकाता", "चेन्नई"],
-        answer: 1
-      },
-      {
-        q: "2. राजस्थान का सबसे बड़ा जिला क्षेत्रफल की दृष्टि से कौन-सा है?",
-        options: ["जयपुर", "जोधपुर", "जैसलमेर", "बीकानेर"],
-        answer: 2
-      },
-      {
-        q: "3. भारत का राष्ट्रीय पशु कौन-सा है?",
-        options: ["शेर", "बाघ", "हाथी", "चीता"],
-        answer: 1
-      },
-      {
-        q: "4. संविधान सभा के प्रारूप समिति के अध्यक्ष कौन थे?",
-        options: ["डॉ. राजेंद्र प्रसाद", "डॉ. बी. आर. अम्बेडकर", "जवाहरलाल नेहरू", "सरदार पटेल"],
-        answer: 1
-      },
-      {
-        q: "5. पृथ्वी पर सबसे बड़ा महासागर कौन-सा है?",
-        options: ["अटलांटिक महासागर", "हिंद महासागर", "प्रशांत महासागर", "आर्कटिक महासागर"],
-        answer: 2
-      }
+      { q: "1. भारत की राजधानी क्या है?", options: ["मुंबई", "नई दिल्ली", "कोलकाता", "चेन्नई"], answer: 1 },
+      { q: "2. राजस्थान का सबसे बड़ा जिला कौन-सा है?", options: ["जयपुर", "जोधपुर", "जैसलमेर", "बीकानेर"], answer: 2 },
+      { q: "3. भारत का राष्ट्रीय पशु कौन-सा है?", options: ["शेर", "बाघ", "हाथी", "चीता"], answer: 1 },
+      { q: "4. संविधान सभा के प्रारूप समिति के अध्यक्ष कौन थे?", options: ["डॉ. राजेंद्र प्रसाद", "डॉ. बी. आर. अम्बेडकर", "जवाहरलाल नेहरू", "सरदार पटेल"], answer: 1 },
+      { q: "5. पृथ्वी पर सबसे बड़ा महासागर कौन-सा है?", options: ["अटलांटिक महासागर", "हिंद महासागर", "प्रशांत महासागर", "आर्कटिक महासागर"], answer: 2 }
     ];
 
-    // 50 कंप्यूटर (Computer) प्रश्न (हमेशा कोड में सेव)
     const COMPUTER_QUESTIONS = [
-      {
-        q: "1. CPU का पूरा नाम क्या है?",
-        options: ["Central Processing Unit", "Computer Personal Unit", "Central Print Unit", "Control Program Utility"],
-        answer: 0
-      },
-      {
-        q: "2. HTML का उपयोग किस लिए किया जाता है?",
-        options: ["डेटाबेस बनाने के लिए", "वेब पेज की संरचना बनाने के लिए", "ऑपरेटिंग सिस्टम बनाने के लिए", "वीडियो एडिटिंग के लिए"],
-        answer: 1
-      },
-      {
-        q: "3. RAM किस प्रकार की मेमोरी है?",
-        options: ["Permanent", "Temporary (Volatile)", "Secondary", "Optical"],
-        answer: 1
-      },
-      {
-        q: "4. MS Excel में फ़ॉर्मूला किस चिह्न से शुरू होता है?",
-        options: ["+", "=", "@", "#"],
-        answer: 1
-      },
-      {
-        q: "5. IP का पूरा नाम क्या है?",
-        options: ["Internet Protocol", "Internal Program", "Input Process", "Internet Provider"],
-        answer: 0
-      }
+      { q: "1. CPU का पूरा नाम क्या है?", options: ["Central Processing Unit", "Computer Personal Unit", "Central Print Unit", "Control Program Utility"], answer: 0 },
+      { q: "2. HTML का उपयोग किस लिए किया जाता है?", options: ["डेटाबेस बनाने के लिए", "वेब पेज की संरचना बनाने के लिए", "ऑपरेटिंग सिस्टम बनाने के लिए", "वीडियो एडिटिंग के लिए"], answer: 1 },
+      { q: "3. RAM किस प्रकार की मेमोरी है?", options: ["Permanent", "Temporary (Volatile)", "Secondary", "Optical"], answer: 1 },
+      { q: "4. MS Excel में फ़ॉर्मूला किस चिह्न से शुरू होता है?", options: ["+", "=", "@", "#"], answer: 1 },
+      { q: "5. IP का पूरा नाम क्या है?", options: ["Internet Protocol", "Internal Program", "Input Process", "Internet Provider"], answer: 0 }
     ];
 
-    // 50 पूरे करने के लिए स्लॉट (आप इन्हें असली प्रश्नों से बदल सकते हैं)
     while (GK_QUESTIONS.length < 50) {
       const n = GK_QUESTIONS.length + 1;
       GK_QUESTIONS.push({
-        q: `${n}. सामान्य ज्ञान प्रश्न #${n} (यहाँ अपना प्रश्न लिखें)`,
+        q: `${n}. सामान्य ज्ञान प्रश्न #${n}`,
         options: ["विकल्प A", "विकल्प B", "विकल्प C", "विकल्प D"],
         answer: 0
       });
@@ -473,7 +426,7 @@
     while (COMPUTER_QUESTIONS.length < 50) {
       const n = COMPUTER_QUESTIONS.length + 1;
       COMPUTER_QUESTIONS.push({
-        q: `${n}. कंप्यूटर प्रश्न #${n} (यहाँ अपना प्रश्न लिखें)`,
+        q: `${n}. कंप्यूटर प्रश्न #${n}`,
         options: ["विकल्प A", "विकल्प B", "विकल्प C", "विकल्प D"],
         answer: 0
       });
@@ -614,7 +567,6 @@
       resEl.className = "status ok";
     }
 
-    // 🖐 आइकन दबाने पर एडमिन लॉगिन बॉक्स खुलेगा
     function openAdminPrompt() {
       document.getElementById("studentLoginCard").classList.add("hidden");
       document.getElementById("examCard").classList.add("hidden");
@@ -675,4 +627,31 @@
       const rows = [["ID", "Name", "Username", "Subject", "Score", "Time"]];
       records.forEach((r, idx) => rows.push([idx + 1, r.name, r.username, r.subject || "-", r.score, r.time]));
 
-      const csv = rows.map(r => r.map(v => `"${String(v).replaceAl
+      const csv = rows.map(r => r.map(v => `"${String(v).replaceAll('"', '""')}"`).join(",")).join("\n");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "pj_joshi_students_data.csv";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function clearAllStudentData() {
+      localStorage.removeItem(RECORDS_KEY);
+      renderAdminTable();
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    updateStudentExamBanner();
+  </script>
+</body>
+  </html>
+  
