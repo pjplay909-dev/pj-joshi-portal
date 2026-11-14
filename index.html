@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PJ Joshi - ऑनलाइन परीक्षा एवं अभ्यास पोर्टल</title>
+  <title>PJ Joshi - ऑनलाइन परीक्षा पोर्टल</title>
   <style>
     :root {
       --bg: #f4f7fb;
@@ -68,7 +68,7 @@
     .header-top {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
       gap: 12px;
       position: relative;
       z-index: 5;
@@ -97,21 +97,20 @@
       border: 1px solid var(--border);
       background: var(--bg);
       color: var(--text);
-      opacity: 0.85;
       font-size: 22px;
       line-height: 1;
-      padding: 8px 10px;
-      border-radius: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
       cursor: pointer;
       position: relative;
-      z-index: 10;
+      z-index: 15;
       pointer-events: auto;
       touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
     }
 
     .subtle-car-btn:active {
-      transform: scale(0.95);
+      transform: scale(0.94);
     }
 
     h1, h2, h3, h4, p {
@@ -298,86 +297,70 @@
       </div>
     </div>
 
-    <!-- STEP 1: User ID & User Password -->
+    <!-- Step 1 -->
     <div class="card" id="step1Card">
       <div style="text-align:center;">
         <div class="logo-box" style="margin:0 auto 10px;">PJ</div>
         <h2>चरण 1: यूज़र लॉगिन</h2>
-        <p class="subtitle" style="margin-top:8px;">
-          पहले अपनी यूज़र आईडी और यूज़र पासवर्ड दर्ज करें।
-        </p>
+        <p class="subtitle" style="margin-top:8px;">अपनी यूज़र आईडी और पासवर्ड दर्ज करें।</p>
         <p class="subtitle" id="studentExamInfo" style="margin-top:6px; font-weight:600;"></p>
       </div>
-
       <div class="form-group">
         <label>यूज़र आईडी (User ID) *</label>
-        <input type="text" id="studentUserId" placeholder="अपनी यूज़र आईडी दर्ज करें" />
+        <input type="text" id="studentUserId" placeholder="यूज़र आईडी दर्ज करें" />
       </div>
-
       <div class="form-group">
         <label id="studentPassLabel">यूज़र पासवर्ड (User Password)</label>
-        <input type="password" id="studentUserPass" placeholder="यूज़र पासवर्ड दर्ज करें" />
+        <input type="password" id="studentUserPass" placeholder="पासवर्ड दर्ज करें" />
       </div>
-
       <button type="button" class="btn" id="step1NextBtn">आगे बढ़ें (Next)</button>
       <div id="step1Msg" class="status"></div>
     </div>
 
-    <!-- STEP 2: Full Name & Father's Name -->
+    <!-- Step 2 -->
     <div class="card hidden" id="step2Card">
       <div style="text-align:center;">
         <div class="logo-box" style="margin:0 auto 10px;">PJ</div>
         <h2>चरण 2: विद्यार्थी विवरण</h2>
-        <p class="subtitle" style="margin-top:8px;">
-          अपना पूरा नाम और पिता का नाम अनिवार्य रूप से भरें।
-        </p>
+        <p class="subtitle" style="margin-top:8px;">अपना और पिता का नाम भरें।</p>
         <p class="subtitle" id="step2UserBadge" style="margin-top:6px; font-weight:600;"></p>
       </div>
-
       <div class="form-group">
         <label>अपना नाम (Full Name) *</label>
-        <input type="text" id="studentName" placeholder="अपना पूरा नाम दर्ज करें" />
+        <input type="text" id="studentName" placeholder="अपना नाम दर्ज करें" />
       </div>
-
       <div class="form-group">
         <label>पिता का नाम (Father's Name) *</label>
-        <input type="text" id="studentFatherName" placeholder="अपने पिता का नाम दर्ज करें" />
+        <input type="text" id="studentFatherName" placeholder="पिता का नाम दर्ज करें" />
       </div>
-
-      <button type="button" class="btn" id="step2NextBtn">परीक्षा शुरू करें (Questions)</button>
+      <button type="button" class="btn" id="step2NextBtn">परीक्षा शुरू करें</button>
       <div id="step2Msg" class="status"></div>
     </div>
 
-    <!-- STEP 3: Questions Exam Area -->
+    <!-- Step 3 -->
     <div class="card hidden" id="step3Card">
       <div class="top-bar">
         <div>
           <h2 id="welcomeStudent"></h2>
           <p class="subtitle" id="studentMetaLine"></p>
-          <p class="subtitle" id="examSubtitle">अभ्यास परीक्षा — सभी प्रश्नों के उत्तर दें</p>
+          <p class="subtitle" id="examSubtitle">अभ्यास परीक्षा</p>
         </div>
         <span class="badge" id="examBadge">Student Mode</span>
       </div>
-
       <div id="questionsContainer"></div>
-
       <button type="button" class="btn" id="submitExamBtn">परीक्षा सबमिट करें</button>
       <div id="examResult" class="status"></div>
     </div>
 
-    <!-- Admin Login Box -->
+    <!-- Admin Auth -->
     <div class="card hidden" id="adminAuthCard">
       <div class="top-bar">
         <h2>🔒 एडमिन लॉगिन</h2>
         <button type="button" class="mode-btn close-admin-btn">वापस</button>
       </div>
-      <p class="subtitle" style="margin-top:6px;">
-        एडमिन डैशबोर्ड खोलने के लिए एडमिन पिन या एडमिन पासवर्ड दर्ज करें।
-      </p>
-
       <div class="form-group">
         <label>एडमिन पिन / पासवर्ड</label>
-        <input type="password" id="adminPassInput" placeholder="एडमिन पिन या पासवर्ड दर्ज करें" />
+        <input type="password" id="adminPassInput" placeholder="पिन या पासवर्ड दर्ज करें" />
       </div>
       <button type="button" class="btn" id="verifyAdminBtn">लॉगिन करें</button>
       <div id="adminAuthMsg" class="status"></div>
@@ -389,117 +372,88 @@
         <h2>📊 एडमिन कंट्रोल पैनल</h2>
         <button type="button" class="mode-btn close-admin-btn">बंद करें</button>
       </div>
-      <p class="subtitle" style="margin-top:6px;">
-        यहाँ से एडमिन प्रोफाइल, यूज़र आईडी/पासवर्ड, एडमिन पिन, परीक्षा सेटिंग और छात्रों का पूरा हिसाब नियंत्रित करें।
-      </p>
 
-      <!-- 1. Admin Profile, Password, PIN & Student User Credentials -->
       <div class="section-box">
-        <h3>🛡️ एडमिन एवं यूज़र क्रेडेंशियल पावर</h3>
+        <h3>🛡️ क्रेडेंशियल सेटिंग्स</h3>
         <div class="grid-2" style="margin-top:12px;">
-          <div>
-            <label>एडमिन का नाम</label>
-            <input type="text" id="cfgAdminName" placeholder="एडमिन का नाम" />
-          </div>
-          <div>
-            <label>एडमिन पासवर्ड</label>
-            <input type="text" id="cfgAdminPassword" placeholder="नया एडमिन पासवर्ड" />
-          </div>
-          <div>
-            <label>एडमिन पिन</label>
-            <input type="text" id="cfgAdminPin" placeholder="नया एडमिन पिन" />
-          </div>
-          <div>
-            <label>स्टूडेंट यूज़र आईडी</label>
-            <input type="text" id="cfgStudentUserId" placeholder="खाली = कोई भी ID | या तय ID लिखें" />
-          </div>
-          <div>
-            <label>स्टूडेंट यूज़र पासवर्ड</label>
-            <input type="text" id="cfgStudentUserPass" placeholder="खाली = बिना पासवर्ड | या पासवर्ड सेट करें" />
-          </div>
+          <div><label>एडमिन नाम</label><input type="text" id="cfgAdminName" /></div>
+          <div><label>एडमिन पासवर्ड</label><input type="text" id="cfgAdminPassword" /></div>
+          <div><label>एडमिन पिन</label><input type="text" id="cfgAdminPin" /></div>
+          <div><label>तय यूज़र आईडी</label><input type="text" id="cfgStudentUserId" /></div>
+          <div><label>तय यूज़र पासवर्ड</label><input type="text" id="cfgStudentUserPass" /></div>
         </div>
-        <button type="button" class="btn" id="saveAdminCredBtn">एडमिन व यूज़र सेटिंग सेव करें</button>
+        <button type="button" class="btn" id="saveAdminCredBtn">क्रेडेंशियल सेव करें</button>
         <div id="adminCredMsg" class="status"></div>
       </div>
 
-      <!-- 2. Exam & Question Controls -->
       <div class="section-box">
-        <h3>⚙️ परीक्षा व प्रश्न नियंत्रण</h3>
+        <h3>⚙️ परीक्षा सेटिंग्स</h3>
         <div class="grid-2" style="margin-top:12px;">
           <div>
             <label>डिफ़ॉल्ट विषय</label>
             <select id="adminSubjectSelect">
-              <option value="gk">सामान्य ज्ञान (50 प्रश्न)</option>
-              <option value="computer">कंप्यूटर (50 प्रश्न)</option>
+              <option value="gk">सामान्य ज्ञान (20 प्रश्न)</option>
+              <option value="computer">कंप्यूटर (20 प्रश्न)</option>
             </select>
           </div>
           <div>
-            <label>कितने प्रश्न देने हैं? (1 से 50)</label>
-            <input type="number" id="adminQuestionCount" min="1" max="50" value="10" />
+            <label>प्रश्न संख्या (1 से 20)</label>
+            <input type="number" id="adminQuestionCount" min="1" max="20" value="10" />
           </div>
         </div>
-        <button type="button" class="btn" id="saveExamCfgBtn">परीक्षा सेटिंग सेव करें</button>
+        <button type="button" class="btn" id="saveExamCfgBtn">सेटिंग्स सेव करें</button>
         <div id="configMsg" class="status"></div>
 
         <div style="margin-top:16px; padding-top:14px; border-top:1px solid var(--border);">
-          <h4>➕ नया प्रश्न जोड़ें</h4>
+          <h4>➕ नया प्रश्न</h4>
           <div class="grid-2" style="margin-top:10px;">
-            <div>
-              <label>विषय चुनें</label>
-              <select id="newQSubject">
-                <option value="gk">सामान्य ज्ञान (GK)</option>
-                <option value="computer">कंप्यूटर (Computer)</option>
-              </select>
-            </div>
-            <div>
-              <label>सही विकल्प</label>
-              <select id="newQAnswer">
-                <option value="0">विकल्प A</option>
-                <option value="1">विकल्प B</option>
-                <option value="2">विकल्प C</option>
-                <option value="3">विकल्प D</option>
-              </select>
-            </div>
+            <select id="newQSubject">
+              <option value="gk">सामान्य ज्ञान</option>
+              <option value="computer">कंप्यूटर</option>
+            </select>
+            <select id="newQAnswer">
+              <option value="0">A</option>
+              <option value="1">B</option>
+              <option value="2">C</option>
+              <option value="3">D</option>
+            </select>
           </div>
           <div class="form-group">
-            <label>प्रश्न लिखें</label>
-            <input type="text" id="newQText" placeholder="नया प्रश्न दर्ज करें" />
+            <input type="text" id="newQText" placeholder="प्रश्न लिखें" />
           </div>
           <div class="grid-2" style="margin-top:10px;">
-            <input type="text" id="newQOpt0" placeholder="विकल्प A" />
-            <input type="text" id="newQOpt1" placeholder="विकल्प B" />
-            <input type="text" id="newQOpt2" placeholder="विकल्प C" />
-            <input type="text" id="newQOpt3" placeholder="विकल्प D" />
+            <input type="text" id="newQOpt0" placeholder="A" />
+            <input type="text" id="newQOpt1" placeholder="B" />
+            <input type="text" id="newQOpt2" placeholder="C" />
+            <input type="text" id="newQOpt3" placeholder="D" />
           </div>
-          <button type="button" class="btn" id="addCustomQBtn">प्रश्न बैंक में जोड़ें</button>
+          <button type="button" class="btn" id="addCustomQBtn">जोड़ें</button>
           <div id="addQMsg" class="status"></div>
         </div>
       </div>
 
-      <!-- 3. Student Data & Full Report -->
       <div class="section-box">
         <div class="top-bar">
-          <h3>📋 छात्रों का पूरा हिसाब (Student Records)</h3>
+          <h3>📋 छात्रों का रिकॉर्ड</h3>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button type="button" class="mode-btn active" id="downloadCsvBtn">CSV डाउनलोड करें</button>
-            <button type="button" class="mode-btn" id="clearRecordsBtn">डेटा साफ़ करें</button>
+            <button type="button" class="mode-btn active" id="downloadCsvBtn">CSV डाउनलोड</button>
+            <button type="button" class="mode-btn" id="clearRecordsBtn">डेटा साफ़</button>
           </div>
         </div>
-
         <div style="overflow-x:auto;">
           <table>
             <thead>
               <tr>
                 <th>#</th>
-                <th>छात्र का नाम</th>
-                <th>पिता का नाम</th>
-                <th>यूज़र आईडी</th>
+                <th>नाम</th>
+                <th>पिता</th>
+                <th>ID</th>
                 <th>विषय</th>
                 <th>सही</th>
                 <th>गलत</th>
                 <th>स्कोर</th>
-                <th>लॉगिन समय</th>
-                <th>सबमिट समय</th>
+                <th>लॉगिन</th>
+                <th>सबमिट</th>
               </tr>
             </thead>
             <tbody id="adminTableBody"></tbody>
@@ -511,9 +465,9 @@
 
   <script>
     (function () {
-      const RECORDS_KEY = "pj_joshi_portal_records_v7";
-      const CONFIG_KEY = "pj_joshi_portal_config_v5";
-      const CUSTOM_Q_KEY = "pj_joshi_portal_custom_q_v4";
+      const RECORDS_KEY = "pj_joshi_portal_records_v9";
+      const CONFIG_KEY = "pj_joshi_portal_config_v7";
+      const CUSTOM_Q_KEY = "pj_joshi_portal_custom_q_v6";
 
       const DEFAULT_GK = [
         { q: "1. भारत की राजधानी क्या है?", options: ["मुंबई", "नई दिल्ली", "कोलकाता", "चेन्नई"], answer: 1 },
@@ -525,36 +479,33 @@
 
       const DEFAULT_COMPUTER = [
         { q: "1. CPU का पूरा नाम क्या है?", options: ["Central Processing Unit", "Computer Personal Unit", "Central Print Unit", "Control Program Utility"], answer: 0 },
-        { q: "2. HTML का उपयोग किस लिए किया जाता है?", options: ["डेटाबेस बनाने के लिए", "वेब पेज की संरचना बनाने के लिए", "ऑपरेटिंग सिस्टम बनाने के लिए", "वीडियो एडिटिंग के लिए"], answer: 1 },
-        { q: "3. RAM किस प्रकार की मेमोरी है?", options: ["Permanent", "Temporary (Volatile)", "Secondary", "Optical"], answer: 1 },
-        { q: "4. MS Excel में फ़ॉर्मूला किस चिह्न से शुरू होता है?", options: ["+", "=", "@", "#"], answer: 1 },
+        { q: "2. HTML का उपयोग किस लिए किया जाता है?", options: ["डेटाबेस", "वेब संरचना", "OS", "वीडियो एडिटिंग"], answer: 1 },
+        { q: "3. RAM किस प्रकार की मेमोरी है?", options: ["Permanent", "Temporary", "Secondary", "Optical"], answer: 1 },
+        { q: "4. MS Excel फ़ॉर्मूला किस चिह्न से शुरू होता है?", options: ["+", "=", "@", "#"], answer: 1 },
         { q: "5. IP का पूरा नाम क्या है?", options: ["Internet Protocol", "Internal Program", "Input Process", "Internet Provider"], answer: 0 }
       ];
 
-      function buildFullBank(baseList, label) {
-        const copy = baseList.map(item => ({ q: item.q, options: item.options.slice(), answer: item.answer }));
-        while (copy.length < 50) {
-          const n = copy.length + 1;
-          copy.push({
-            q: n + ". " + label + " प्रश्न #" + n,
+      function buildBank(base, label) {
+        const list = base.map(i => ({ q: i.q, options: [...i.options], answer: i.answer }));
+        for (let i = list.length + 1; i <= 20; i++) {
+          list.push({
+            q: `${i}. ${label} प्रश्न #${i}`,
             options: ["विकल्प A", "विकल्प B", "विकल्प C", "विकल्प D"],
             answer: 0
           });
         }
-        return copy;
+        return list;
       }
 
-      const GK_QUESTIONS = buildFullBank(DEFAULT_GK, "सामान्य ज्ञान");
-      const COMPUTER_QUESTIONS = buildFullBank(DEFAULT_COMPUTER, "कंप्यूटर");
+      const GK_QUESTIONS = buildBank(DEFAULT_GK, "सामान्य ज्ञान");
+      const COMPUTER_QUESTIONS = buildBank(DEFAULT_COMPUTER, "कंप्यूटर");
 
       let currentSessionId = null;
       let currentUserId = "";
       let currentStudent = null;
       let activeQuestions = [];
 
-      function nowText() {
-        return new Date().toLocaleString("hi-IN");
-      }
+      const nowText = () => new Date().toLocaleString("hi-IN");
 
       function getConfig() {
         const defaults = {
@@ -567,18 +518,11 @@
           count: 10
         };
         try {
-          const saved = JSON.parse(localStorage.getItem(CONFIG_KEY) || "null");
-          if (!saved) return defaults;
-          return {
-            adminName: saved.adminName || defaults.adminName,
-            adminPassword: saved.adminPassword || defaults.adminPassword,
-            adminPin: saved.adminPin || defaults.adminPin,
-            studentUserId: saved.studentUserId || "",
-            studentUserPass: saved.studentUserPass || "",
-            subject: saved.subject === "computer" ? "computer" : "gk",
-            count: Math.min(50, Math.max(1, Number(saved.count) || 10))
-          };
-        } catch (e) {
+          const saved = JSON.parse(localStorage.getItem(CONFIG_KEY));
+          return saved
+            ? { ...defaults, ...saved, count: Math.min(20, Math.max(1, Number(saved.count) || 10)) }
+            : defaults;
+        } catch {
           return defaults;
         }
       }
@@ -590,49 +534,104 @@
 
       function getCustomQuestions() {
         try {
-          const parsed = JSON.parse(localStorage.getItem(CUSTOM_Q_KEY) || "null");
-          if (parsed && Array.isArray(parsed.gk) && Array.isArray(parsed.computer)) {
-            return parsed;
-          }
-        } catch (e) {}
-        return { gk: [], computer: [] };
+          const p = JSON.parse(localStorage.getItem(CUSTOM_Q_KEY));
+          return (p && Array.isArray(p.gk) && Array.isArray(p.computer)) ? p : { gk: [], computer: [] };
+        } catch {
+          return { gk: [], computer: [] };
+        }
       }
 
-      function getBankForSubject(subject) {
-        const custom = getCustomQuestions();
-        const base = subject === "gk" ? GK_QUESTIONS : COMPUTER_QUESTIONS;
-        const extra = subject === "gk" ? custom.gk : custom.computer;
-        return extra.concat(base);
+      function getBank(sub) {
+        const c = getCustomQuestions();
+        return (sub === "gk" ? c.gk : c.computer).concat(sub === "gk" ? GK_QUESTIONS : COMPUTER_QUESTIONS);
       }
 
       function refreshUIState() {
         const cfg = getConfig();
-        const subLabel = cfg.subject === "gk" ? "सामान्य ज्ञान (GK)" : "कंप्यूटर (Computer)";
-
-        const infoEl = document.getElementById("studentExamInfo");
-        if (infoEl) {
-          infoEl.textContent = "आज की परीक्षा: " + subLabel + " (" + cfg.count + " प्रश्न)";
-        }
-
-        const adminLabel = document.getElementById("activeAdminLabel");
-        if (adminLabel) {
-          adminLabel.textContent = "एडमिन: " + cfg.adminName;
-        }
-
-        const passLabel = document.getElementById("studentPassLabel");
-        if (passLabel) {
-          passLabel.textContent = cfg.studentUserPass
-            ? "यूज़र पासवर्ड (User Password) *"
-            : "यूज़र पासवर्ड (User Password — वैकल्पिक)";
-        }
+        const subLbl = cfg.subject === "gk" ? "सामान्य ज्ञान (GK)" : "कंप्यूटर (Computer)";
+        const el = document.getElementById("studentExamInfo");
+        if (el) el.textContent = `आज की परीक्षा: ${subLbl} (${cfg.count} प्रश्न)`;
+        const adm = document.getElementById("activeAdminLabel");
+        if (adm) adm.textContent = `एडमिन: ${cfg.adminName}`;
+        const passLbl = document.getElementById("studentPassLabel");
+        if (passLbl) passLbl.textContent = cfg.studentUserPass ? "यूज़र पासवर्ड *" : "यूज़र पासवर्ड (वैकल्पिक)";
       }
 
       function setTheme(mode, btn) {
         document.body.classList.remove("dark", "green");
         if (mode === "dark") document.body.classList.add("dark");
         if (mode === "green") document.body.classList.add("green");
+        document.querySelectorAll(".mode-btn[data-theme]").forEach(b => b.classList.remove("active"));
+        if (btn) btn.classList.add("active");
+      }
 
-        document.querySelectorAll(".mode-btn[data-theme]").forEach(function (b) {
-          b.classList.remove("active");
-        });
-      
+      function getRecords() {
+        try {
+          return JSON.parse(localStorage.getItem(RECORDS_KEY) || "[]");
+        } catch {
+          return [];
+        }
+      }
+
+      function saveRecords(r) {
+        localStorage.setItem(RECORDS_KEY, JSON.stringify(r));
+      }
+
+      function goToStep2() {
+        const cfg = getConfig();
+        const uId = document.getElementById("studentUserId").value.trim();
+        const uPass = document.getElementById("studentUserPass").value;
+        const msg = document.getElementById("step1Msg");
+
+        if (!uId) {
+          msg.textContent = "यूज़र आईडी भरें।";
+          msg.className = "status err";
+          return;
+        }
+        if (cfg.studentUserId && uId !== cfg.studentUserId) {
+          msg.textContent = "गलत यूज़र आईडी।";
+          msg.className = "status err";
+          return;
+        }
+        if (cfg.studentUserPass && uPass !== cfg.studentUserPass) {
+          msg.textContent = "गलत पासवर्ड।";
+          msg.className = "status err";
+          return;
+        }
+
+        currentUserId = uId;
+        msg.textContent = "";
+        document.getElementById("step1Card").classList.add("hidden");
+        document.getElementById("step2Card").classList.remove("hidden");
+        document.getElementById("step2UserBadge").textContent = `लॉगिन ID: ${uId}`;
+      }
+
+      function goToStep3() {
+        const cfg = getConfig();
+        const name = document.getElementById("studentName").value.trim();
+        const fName = document.getElementById("studentFatherName").value.trim();
+        const msg = document.getElementById("step2Msg");
+
+        if (!name || !fName) {
+          msg.textContent = "नाम और पिता का नाम भरें।";
+          msg.className = "status err";
+          return;
+        }
+
+        activeQuestions = getBank(cfg.subject).slice(0, cfg.count);
+        const subLbl = cfg.subject === "gk" ? "सामान्य ज्ञान (GK)" : "कंप्यूटर (Computer)";
+        currentStudent = { name, fatherName: fName, userId: currentUserId, subjectLabel: subLbl };
+        currentSessionId = String(Date.now());
+
+        const records = getRecords();
+        records.unshift({
+          id: currentSessionId,
+          name,
+          fatherName: fName,
+          userId: currentUserId,
+          subject: subLbl,
+          correct: "-",
+          wrong: "-",
+          score: "सबमिट नहीं किया",
+          loginTime: nowText(),
+   
