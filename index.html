@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PJ Joshi - Online Exam Portal</title>
+  <title>PJ Joshi - ऑनलाइन परीक्षा पोर्टल</title>
   <style>
     :root {
       --bg: #f4f7fb; --card: #ffffff; --text: #111827; --muted: #6b7280;
@@ -35,7 +35,7 @@
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
     label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
     input, select, textarea { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 15px; }
-    textarea { min-height: 190px; line-height: 1.5; resize: vertical; }
+    textarea { min-height: 210px; line-height: 1.5; resize: vertical; }
     .btn { width: 100%; margin-top: 16px; padding: 13px; border: none; border-radius: 12px; background: var(--primary); color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; touch-action: manipulation; }
     .hidden { display: none !important; }
     .section-box { margin-top: 16px; padding: 16px; border: 1px solid var(--border); border-radius: 14px; }
@@ -57,6 +57,7 @@
     .top-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
     .badge { font-size: 12px; padding: 4px 10px; border-radius: 999px; background: rgba(37,99,235,0.12); color: var(--primary); font-weight: 700; }
     .timer-badge { font-size: 13px; padding: 6px 12px; border-radius: 999px; background: rgba(220,38,38,0.12); color: var(--danger); font-weight: 800; }
+    .schedule-banner { margin-top: 10px; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); font-size: 13px; font-weight: 600; }
   </style>
 </head>
 <body>
@@ -67,130 +68,141 @@
           <div class="logo-box">PJ</div>
           <div>
             <h1>PJ Joshi</h1>
-            <p class="subtitle">Online Exam & Practice Portal</p>
+            <p class="subtitle">ऑनलाइन परीक्षा एवं अभ्यास पोर्टल</p>
             <p class="subtitle" id="activeAdminLabel" style="font-size:12px;"></p>
           </div>
         </div>
-        <button type="button" id="carAdminBtn" class="subtle-car-btn" title="Admin">🚗</button>
+        <button type="button" id="carAdminBtn" class="subtle-car-btn" title="एडमिन">🚗</button>
       </div>
+      <div class="schedule-banner" id="globalScheduleBanner">परीक्षा समय सारणी लोड हो रही है...</div>
       <div class="modes">
-        <button type="button" class="mode-btn active" data-theme="clear">Clear Mode</button>
-        <button type="button" class="mode-btn" data-theme="dark">Dark Mode</button>
-        <button type="button" class="mode-btn" data-theme="green">Green Mode</button>
+        <button type="button" class="mode-btn active" data-theme="clear">क्लियर मोड</button>
+        <button type="button" class="mode-btn" data-theme="dark">डार्क मोड</button>
+        <button type="button" class="mode-btn" data-theme="green">ग्रीन मोड</button>
       </div>
     </div>
 
+    <!-- चरण 1: यूजर लॉगिन -->
     <div class="card" id="step1Card">
       <div style="text-align:center;">
         <div class="logo-box" style="margin:0 auto 10px;">PJ</div>
-        <h2>Step 1: User Login</h2>
+        <h2>चरण 1: यूजर लॉगिन</h2>
         <p class="subtitle" id="studentExamInfo" style="margin-top:8px; font-weight:600;"></p>
+        <p class="subtitle" id="step1ScheduleStatus" style="margin-top:6px; font-weight:700;"></p>
       </div>
-      <div class="form-group"><label>User ID *</label><input type="text" id="studentUserId" placeholder="Enter User ID" /></div>
-      <div class="form-group"><label id="studentPassLabel">User Password</label><input type="password" id="studentUserPass" placeholder="Enter Password" /></div>
-      <button type="button" class="btn" id="step1NextBtn">Next</button>
+      <div class="form-group"><label>यूजर आईडी (User ID) *</label><input type="text" id="studentUserId" placeholder="अपनी User ID दर्ज करें" /></div>
+      <div class="form-group"><label id="studentPassLabel">पासवर्ड (Password)</label><input type="password" id="studentUserPass" placeholder="अपना Password दर्ज करें" /></div>
+      <button type="button" class="btn" id="step1NextBtn">आगे बढ़ें</button>
       <div id="step1Msg" class="status"></div>
     </div>
 
+    <!-- चरण 2: विद्यार्थी विवरण -->
     <div class="card hidden" id="step2Card">
       <div style="text-align:center;">
         <div class="logo-box" style="margin:0 auto 10px;">PJ</div>
-        <h2>Step 2: Student Details</h2>
+        <h2>चरण 2: विद्यार्थी विवरण</h2>
         <p class="subtitle" id="step2UserBadge" style="margin-top:8px; font-weight:600;"></p>
+        <p class="subtitle" id="step2ScheduleStatus" style="margin-top:6px; font-weight:700;"></p>
       </div>
-      <div class="form-group"><label>Student Name *</label><input type="text" id="studentName" placeholder="Enter Full Name" /></div>
-      <div class="form-group"><label>Father's Name *</label><input type="text" id="studentFatherName" placeholder="Enter Father's Name" /></div>
-      <button type="button" class="btn" id="step2NextBtn">Start Exam</button>
+      <div class="form-group"><label>छात्र का नाम *</label><input type="text" id="studentName" placeholder="अपना पूरा नाम दर्ज करें" /></div>
+      <div class="form-group"><label>पिता का नाम *</label><input type="text" id="studentFatherName" placeholder="पिता का नाम दर्ज करें" /></div>
+      <button type="button" class="btn" id="step2NextBtn">परीक्षा शुरू करें</button>
       <div id="step2Msg" class="status"></div>
     </div>
 
+    <!-- चरण 3: परीक्षा स्क्रीन -->
     <div class="card hidden" id="step3Card">
       <div class="top-bar">
         <div>
           <h2 id="welcomeStudent"></h2>
           <p class="subtitle" id="studentMetaLine"></p>
           <p class="subtitle" id="examSubtitle"></p>
+          <p class="subtitle" id="step3EndTimeLine"></p>
         </div>
         <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-          <span class="timer-badge" id="examTimerDisplay">Time: 30:00</span>
-          <span class="badge" id="examBadge">Random Exam</span>
+          <span class="timer-badge" id="examTimerDisplay">बाकी समय: 30:00</span>
+          <span class="badge" id="examBadge">रैंडम परीक्षा</span>
         </div>
       </div>
       <div id="questionsContainer"></div>
-      <button type="button" class="btn" id="submitExamBtn">Submit Exam</button>
+      <button type="button" class="btn" id="submitExamBtn">परीक्षा सबमिट करें</button>
       <div id="examResult" class="status"></div>
       <div id="finalSummaryBox" class="summary-box hidden"></div>
     </div>
 
+    <!-- एडमिन लॉगिन -->
     <div class="card hidden" id="adminAuthCard">
-      <div class="top-bar"><h2>🔒 Admin Login</h2><button type="button" class="mode-btn close-admin-btn">Back</button></div>
-      <div class="form-group"><label>Admin PIN / Password</label><input type="password" id="adminPassInput" placeholder="Enter Admin PIN or Password" /></div>
-      <button type="button" class="btn" id="verifyAdminBtn">Login</button>
+      <div class="top-bar"><h2>🔒 एडमिन लॉगिन</h2><button type="button" class="mode-btn close-admin-btn">वापस जाएं</button></div>
+      <div class="form-group"><label>एडमिन पिन / पासवर्ड</label><input type="password" id="adminPassInput" placeholder="एडमिन पिन या पासवर्ड दर्ज करें" /></div>
+      <button type="button" class="btn" id="verifyAdminBtn">लॉगिन करें</button>
       <div id="adminAuthMsg" class="status"></div>
     </div>
 
+    <!-- एडमिन कंट्रोल पैनल -->
     <div class="card hidden" id="adminDashboardCard">
-      <div class="top-bar"><h2>📊 Admin Control Panel</h2><button type="button" class="mode-btn close-admin-btn">Close</button></div>
+      <div class="top-bar"><h2>📊 एडमिन कंट्रोल पैनल</h2><button type="button" class="mode-btn close-admin-btn">बंद करें</button></div>
 
       <div class="section-box">
-        <h3>📲 WhatsApp Group Notice Box (Auto-Updated)</h3>
-        <p class="subtitle">Automatically updates when Time, Questions, User ID, or Password changes.</p>
+        <h3>📲 WhatsApp ग्रुप नोटिस बॉक्स (अपने आप अपडेट)</h3>
+        <p class="subtitle">शुरू समय, समाप्त समय, प्रश्न संख्या, User ID या Password बदलते ही नीचे मैसेज अपने आप तैयार हो जाएगा।</p>
         <div class="form-group">
           <textarea id="whatsappShareText" readonly></textarea>
         </div>
-        <button type="button" class="btn" id="copyWhatsappBtn">📋 Copy WhatsApp Message</button>
+        <button type="button" class="btn" id="copyWhatsappBtn">📋 WhatsApp मैसेज कॉपी करें</button>
         <div id="whatsappCopyMsg" class="status"></div>
       </div>
 
       <div class="section-box">
-        <h3>👁️ Selected Questions Preview (Admin Pre-View)</h3>
-        <p class="subtitle" id="previewMetaText">No random set generated yet.</p>
-        <button type="button" class="btn" id="generatePreviewSetBtn">Generate New Random Set Now</button>
+        <h3>👁️ चुने गए प्रश्नों का प्रीव्यू (Admin को पहले से दिखेंगे)</h3>
+        <p class="subtitle" id="previewMetaText">अभी कोई रैंडम सेट तैयार नहीं है।</p>
+        <button type="button" class="btn" id="generatePreviewSetBtn">नया रैंडम सेट अभी तैयार करें</button>
         <div id="adminQuestionPreviewList" class="preview-list"></div>
       </div>
 
       <div class="section-box">
-        <h3>🛡️ Credentials</h3>
+        <h3>🛡️ क्रेडेंशियल सेटिंग्स</h3>
         <div class="grid-2" style="margin-top:12px;">
-          <div><label>Admin Name</label><input type="text" id="cfgAdminName" /></div>
-          <div><label>Admin Password</label><input type="text" id="cfgAdminPassword" /></div>
-          <div><label>Admin PIN</label><input type="text" id="cfgAdminPin" /></div>
-          <div><label>Fixed User ID</label><input type="text" id="cfgStudentUserId" /></div>
-          <div><label>Fixed User Password</label><input type="text" id="cfgStudentUserPass" /></div>
+          <div><label>एडमिन नाम</label><input type="text" id="cfgAdminName" /></div>
+          <div><label>एडमिन पासवर्ड</label><input type="text" id="cfgAdminPassword" /></div>
+          <div><label>एडमिन पिन</label><input type="text" id="cfgAdminPin" /></div>
+          <div><label>तय User ID</label><input type="text" id="cfgStudentUserId" /></div>
+          <div><label>तय User Password</label><input type="text" id="cfgStudentUserPass" /></div>
         </div>
-        <button type="button" class="btn" id="saveAdminCredBtn">Save Credentials</button>
+        <button type="button" class="btn" id="saveAdminCredBtn">क्रेडेंशियल सेव करें</button>
         <div id="adminCredMsg" class="status"></div>
       </div>
 
       <div class="section-box">
-        <h3>⚙️ Exam Settings (50 GK + 50 Computer & Time)</h3>
+        <h3>⚙️ परीक्षा सेटिंग्स (50 GK + 50 Computer, अवधि और शुरू/समाप्त समय)</h3>
         <div class="grid-2" style="margin-top:12px;">
           <div>
-            <label>Subject / Mode</label>
+            <label>विषय / मोड</label>
             <select id="adminSubjectSelect">
-              <option value="all100">50 GK + 50 Computer (Random)</option>
-              <option value="gk">GK Only (50)</option>
-              <option value="computer">Computer Only (50)</option>
+              <option value="all100">50 GK + 50 Computer (रैंडम)</option>
+              <option value="gk">केवल सामान्य ज्ञान (50 GK)</option>
+              <option value="computer">केवल कंप्यूटर (50 Computer)</option>
             </select>
           </div>
-          <div><label>Questions Count (1-100)</label><input type="number" id="adminQuestionCount" min="1" max="100" value="50" /></div>
-          <div><label>Exam Time (Minutes, 1-180)</label><input type="number" id="adminExamMinutes" min="1" max="180" value="30" /></div>
+          <div><label>कुल प्रश्न (1 से 100)</label><input type="number" id="adminQuestionCount" min="1" max="100" value="50" /></div>
+          <div><label>परीक्षा अवधि (मिनट, 1 से 180)</label><input type="number" id="adminExamMinutes" min="1" max="180" value="30" /></div>
+          <div><label>परीक्षा शुरू होने का तय समय (Start Time) *</label><input type="time" id="adminStartTime" /></div>
+          <div><label>परीक्षा समाप्त होने का तय समय (End Time) *</label><input type="time" id="adminEndTime" /></div>
         </div>
-        <button type="button" class="btn" id="saveExamCfgBtn">Save Settings</button>
+        <button type="button" class="btn" id="saveExamCfgBtn">सेटिंग्स सेव करें</button>
         <div id="configMsg" class="status"></div>
       </div>
 
       <div class="section-box">
         <div class="top-bar">
-          <h3>📋 Student Records</h3>
+          <h3>📋 छात्रों का रिकॉर्ड</h3>
           <div style="display:flex; gap:8px;">
-            <button type="button" class="mode-btn active" id="downloadCsvBtn">CSV</button>
-            <button type="button" class="mode-btn" id="clearRecordsBtn">Clear</button>
+            <button type="button" class="mode-btn active" id="downloadCsvBtn">CSV डाउनलोड</button>
+            <button type="button" class="mode-btn" id="clearRecordsBtn">डेटा साफ़ करें</button>
           </div>
         </div>
         <div style="overflow-x:auto;">
           <table>
-            <thead><tr><th>#</th><th>Name</th><th>Father</th><th>ID</th><th>Mode</th><th>Correct</th><th>Wrong</th><th>Score</th><th>Duration</th><th>Submit</th></tr></thead>
+            <thead><tr><th>#</th><th>नाम</th><th>पिता</th><th>ID</th><th>मोड</th><th>सही</th><th>गलत</th><th>स्कोर</th><th>समय</th><th>सबमिट</th></tr></thead>
             <tbody id="adminTableBody"></tbody>
           </table>
         </div>
@@ -199,7 +211,7 @@
   </div>
     <script>
     (function () {
-      const RECORDS_KEY = "pj_portal_rec_en_ui_v1", CONFIG_KEY = "pj_portal_cfg_en_ui_v1", QUEUE_KEY = "pj_portal_queue_en_ui_v1";
+      const RECORDS_KEY = "pj_portal_rec_hi_sched_v1", CONFIG_KEY = "pj_portal_cfg_hi_sched_v1", QUEUE_KEY = "pj_portal_queue_hi_sched_v1";
 
       const GK_POOL = [
         { sub: "GK", q: "भारत की राजधानी क्या है?", options: ["मुंबई", "नई दिल्ली", "कोलकाता", "चेन्नई"], answer: 1 },
@@ -307,15 +319,58 @@
         { sub: "Computer", q: "इनमें से Search Engine कौन-सा है?", options: ["Google", "WhatsApp", "Photoshop", "Notepad"], answer: 0 }
       ];
             let sessionId = null, userId = "", student = null, activeQ = [];
-      let timerInterval = null, remainingSeconds = 1800, examStartTime = 0, examSubmitted = false;
+      let timerInterval = null, scheduleWatchInterval = null, remainingSeconds = 1800, examStartTime = 0, examSubmitted = false;
 
-      const nowStr = () => new Date().toLocaleString("en-IN");
+      const nowStr = () => new Date().toLocaleString("hi-IN");
       const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
 
       function formatSec(sec) {
         const m = Math.floor(sec / 60);
         const s = sec % 60;
         return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+      }
+
+      function format12Hour(hhmm) {
+        if (!hhmm || !/^\d{2}:\d{2}$/.test(hhmm)) return "सेट नहीं है";
+        let [h, m] = hhmm.split(":").map(Number);
+        const suffix = h >= 12 ? "PM" : "AM";
+        h = h % 12 || 12;
+        return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")} ${suffix}`;
+      }
+
+      function parseTodayTime(hhmm) {
+        if (!hhmm || !/^\d{2}:\d{2}$/.test(hhmm)) return null;
+        const [h, m] = hhmm.split(":").map(Number);
+        const d = new Date();
+        d.setHours(h, m, 0, 0);
+        return d;
+      }
+
+      function getScheduleState(cfg) {
+        const startObj = parseTodayTime(cfg.startTime);
+        const endObj = parseTodayTime(cfg.endTime);
+        const now = new Date();
+
+        if (!startObj && !endObj) {
+          return { allowed: true, statusText: "परीक्षा अभी खुली है (कोई तय Start/End समय सेट नहीं है)" };
+        }
+        if (startObj && now < startObj) {
+          return {
+            allowed: false,
+            statusText: `⏳ परीक्षा अभी शुरू नहीं हुई है! तय समय: ${format12Hour(cfg.startTime)} पर शुरू होगी।`
+          };
+        }
+        if (endObj && now >= endObj) {
+          return {
+            allowed: false,
+            statusText: `⛔ परीक्षा का समय समाप्त हो चुका है! तय समाप्ति समय: ${format12Hour(cfg.endTime)}`
+          };
+        }
+        const endText = endObj ? ` | समाप्ति समय: ${format12Hour(cfg.endTime)}` : "";
+        return {
+          allowed: true,
+          statusText: `✅ परीक्षा चालू है${endText}`
+        };
       }
 
       function shuffle(arr) {
@@ -328,7 +383,18 @@
       }
 
       function getCfg() {
-        const d = { adminName: "PJ Joshi", adminPassword: "PJ@Admin2026", adminPin: "PJ@Admin2026", studentUserId: "", studentUserPass: "", subject: "all100", count: 50, minutes: 30 };
+        const d = {
+          adminName: "PJ Joshi",
+          adminPassword: "PJ@Admin2026",
+          adminPin: "PJ@Admin2026",
+          studentUserId: "",
+          studentUserPass: "",
+          subject: "all100",
+          count: 50,
+          minutes: 30,
+          startTime: "",
+          endTime: ""
+        };
         try {
           const s = JSON.parse(localStorage.getItem(CONFIG_KEY));
           return s ? {
@@ -353,6 +419,8 @@
         const subSel = document.getElementById("adminSubjectSelect");
         const cntInp = document.getElementById("adminQuestionCount");
         const minInp = document.getElementById("adminExamMinutes");
+        const stInp = document.getElementById("adminStartTime");
+        const enInp = document.getElementById("adminEndTime");
         const uidInp = document.getElementById("cfgStudentUserId");
         const upwInp = document.getElementById("cfgStudentUserPass");
         const admInp = document.getElementById("cfgAdminName");
@@ -361,26 +429,30 @@
         const modeVal = subSel ? subSel.value : saved.subject;
         const countVal = cntInp ? Math.min(100, Math.max(1, Number(cntInp.value) || saved.count)) : saved.count;
         const minVal = minInp ? Math.min(180, Math.max(1, Number(minInp.value) || saved.minutes)) : saved.minutes;
+        const startVal = stInp ? stInp.value : saved.startTime;
+        const endVal = enInp ? enInp.value : saved.endTime;
         const userIdVal = uidInp ? uidInp.value.trim() : saved.studentUserId;
         const userPassVal = upwInp ? upwInp.value.trim() : saved.studentUserPass;
         const adminVal = admInp ? (admInp.value.trim() || saved.adminName) : saved.adminName;
 
         const modeLabel = modeVal === "gk"
-          ? "GK Only (Random)"
+          ? "केवल सामान्य ज्ञान (GK रैंडम)"
           : modeVal === "computer"
-          ? "Computer Only (Random)"
-          : "50 GK + 50 Computer (Random Mix)";
+          ? "केवल कंप्यूटर (Computer रैंडम)"
+          : "50 GK + 50 Computer (रैंडम मिक्स)";
 
         ta.value = [
-          `🎓 *${adminVal} — Online Exam Notice*`,
+          `🎓 *${adminVal} — ऑनलाइन परीक्षा सूचना*`,
           `━━━━━━━━━━━━━━━━━━`,
-          `📚 *Subject / Mode:* ${modeLabel}`,
-          `❓ *Total Questions:* ${countVal}`,
-          `⏱️ *Exam Duration:* ${minVal} Minutes`,
-          `👤 *User ID:* ${userIdVal || "Any User ID"}`,
-          `🔑 *Password:* ${userPassVal || "Optional"}`,
-          `📝 *Instructions:* Enter User ID & Password, fill Name & Father's Name, then start the exam.`,
-          `🔗 *Portal Link:* ${window.location.href}`
+          `📚 *विषय / मोड:* ${modeLabel}`,
+          `❓ *कुल प्रश्न:* ${countVal} प्रश्न`,
+          `⏱️ *परीक्षा अवधि:* ${minVal} मिनट`,
+          `🟢 *परीक्षा शुरू होने का समय:* ${format12Hour(startVal)}`,
+          `🔴 *परीक्षा समाप्त होने का समय:* ${format12Hour(endVal)}`,
+          `👤 *User ID:* ${userIdVal || "कोई भी User ID दर्ज करें"}`,
+          `🔑 *Password:* ${userPassVal || "आवश्यक नहीं (वैकल्पिक)"}`,
+          `📝 *निर्देश:* तय समय शुरू होने पर User ID व Password डालें, फिर नाम व पिता का नाम भरकर परीक्षा शुरू करें।`,
+          `🔗 *पोर्टल लिंक:* ${window.location.href}`
         ].join("\n");
       }
 
@@ -406,6 +478,8 @@
           mode: cfg.subject,
           count: selected.length,
           minutes: cfg.minutes,
+          startTime: cfg.startTime,
+          endTime: cfg.endTime,
           questions: selected
         };
         localStorage.setItem(QUEUE_KEY, JSON.stringify(queuePayload));
@@ -423,26 +497,38 @@
         const box = document.getElementById("adminQuestionPreviewList");
         if (!meta || !box) return;
         if (!qData || !Array.isArray(qData.questions) || qData.questions.length === 0) {
-          meta.textContent = "No random set generated yet.";
+          meta.textContent = "अभी कोई रैंडम सेट तैयार नहीं है।";
           box.innerHTML = "";
           return;
         }
-        meta.textContent = `Generated: ${qData.generatedAt} | Questions: ${qData.questions.length} | Time: ${qData.minutes} min`;
+        meta.textContent = `समय: ${qData.generatedAt} | कुल प्रश्न: ${qData.questions.length} | अवधि: ${qData.minutes} मिनट`;
         box.innerHTML = qData.questions.map(item => `
           <div class="preview-item">
             <strong>${esc(item.q)}</strong><br/>
-            <span>Answer: ${esc(item.options[item.answer])}</span>
+            <span>सही उत्तर: ${esc(item.options[item.answer])}</span>
           </div>
         `).join("");
       }
 
       function refreshUI() {
         const c = getCfg();
-        const lbl = c.subject === "gk" ? "GK Only" : c.subject === "computer" ? "Computer Only" : "50 GK + 50 Computer";
-        document.getElementById("studentExamInfo").textContent = `Exam: ${lbl} (${c.count} Qs | ${c.minutes} Min)`;
-        document.getElementById("activeAdminLabel").textContent = `Admin: ${c.adminName}`;
-        document.getElementById("studentPassLabel").textContent = c.studentUserPass ? "User Password *" : "User Password (Optional)";
-        document.getElementById("examTimerDisplay").textContent = `Time: ${formatSec(c.minutes * 60)}`;
+        const lbl = c.subject === "gk" ? "केवल GK" : c.subject === "computer" ? "केवल Computer" : "50 GK + 50 Computer";
+        document.getElementById("studentExamInfo").textContent = `परीक्षा: ${lbl} (${c.count} प्रश्न | ${c.minutes} मिनट)`;
+        document.getElementById("activeAdminLabel").textContent = `एडमिन: ${c.adminName}`;
+        document.getElementById("studentPassLabel").textContent = c.studentUserPass ? "पासवर्ड (Password) *" : "पासवर्ड (Password - वैकल्पिक)";
+
+        const sched = getScheduleState(c);
+        const startTxt = c.startTime ? format12Hour(c.startTime) : "तय नहीं";
+        const endTxt = c.endTime ? format12Hour(c.endTime) : "तय नहीं";
+        document.getElementById("globalScheduleBanner").textContent =
+          `🕒 शुरू समय: ${startTxt} | 🏁 समाप्त समय: ${endTxt} — ${sched.statusText}`;
+        document.getElementById("step1ScheduleStatus").textContent = sched.statusText;
+        document.getElementById("step2ScheduleStatus").textContent = sched.statusText;
+        document.getElementById("step3EndTimeLine").textContent = `तय समाप्ति समय: ${endTxt}`;
+
+        if (!timerInterval) {
+          document.getElementById("examTimerDisplay").textContent = `बाकी समय: ${formatSec(c.minutes * 60)}`;
+        }
       }
 
       function setTheme(mode, btn) {
@@ -458,29 +544,48 @@
 
       function startTimer(minutes) {
         clearInterval(timerInterval);
+        clearInterval(scheduleWatchInterval);
         remainingSeconds = minutes * 60;
         examStartTime = Date.now();
         examSubmitted = false;
         const disp = document.getElementById("examTimerDisplay");
-        disp.textContent = `Time: ${formatSec(remainingSeconds)}`;
+        disp.textContent = `बाकी समय: ${formatSec(remainingSeconds)}`;
+
         timerInterval = setInterval(() => {
           remainingSeconds--;
-          disp.textContent = `Time: ${formatSec(Math.max(0, remainingSeconds))}`;
+          disp.textContent = `बाकी समय: ${formatSec(Math.max(0, remainingSeconds))}`;
           if (remainingSeconds <= 0) {
             clearInterval(timerInterval);
-            if (!examSubmitted) submitExam(true);
+            clearInterval(scheduleWatchInterval);
+            if (!examSubmitted) submitExam(true, "अवधि समाप्त");
+          }
+        }, 1000);
+
+        scheduleWatchInterval = setInterval(() => {
+          const c = getCfg();
+          const endObj = parseTodayTime(c.endTime);
+          if (endObj && new Date() >= endObj && !examSubmitted) {
+            clearInterval(timerInterval);
+            clearInterval(scheduleWatchInterval);
+            submitExam(true, "तय समाप्ति समय पूरा");
           }
         }, 1000);
       }
 
       document.getElementById("step1NextBtn").onclick = () => {
         const c = getCfg();
+        const sched = getScheduleState(c);
+        const msg = document.getElementById("step1Msg");
+        if (!sched.allowed) {
+          msg.textContent = sched.statusText;
+          msg.className = "status err";
+          return;
+        }
         const id = document.getElementById("studentUserId").value.trim();
         const pw = document.getElementById("studentUserPass").value;
-        const msg = document.getElementById("step1Msg");
-        if (!id) { msg.textContent = "Please enter User ID."; msg.className = "status err"; return; }
-        if (c.studentUserId && id !== c.studentUserId) { msg.textContent = "Invalid User ID."; msg.className = "status err"; return; }
-        if (c.studentUserPass && pw !== c.studentUserPass) { msg.textContent = "Invalid Password."; msg.className = "status err"; return; }
+        if (!id) { msg.textContent = "कृपया User ID दर्ज करें।"; msg.className = "status err"; return; }
+        if (c.studentUserId && id !== c.studentUserId) { msg.textContent = "गलत User ID।"; msg.className = "status err"; return; }
+        if (c.studentUserPass && pw !== c.studentUserPass) { msg.textContent = "गलत Password।"; msg.className = "status err"; return; }
         userId = id; msg.textContent = "";
         document.getElementById("step1Card").classList.add("hidden");
         document.getElementById("step2Card").classList.remove("hidden");
@@ -489,17 +594,23 @@
 
       document.getElementById("step2NextBtn").onclick = () => {
         const c = getCfg();
+        const sched = getScheduleState(c);
+        const msg = document.getElementById("step2Msg");
+        if (!sched.allowed) {
+          msg.textContent = sched.statusText;
+          msg.className = "status err";
+          return;
+        }
         const name = document.getElementById("studentName").value.trim();
         const father = document.getElementById("studentFatherName").value.trim();
-        const msg = document.getElementById("step2Msg");
-        if (!name || !father) { msg.textContent = "Please enter Student Name and Father's Name."; msg.className = "status err"; return; }
+        if (!name || !father) { msg.textContent = "कृपया छात्र का नाम और पिता का नाम दोनों भरें।"; msg.className = "status err"; return; }
 
         activeQ = buildRandomSet(c);
-        const subLbl = c.subject === "gk" ? "GK Random" : c.subject === "computer" ? "Computer Random" : "50 GK + 50 Computer";
+        const subLbl = c.subject === "gk" ? "GK रैंडम" : c.subject === "computer" ? "Computer रैंडम" : "50 GK + 50 Computer";
         student = { name, father, userId, subject: subLbl };
         sessionId = String(Date.now());
         const recs = getRecs();
-        recs.unshift({ id: sessionId, name, father, userId, subject: subLbl, correct: "-", wrong: "-", score: "Running", duration: "-", submitTime: "-" });
+        recs.unshift({ id: sessionId, name, father, userId, subject: subLbl, correct: "-", wrong: "-", score: "चल रही है", duration: "-", submitTime: "-" });
         saveRecs(recs);
 
         msg.textContent = "";
@@ -508,9 +619,9 @@
         document.getElementById("finalSummaryBox").innerHTML = "";
         document.getElementById("step2Card").classList.add("hidden");
         document.getElementById("step3Card").classList.remove("hidden");
-        document.getElementById("welcomeStudent").textContent = `Welcome, ${name}`;
-        document.getElementById("studentMetaLine").textContent = `Father: ${father} | ID: ${userId}`;
-        document.getElementById("examSubtitle").textContent = `${subLbl} — ${activeQ.length} Questions (${c.minutes} Min)`;
+        document.getElementById("welcomeStudent").textContent = `नमस्ते, ${name}`;
+        document.getElementById("studentMetaLine").textContent = `पिता का नाम: ${father} | User ID: ${userId}`;
+        document.getElementById("examSubtitle").textContent = `${subLbl} — ${activeQ.length} प्रश्न (${c.minutes} मिनट)`;
         document.getElementById("examBadge").textContent = subLbl;
 
         document.getElementById("questionsContainer").innerHTML = activeQ.map((item, idx) => `
@@ -528,10 +639,11 @@
         startTimer(c.minutes);
       };
 
-      function submitExam(autoByTime = false) {
+      function submitExam(autoByTime = false, reasonText = "") {
         if (!student || examSubmitted) return;
         examSubmitted = true;
         clearInterval(timerInterval);
+        clearInterval(scheduleWatchInterval);
 
         let correct = 0, wrong = 0, attempted = 0;
         activeQ.forEach((item, idx) => {
@@ -565,25 +677,27 @@
         saveRecs(recs);
 
         const resEl = document.getElementById("examResult");
-        resEl.textContent = autoByTime ? "Time up — Exam auto-submitted!" : "Exam submitted — Summary box below!";
+        resEl.textContent = autoByTime
+          ? `${reasonText || "समय समाप्त"} — परीक्षा अपने आप सबमिट हो गई!`
+          : "परीक्षा सफलतापूर्वक सबमिट हो गई — परिणाम नीचे बॉक्स में है!";
         resEl.className = "status ok";
 
         const box = document.getElementById("finalSummaryBox");
         box.classList.remove("hidden");
         box.innerHTML = `
-          <h3>📄 Student Final Result Box</h3>
+          <h3>📄 छात्र अंतिम परिणाम विवरण</h3>
           <div class="summary-grid">
-            <div class="summary-item"><strong>Student Name:</strong> ${esc(student.name)}</div>
-            <div class="summary-item"><strong>Father's Name:</strong> ${esc(student.father)}</div>
+            <div class="summary-item"><strong>छात्र का नाम:</strong> ${esc(student.name)}</div>
+            <div class="summary-item"><strong>पिता का नाम:</strong> ${esc(student.father)}</div>
             <div class="summary-item"><strong>User ID:</strong> ${esc(student.userId)}</div>
-            <div class="summary-item"><strong>Exam Mode:</strong> ${esc(student.subject)}</div>
-            <div class="summary-item"><strong>Total Questions:</strong> ${total}</div>
-            <div class="summary-item"><strong>Attempted:</strong> ${attempted}</div>
-            <div class="summary-item"><strong>Correct:</strong> ${correct}</div>
-            <div class="summary-item"><strong>Wrong:</strong> ${wrong}</div>
-            <div class="summary-item"><strong>Total Score:</strong> ${correct} / ${total}</div>
-            <div class="summary-item"><strong>Time Taken:</strong> ${esc(durationStr)}</div>
-            <div class="summary-item" style="grid-column: 1 / -1;"><strong>Submit Time:</strong> ${esc(submitTime)}</div>
+            <div class="summary-item"><strong>परीक्षा मोड:</strong> ${esc(student.subject)}</div>
+            <div class="summary-item"><strong>कुल प्रश्न:</strong> ${total}</div>
+            <div class="summary-item"><strong>हल किए गए प्रश्न:</strong> ${attempted}</div>
+            <div class="summary-item"><strong>सही उत्तर:</strong> ${correct}</div>
+            <div class="summary-item"><strong>गलत उत्तर:</strong> ${wrong}</div>
+            <div class="summary-item"><strong>कुल स्कोर:</strong> ${correct} / ${total}</div>
+            <div class="summary-item"><strong>लिया गया समय:</strong> ${esc(durationStr)}</div>
+            <div class="summary-item" style="grid-column: 1 / -1;"><strong>सबमिट समय:</strong> ${esc(submitTime)}</div>
           </div>
         `;
         box.scrollIntoView({ behavior: "smooth" });
@@ -593,6 +707,8 @@
 
       function openAdmin() {
         clearInterval(timerInterval);
+        clearInterval(scheduleWatchInterval);
+        timerInterval = null;
         ["step1Card", "step2Card", "step3Card", "adminDashboardCard"].forEach(id => document.getElementById(id).classList.add("hidden"));
         document.getElementById("adminAuthCard").classList.remove("hidden");
         document.getElementById("adminPassInput").value = "";
@@ -617,18 +733,20 @@
           document.getElementById("adminSubjectSelect").value = c.subject;
           document.getElementById("adminQuestionCount").value = c.count;
           document.getElementById("adminExamMinutes").value = c.minutes;
+          document.getElementById("adminStartTime").value = c.startTime || "";
+          document.getElementById("adminEndTime").value = c.endTime || "";
           document.getElementById("adminAuthCard").classList.add("hidden");
           document.getElementById("adminDashboardCard").classList.remove("hidden");
           updateWhatsappBox();
           renderAdminPreview();
           renderTable();
         } else {
-          document.getElementById("adminAuthMsg").textContent = "Invalid PIN or Password.";
+          document.getElementById("adminAuthMsg").textContent = "गलत पिन या पासवर्ड।";
           document.getElementById("adminAuthMsg").className = "status err";
         }
       };
 
-      ["adminSubjectSelect", "adminQuestionCount", "adminExamMinutes", "cfgStudentUserId", "cfgStudentUserPass", "cfgAdminName"].forEach(id => {
+      ["adminSubjectSelect", "adminQuestionCount", "adminExamMinutes", "adminStartTime", "adminEndTime", "cfgStudentUserId", "cfgStudentUserPass", "cfgAdminName"].forEach(id => {
         const el = document.getElementById(id);
         if (el) {
           el.addEventListener("input", updateWhatsappBox);
@@ -639,77 +757,4 @@
       document.getElementById("copyWhatsappBtn").onclick = async () => {
         const ta = document.getElementById("whatsappShareText");
         const msg = document.getElementById("whatsappCopyMsg");
-        try {
-          await navigator.clipboard.writeText(ta.value);
-          msg.textContent = "WhatsApp message copied!";
-          msg.className = "status ok";
-        } catch {
-          ta.select();
-          document.execCommand("copy");
-          msg.textContent = "WhatsApp message copied!";
-          msg.className = "status ok";
-        }
-      };
-
-      document.getElementById("generatePreviewSetBtn").onclick = () => {
-        buildRandomSet(getCfg());
-      };
-
-      document.getElementById("saveAdminCredBtn").onclick = () => {
-        const c = getCfg();
-        saveCfg({
-          ...c,
-          adminName: document.getElementById("cfgAdminName").value.trim() || c.adminName,
-          adminPassword: document.getElementById("cfgAdminPassword").value.trim() || c.adminPassword,
-          adminPin: document.getElementById("cfgAdminPin").value.trim() || c.adminPin,
-          studentUserId: document.getElementById("cfgStudentUserId").value.trim(),
-          studentUserPass: document.getElementById("cfgStudentUserPass").value.trim()
-        });
-        document.getElementById("adminCredMsg").textContent = "Credentials saved & WhatsApp box updated.";
-        document.getElementById("adminCredMsg").className = "status ok";
-      };
-
-      document.getElementById("saveExamCfgBtn").onclick = () => {
-        const c = getCfg();
-        const nextCfg = {
-          ...c,
-          subject: document.getElementById("adminSubjectSelect").value,
-          count: Math.min(100, Math.max(1, Number(document.getElementById("adminQuestionCount").value) || 50)),
-          minutes: Math.min(180, Math.max(1, Number(document.getElementById("adminExamMinutes").value) || 30))
-        };
-        saveCfg(nextCfg);
-        buildRandomSet(nextCfg);
-        document.getElementById("configMsg").textContent = `Saved! Time: ${nextCfg.minutes} min, Questions: ${nextCfg.count}`;
-        document.getElementById("configMsg").className = "status ok";
-      };
-
-      function renderTable() {
-        const recs = getRecs();
-        document.getElementById("adminTableBody").innerHTML = recs.length
-          ? recs.map((r, i) => `<tr><td>${i+1}</td><td>${esc(r.name)}</td><td>${esc(r.father||"-")}</td><td>${esc(r.userId||"-")}</td><td>${esc(r.subject||"-")}</td><td>${r.correct}</td><td>${r.wrong}</td><td>${r.score}</td><td>${esc(r.duration||"-")}</td><td>${esc(r.submitTime||"-")}</td></tr>`).join("")
-          : '<tr><td colspan="10">No records found.</td></tr>';
-      }
-
-      document.getElementById("downloadCsvBtn").onclick = () => {
-        const recs = getRecs();
-        const rows = [["#", "Name", "Father", "User ID", "Mode", "Correct", "Wrong", "Score", "Duration", "Submit"]];
-        recs.forEach((r, i) => rows.push([i+1, r.name, r.father||"-", r.userId||"-", r.subject||"-", r.correct, r.wrong, r.score, r.duration||"-", r.submitTime||"-"]));
-        const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8;" }));
-        a.download = "pj_joshi_exam_results.csv";
-        a.click();
-      };
-
-      document.getElementById("clearRecordsBtn").onclick = () => { localStorage.removeItem(RECORDS_KEY); renderTable(); };
-      document.querySelectorAll(".mode-btn[data-theme]").forEach(btn => {
-        btn.onclick = () => setTheme(btn.dataset.theme, btn);
-      });
-
-      refreshUI();
-      updateWhatsappBox();
-      renderAdminPreview();
-    })();
-  </script>
-</body>
-</html>
+     
