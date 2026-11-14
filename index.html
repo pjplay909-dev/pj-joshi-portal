@@ -90,7 +90,7 @@
         <p class="subtitle" id="step1ScheduleStatus" style="margin-top:6px; font-weight:700;"></p>
       </div>
       <div class="form-group"><label>यूजर आईडी (User ID) *</label><input type="text" id="studentUserId" placeholder="अपनी User ID दर्ज करें" /></div>
-      <div class="form-group"><label id="studentPassLabel">पासवर्ड (Password)</label><input type="password" id="studentUserPass" placeholder="अपना Password दर्ज करें" /></div>
+      <div class="form-group"><label id="studentPassLabel">पासवर्ड (Password) *</label><input type="password" id="studentUserPass" placeholder="अपना Password दर्ज करें" /></div>
       <button type="button" class="btn" id="step1NextBtn">आगे बढ़ें</button>
       <div id="step1Msg" class="status"></div>
     </div>
@@ -117,7 +117,7 @@
           <p class="subtitle" id="step3EndTimeLine"></p>
         </div>
         <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-          <span class="timer-badge" id="examTimerDisplay">बाकी समय: 30:00</span>
+          <span class="timer-badge" id="examTimerDisplay">बाकी समय: 15:00</span>
           <span class="badge" id="examBadge">रैंडम परीक्षा</span>
         </div>
       </div>
@@ -158,25 +158,25 @@
           <div><label>एडमिन पासवर्ड</label><input type="text" id="cfgAdminPassword" /></div>
           <div><label>एडमिन पिन</label><input type="text" id="cfgAdminPin" /></div>
           <div><label>तय User ID</label><input type="text" id="cfgStudentUserId" /></div>
-          <div><label>तय User Password</label><input type="text" id="cfgStudentUserPass" /></div>
+          <div><label>तय User Password *</label><input type="text" id="cfgStudentUserPass" /></div>
         </div>
         <button type="button" class="btn" id="saveAdminCredBtn">क्रेडेंशियल सेव करें</button>
         <div id="adminCredMsg" class="status"></div>
       </div>
 
       <div class="section-box">
-        <h3>⚙️ परीक्षा सेटिंग्स (50 GK + 50 Computer, अवधि और शुरू/समाप्त समय)</h3>
+        <h3>⚙️ परीक्षा सेटिंग्स (प्रश्न संख्या, अवधि और शुरू/समाप्त समय)</h3>
         <div class="grid-2" style="margin-top:12px;">
           <div>
             <label>विषय / मोड</label>
             <select id="adminSubjectSelect">
-              <option value="all100">50 GK + 50 Computer (रैंडम)</option>
-              <option value="gk">केवल सामान्य ज्ञान (50 GK)</option>
-              <option value="computer">केवल कंप्यूटर (50 Computer)</option>
+              <option value="all100">GK + Computer (रैंडम मिक्स)</option>
+              <option value="gk">केवल सामान्य ज्ञान (GK)</option>
+              <option value="computer">केवल कंप्यूटर (Computer)</option>
             </select>
           </div>
-          <div><label>कुल प्रश्न (1 से 100)</label><input type="number" id="adminQuestionCount" min="1" max="100" value="50" /></div>
-          <div><label>परीक्षा अवधि (मिनट, 1 से 180)</label><input type="number" id="adminExamMinutes" min="1" max="180" value="30" /></div>
+          <div><label>कुल प्रश्न (1 से 100)</label><input type="number" id="adminQuestionCount" min="1" max="100" value="10" /></div>
+          <div><label>परीक्षा अवधि (मिनट, 1 से 180)</label><input type="number" id="adminExamMinutes" min="1" max="180" value="15" /></div>
           <div><label>परीक्षा शुरू होने का तय समय (Start Time) *</label><input type="time" id="adminStartTime" /></div>
           <div><label>परीक्षा समाप्त होने का तय समय (End Time) *</label><input type="time" id="adminEndTime" /></div>
         </div>
@@ -200,10 +200,10 @@
         </div>
       </div>
     </div>
-                                                                                                                   </div>
-                                                                                                                     <script>
+  </div>
+    <script>
     (function () {
-      const RECORDS_KEY = "pj_portal_rec_6p_v1", CONFIG_KEY = "pj_portal_cfg_6p_v1", QUEUE_KEY = "pj_portal_queue_6p_v1";
+      const RECORDS_KEY = "pj_portal_rec_fix_v2", CONFIG_KEY = "pj_portal_cfg_fix_v2", QUEUE_KEY = "pj_portal_queue_fix_v2";
 
       const GK_POOL = [
         { sub: "GK", q: "भारत की राजधानी क्या है?", options: ["मुंबई", "नई दिल्ली", "कोलकाता", "चेन्नई"], answer: 1 },
@@ -257,7 +257,7 @@
         { sub: "GK", q: "सूरतगढ़ किस जिले में स्थित है?", options: ["बीकानेर", "श्रीगंगानगर", "हनुमानगढ़", "चूरू"], answer: 1 },
         { sub: "GK", q: "भारत की मुद्रा क्या है?", options: ["डॉलर", "रुपया", "येन", "पाउंड"], answer: 1 }
       ];
-                                                                                                                             const COMP_POOL = [
+            const COMP_POOL = [
         { sub: "Computer", q: "CPU का पूरा नाम क्या है?", options: ["Central Processing Unit", "Computer Personal Unit", "Central Print Unit", "Control Program Utility"], answer: 0 },
         { sub: "Computer", q: "HTML का उपयोग किस लिए किया जाता है?", options: ["डेटाबेस", "वेब पेज संरचना", "ऑपरेटिंग सिस्टम", "वीडियो एडिटिंग"], answer: 1 },
         { sub: "Computer", q: "RAM किस प्रकार की मेमोरी है?", options: ["स्थायी", "अस्थायी", "द्वितीयक", "ऑप्टिकल"], answer: 1 },
@@ -310,7 +310,7 @@
         { sub: "Computer", q: "इनमें से Search Engine कौन-सा है?", options: ["Google", "WhatsApp", "Photoshop", "Notepad"], answer: 0 }
       ];
             let sessionId = null, userId = "", student = null, activeQ = [];
-      let timerInterval = null, scheduleWatchInterval = null, remainingSeconds = 1800, examStartTime = 0, examSubmitted = false;
+      let timerInterval = null, scheduleWatchInterval = null, remainingSeconds = 900, examStartTime = 0, examSubmitted = false;
 
       const nowStr = () => new Date().toLocaleString("hi-IN");
       const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
@@ -347,10 +347,28 @@
         return copy;
       }
       function getCfg() {
-        const d = { adminName: "PJ Joshi", adminPassword: "PJ@Admin2026", adminPin: "PJ@Admin2026", studentUserId: "", studentUserPass: "", subject: "all100", count: 50, minutes: 30, startTime: "", endTime: "" };
+        const d = {
+          adminName: "PJ Joshi",
+          adminPassword: "PJ@Admin2026",
+          adminPin: "PJ@Admin2026",
+          studentUserId: "PJUser",
+          studentUserPass: "PJ@User2026",
+          subject: "all100",
+          count: 10,
+          minutes: 15,
+          startTime: "",
+          endTime: ""
+        };
         try {
           const s = JSON.parse(localStorage.getItem(CONFIG_KEY));
-          return s ? { ...d, ...s, count: Math.min(100, Math.max(1, Number(s.count) || 50)), minutes: Math.min(180, Math.max(1, Number(s.minutes) || 30)) } : d;
+          if (!s) return d;
+          return {
+            ...d,
+            ...s,
+            studentUserPass: (s.studentUserPass && String(s.studentUserPass).trim()) ? String(s.studentUserPass).trim() : d.studentUserPass,
+            count: Math.min(100, Math.max(1, Number(s.count) || 10)),
+            minutes: Math.min(180, Math.max(1, Number(s.minutes) || 15))
+          };
         } catch { return d; }
       }
       function saveCfg(n) { localStorage.setItem(CONFIG_KEY, JSON.stringify(n)); refreshUI(); updateWhatsappBox(); }
@@ -367,24 +385,29 @@
         const userIdVal = (document.getElementById("cfgStudentUserId")?.value ?? saved.studentUserId).trim();
         const userPassVal = (document.getElementById("cfgStudentUserPass")?.value ?? saved.studentUserPass).trim();
         const adminVal = (document.getElementById("cfgAdminName")?.value ?? saved.adminName).trim() || saved.adminName;
-        const modeLabel = modeVal === "gk" ? "केवल सामान्य ज्ञान (GK रैंडम)" : modeVal === "computer" ? "केवल कंप्यूटर (Computer रैंडम)" : "50 GK + 50 Computer (रैंडम मिक्स)";
+        const modeLabel = modeVal === "gk" ? "केवल सामान्य ज्ञान (GK रैंडम)" : modeVal === "computer" ? "केवल कंप्यूटर (Computer रैंडम)" : "GK + Computer (रैंडम मिक्स)";
         ta.value = [
           `🎓 *${adminVal} — ऑनलाइन परीक्षा सूचना*`, `━━━━━━━━━━━━━━━━━━`,
           `📚 *विषय / मोड:* ${modeLabel}`, `❓ *कुल प्रश्न:* ${countVal} प्रश्न`,
           `⏱️ *परीक्षा अवधि:* ${minVal} मिनट`, `🟢 *परीक्षा शुरू होने का समय:* ${format12Hour(startVal)}`,
-          `🔴 *परीक्षा समाप्त होने का समय:* ${format12Hour(endVal)}`, `👤 *User ID:* ${userIdVal || "कोई भी User ID दर्ज करें"}`,
-          `🔑 *Password:* ${userPassVal || "आवश्यक नहीं (वैकल्पिक)"}`,
+          `🔴 *परीक्षा समाप्त होने का समय:* ${format12Hour(endVal)}`, `👤 *User ID:* ${userIdVal || "PJUser"}`,
+          `🔑 *Password:* ${userPassVal || "PJ@User2026"}`,
           `📝 *निर्देश:* तय समय शुरू होने पर User ID व Password डालें, फिर नाम व पिता का नाम भरकर परीक्षा शुरू करें।`,
           `🔗 *पोर्टल लिंक:* ${window.location.href}`
         ].join("\n");
       }
 
       function buildRandomSet(cfg) {
-        const totalCount = Math.min(100, Math.max(1, Number(cfg.count) || 50));
-        let pool = cfg.subject === "gk" ? shuffle(GK_POOL) : cfg.subject === "computer" ? shuffle(COMP_POOL) : (() => {
+        const totalCount = Math.min(100, Math.max(1, Number(cfg.count) || 10));
+        let pool = [];
+        if (cfg.subject === "gk") {
+          pool = shuffle(GK_POOL);
+        } else if (cfg.subject === "computer") {
+          pool = shuffle(COMP_POOL);
+        } else {
           const half = Math.ceil(totalCount / 2);
-          return shuffle(shuffle(GK_POOL).slice(0, half).concat(shuffle(COMP_POOL).slice(0, totalCount - half)));
-        })();
+          pool = shuffle(shuffle(GK_POOL).slice(0, half).concat(shuffle(COMP_POOL).slice(0, totalCount - half)));
+        }
         const selected = pool.slice(0, totalCount).map((item, idx) => ({ ...item, q: `${idx + 1}. [${item.sub}] ${item.q}` }));
         localStorage.setItem(QUEUE_KEY, JSON.stringify({ generatedAt: nowStr(), mode: cfg.subject, count: selected.length, minutes: cfg.minutes, startTime: cfg.startTime, endTime: cfg.endTime, questions: selected }));
         renderAdminPreview(); return selected;
@@ -402,10 +425,10 @@
 
       function refreshUI() {
         const c = getCfg(), sched = getScheduleState(c);
-        const lbl = c.subject === "gk" ? "केवल GK" : c.subject === "computer" ? "केवल Computer" : "50 GK + 50 Computer";
+        const lbl = c.subject === "gk" ? "केवल GK" : c.subject === "computer" ? "केवल Computer" : "GK + Computer";
         document.getElementById("studentExamInfo").textContent = `परीक्षा: ${lbl} (${c.count} प्रश्न | ${c.minutes} मिनट)`;
         document.getElementById("activeAdminLabel").textContent = `एडमिन: ${c.adminName}`;
-        document.getElementById("studentPassLabel").textContent = c.studentUserPass ? "पासवर्ड (Password) *" : "पासवर्ड (Password - वैकल्पिक)";
+        document.getElementById("studentPassLabel").textContent = "पासवर्ड (Password) *";
         const startTxt = c.startTime ? format12Hour(c.startTime) : "तय नहीं", endTxt = c.endTime ? format12Hour(c.endTime) : "तय नहीं";
         document.getElementById("globalScheduleBanner").textContent = `🕒 शुरू समय: ${startTxt} | 🏁 समाप्त समय: ${endTxt} — ${sched.statusText}`;
         document.getElementById("step1ScheduleStatus").textContent = sched.statusText;
@@ -444,10 +467,11 @@
       document.getElementById("step1NextBtn").onclick = () => {
         const c = getCfg(), sched = getScheduleState(c), msg = document.getElementById("step1Msg");
         if (!sched.allowed) { msg.textContent = sched.statusText; msg.className = "status err"; return; }
-        const id = document.getElementById("studentUserId").value.trim(), pw = document.getElementById("studentUserPass").value;
+        const id = document.getElementById("studentUserId").value.trim(), pw = document.getElementById("studentUserPass").value.trim();
         if (!id) { msg.textContent = "कृपया User ID दर्ज करें।"; msg.className = "status err"; return; }
-        if (c.studentUserId && id !== c.studentUserId) { msg.textContent = "गलत User ID।"; msg.className = "status err"; return; }
-        if (c.studentUserPass && pw !== c.studentUserPass) { msg.textContent = "गलत Password।"; msg.className = "status err"; return; }
+        if (!pw) { msg.textContent = "कृपया Password दर्ज करें।"; msg.className = "status err"; return; }
+        if (c.studentUserId && id !== c.studentUserId) { msg.textContent = "गलत User ID!"; msg.className = "status err"; return; }
+        if (pw !== c.studentUserPass) { msg.textContent = "गलत Password! सही Password दर्ज करें।"; msg.className = "status err"; return; }
         userId = id; msg.textContent = "";
         document.getElementById("step1Card").classList.add("hidden");
         document.getElementById("step2Card").classList.remove("hidden");
@@ -460,7 +484,7 @@
         const name = document.getElementById("studentName").value.trim(), father = document.getElementById("studentFatherName").value.trim();
         if (!name || !father) { msg.textContent = "कृपया छात्र का नाम और पिता का नाम दोनों भरें।"; msg.className = "status err"; return; }
         activeQ = buildRandomSet(c);
-        const subLbl = c.subject === "gk" ? "GK रैंडम" : c.subject === "computer" ? "Computer रैंडम" : "50 GK + 50 Computer";
+        const subLbl = c.subject === "gk" ? "GK रैंडम" : c.subject === "computer" ? "Computer रैंडम" : "GK + Computer";
         student = { name, father, userId, subject: subLbl }; sessionId = String(Date.now());
         const recs = getRecs();
         recs.unshift({ id: sessionId, name, father, userId, subject: subLbl, correct: "-", wrong: "-", score: "चल रही है", duration: "-", submitTime: "-" });
@@ -540,7 +564,9 @@
       document.getElementById("generatePreviewSetBtn").onclick = () => buildRandomSet(getCfg());
       document.getElementById("saveAdminCredBtn").onclick = () => {
         const c = getCfg();
-        saveCfg({ ...c, adminName: document.getElementById("cfgAdminName").value.trim() || c.adminName, adminPassword: document.getElementById("cfgAdminPassword").value.trim() || c.adminPassword, adminPin: document.getElementById("cfgAdminPin").value.trim() || c.adminPin, studentUserId: document.getElementById("cfgStudentUserId").value.trim(), studentUserPass: document.getElementById("cfgStudentUserPass").value.trim() });
+        const newPass = document.getElementById("cfgStudentUserPass").value.trim() || c.studentUserPass;
+        saveCfg({ ...c, adminName: document.getElementById("cfgAdminName").value.trim() || c.adminName, adminPassword: document.getElementById("cfgAdminPassword").value.trim() || c.adminPassword, adminPin: document.getElementById("cfgAdminPin").value.trim() || c.adminPin, studentUserId: document.getElementById("cfgStudentUserId").value.trim() || "PJUser", studentUserPass: newPass });
+        document.getElementById("cfgStudentUserPass").value = newPass;
         document.getElementById("adminCredMsg").textContent = "क्रेडेंशियल सेव हो गए और WhatsApp बॉक्स अपडेट हो गया।";
         document.getElementById("adminCredMsg").className = "status ok";
       };
@@ -548,12 +574,12 @@
       document.getElementById("saveExamCfgBtn").onclick = () => {
         const c = getCfg(), stVal = document.getElementById("adminStartTime").value, enVal = document.getElementById("adminEndTime").value, msgEl = document.getElementById("configMsg");
         if (stVal && enVal && stVal >= enVal) { msgEl.textContent = "समाप्ति समय (End Time), शुरू समय (Start Time) के बाद होना चाहिए।"; msgEl.className = "status err"; return; }
-        const nextCfg = { ...c, subject: document.getElementById("adminSubjectSelect").value, count: Math.min(100, Math.max(1, Number(document.getElementById("adminQuestionCount").value) || 50)), minutes: Math.min(180, Math.max(1, Number(document.getElementById("adminExamMinutes").value) || 30)), startTime: stVal, endTime: enVal };
+        const nextCfg = { ...c, subject: document.getElementById("adminSubjectSelect").value, count: Math.min(100, Math.max(1, Number(document.getElementById("adminQuestionCount").value) || 10)), minutes: Math.min(180, Math.max(1, Number(document.getElementById("adminExamMinutes").value) || 15)), startTime: stVal, endTime: enVal };
         saveCfg(nextCfg); buildRandomSet(nextCfg);
-        msgEl.textContent = `सेटिंग्स सेव हो गईं! शुरू: ${format12Hour(stVal)} | समाप्त: ${format12Hour(enVal)}`; msgEl.className = "status ok";
+        msgEl.textContent = `सेटिंग्स सेव हो गईं! प्रश्न: ${nextCfg.count} | शुरू: ${format12Hour(stVal)} | समाप्त: ${format12Hour(enVal)}`; msgEl.className = "status ok";
       };
 
-      function renderTable() {
+      functi renderTable() {
         const recs = getRecs();
         document.getElementById("adminTableBody").innerHTML = recs.length ? recs.map((r, i) => `<tr><td>${i+1}</td><td>${esc(r.name)}</td><td>${esc(r.father||"-")}</td><td>${esc(r.userId||"-")}</td><td>${esc(r.subject||"-")}</td><td>${r.correct}</td><td>${r.wrong}</td><td>${r.score}</td><td>${esc(r.duration||"-")}</td><td>${esc(r.submitTime||"-")}</td></tr>`).join("") : '<tr><td colspan="10">कोई रिकॉर्ड नहीं है।</td></tr>';
       }
