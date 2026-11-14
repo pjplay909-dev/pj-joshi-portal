@@ -91,21 +91,20 @@
     }
 
     .subtle-car-btn {
-      border: none;
-      background: transparent;
-      color: var(--muted);
-      opacity: 0.55;
-      font-size: 24px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      opacity: 0.8;
+      font-size: 22px;
       line-height: 1;
-      padding: 6px;
-      border-radius: 8px;
+      padding: 8px 10px;
+      border-radius: 10px;
       cursor: pointer;
-      transition: opacity 0.2s, transform 0.15s;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .subtle-car-btn:hover {
-      opacity: 1;
-      transform: scale(1.08);
+    .subtle-car-btn:active {
+      transform: scale(0.95);
     }
 
     h1, h2, h3, h4, p {
@@ -134,9 +133,33 @@
       cursor: pointer;
       font-size: 13px;
       font-weight: 600;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .mode-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .step-indicator {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+      justify-content: center;
+    }
+
+    .step-pill {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .step-pill.active {
       background: var(--primary);
       color: #fff;
       border-color: var(--primary);
@@ -275,58 +298,89 @@
 
         <button
           type="button"
+          id="carAdminBtn"
           class="subtle-car-btn"
-          onclick="openAdminPrompt()"
           title="Admin Access"
+          aria-label="Admin Access"
         >🚗</button>
       </div>
 
       <div class="modes">
-        <button type="button" class="mode-btn active" onclick="setTheme('clear', this)">* क्लियर मोड</button>
-        <button type="button" class="mode-btn" onclick="setTheme('dark', this)">☾ डार्क मोड</button>
-        <button type="button" class="mode-btn" onclick="setTheme('green', this)">✿ ग्रीन मोड</button>
+        <button type="button" class="mode-btn active" data-theme="clear">क्लियर मोड</button>
+        <button type="button" class="mode-btn" data-theme="dark">डार्क मोड</button>
+        <button type="button" class="mode-btn" data-theme="green">ग्रीन मोड</button>
       </div>
     </div>
 
-    <!-- Student Login -->
-    <div class="card" id="studentLoginCard">
+    <!-- STEP 1: User ID & User Password -->
+    <div class="card" id="step1Card">
       <div style="text-align:center;">
         <div class="logo-box" style="margin:0 auto 10px;">PJ</div>
-        <h2>विद्यार्थी लॉगिन</h2>
-        <p class="subtitle" style="margin-top:6px;">
-          परीक्षा शुरू करने के लिए अपना नाम, पिता का नाम और यूज़र आईडी अनिवार्य रूप से भरें।
+        <h2>चरण 1: यूज़र लॉगिन</h2>
+        <div class="step-indicator">
+          <span class="step-pill active">1. यूज़र आईडी / पासवर्ड</span>
+          <span class="step-pill">2. नाम व पिता का नाम</span>
+          <span class="step-pill">3. प्रश्न</span>
+        </div>
+        <p class="subtitle" style="margin-top:8px;">
+          पहले अपनी यूज़र आईडी और यूज़र पासवर्ड दर्ज करें।
         </p>
         <p class="subtitle" id="studentExamInfo" style="margin-top:6px; font-weight:600;"></p>
       </div>
 
       <div class="form-group">
-        <label>अपना नाम (Full Name) *</label>
-        <input type="text" id="studentName" placeholder="अपना पूरा नाम दर्ज करें" required />
-      </div>
-
-      <div class="form-group">
-        <label>पिता का नाम (Father's Name) *</label>
-        <input type="text" id="studentFatherName" placeholder="अपने पिता का नाम दर्ज करें" required />
-      </div>
-
-      <div class="form-group">
         <label>यूज़र आईडी (User ID) *</label>
-        <input type="text" id="studentUserId" placeholder="अपनी यूज़र आईडी दर्ज करें" required />
+        <input type="text" id="studentUserId" placeholder="अपनी यूज़र आईडी दर्ज करें" />
       </div>
 
-      <div class="form-group" id="studentPassGroup">
+      <div class="form-group">
         <label id="studentPassLabel">यूज़र पासवर्ड (User Password)</label>
         <input type="password" id="studentUserPass" placeholder="यूज़र पासवर्ड दर्ज करें" />
       </div>
 
-      <button type="button" class="btn" onclick="startExam()">परीक्षा शुरू करें</button>
-      <div id="loginMsg" class="status"></div>
+      <button type="button" class="btn" id="step1NextBtn">आगे बढ़ें (Next)</button>
+      <div id="step1Msg" class="status"></div>
     </div>
 
-    <!-- Exam Area -->
-    <div class="card hidden" id="examCard">
+    <!-- STEP 2: Full Name & Father's Name -->
+    <div class="card hidden" id="step2Card">
+      <div style="text-align:center;">
+        <div class="logo-box" style="margin:0 auto 10px;">PJ</div>
+        <h2>चरण 2: विद्यार्थी विवरण</h2>
+        <div class="step-indicator">
+          <span class="step-pill">1. यूज़र आईडी / पासवर्ड</span>
+          <span class="step-pill active">2. नाम व पिता का नाम</span>
+          <span class="step-pill">3. प्रश्न</span>
+        </div>
+        <p class="subtitle" style="margin-top:8px;">
+          अपना पूरा नाम और पिता का नाम अनिवार्य रूप से भरें।
+        </p>
+        <p class="subtitle" id="step2UserBadge" style="margin-top:6px; font-weight:600;"></p>
+      </div>
+
+      <div class="form-group">
+        <label>अपना नाम (Full Name) *</label>
+        <input type="text" id="studentName" placeholder="अपना पूरा नाम दर्ज करें" />
+      </div>
+
+      <div class="form-group">
+        <label>पिता का नाम (Father's Name) *</label>
+        <input type="text" id="studentFatherName" placeholder="अपने पिता का नाम दर्ज करें" />
+      </div>
+
+      <button type="button" class="btn" id="step2NextBtn">परीक्षा शुरू करें (Questions)</button>
+      <div id="step2Msg" class="status"></div>
+    </div>
+
+    <!-- STEP 3: Questions Exam Area -->
+    <div class="card hidden" id="step3Card">
       <div class="top-bar">
         <div>
+          <div class="step-indicator" style="justify-content:flex-start; margin-top:0; margin-bottom:8px;">
+            <span class="step-pill">1. यूज़र आईडी / पासवर्ड</span>
+            <span class="step-pill">2. नाम व पिता का नाम</span>
+            <span class="step-pill active">3. प्रश्न</span>
+          </div>
           <h2 id="welcomeStudent"></h2>
           <p class="subtitle" id="studentMetaLine"></p>
           <p class="subtitle" id="examSubtitle">अभ्यास परीक्षा — सभी प्रश्नों के उत्तर दें</p>
@@ -336,7 +390,7 @@
 
       <div id="questionsContainer"></div>
 
-      <button type="button" class="btn" onclick="submitExam()">परीक्षा सबमिट करें</button>
+      <button type="button" class="btn" id="submitExamBtn">परीक्षा सबमिट करें</button>
       <div id="examResult" class="status"></div>
     </div>
 
@@ -344,7 +398,7 @@
     <div class="card hidden" id="adminAuthCard">
       <div class="top-bar">
         <h2>🔒 एडमिन लॉगिन</h2>
-        <button type="button" class="mode-btn" onclick="closeAdmin()">वापस</button>
+        <button type="button" class="mode-btn close-admin-btn">वापस</button>
       </div>
       <p class="subtitle" style="margin-top:6px;">
         एडमिन डैशबोर्ड खोलने के लिए एडमिन पिन या एडमिन पासवर्ड दर्ज करें।
@@ -354,7 +408,7 @@
         <label>एडमिन पिन / पासवर्ड</label>
         <input type="password" id="adminPassInput" placeholder="एडमिन पिन या पासवर्ड दर्ज करें" />
       </div>
-      <button type="button" class="btn" onclick="verifyAdmin()">लॉगिन करें</button>
+      <button type="button" class="btn" id="verifyAdminBtn">लॉगिन करें</button>
       <div id="adminAuthMsg" class="status"></div>
     </div>
 
@@ -362,7 +416,7 @@
     <div class="card hidden" id="adminDashboardCard">
       <div class="top-bar">
         <h2>📊 एडमिन कंट्रोल पैनल</h2>
-        <button type="button" class="mode-btn" onclick="closeAdmin()">बंद करें</button>
+        <button type="button" class="mode-btn close-admin-btn">बंद करें</button>
       </div>
       <p class="subtitle" style="margin-top:6px;">
         यहाँ से एडमिन प्रोफाइल, यूज़र आईडी/पासवर्ड, एडमिन पिन, परीक्षा सेटिंग और छात्रों का पूरा हिसाब नियंत्रित करें।
@@ -385,7 +439,7 @@
             <input type="text" id="cfgAdminPin" placeholder="नया एडमिन पिन" />
           </div>
           <div>
-            <label>स्टूडेंट यूज़र आईडी (अनिवार्य नियम)</label>
+            <label>स्टूडेंट यूज़र आईडी</label>
             <input type="text" id="cfgStudentUserId" placeholder="खाली = कोई भी ID | या तय ID लिखें" />
           </div>
           <div>
@@ -393,7 +447,7 @@
             <input type="text" id="cfgStudentUserPass" placeholder="खाली = बिना पासवर्ड | या पासवर्ड सेट करें" />
           </div>
         </div>
-        <button type="button" class="btn" onclick="saveAdminCredentials()">एडमिन व यूज़र सेटिंग सेव करें</button>
+        <button type="button" class="btn" id="saveAdminCredBtn">एडमिन व यूज़र सेटिंग सेव करें</button>
         <div id="adminCredMsg" class="status"></div>
       </div>
 
@@ -413,7 +467,7 @@
             <input type="number" id="adminQuestionCount" min="1" max="50" value="10" />
           </div>
         </div>
-        <button type="button" class="btn" onclick="saveExamConfig()">परीक्षा सेटिंग सेव करें</button>
+        <button type="button" class="btn" id="saveExamCfgBtn">परीक्षा सेटिंग सेव करें</button>
         <div id="configMsg" class="status"></div>
 
         <div style="margin-top:16px; padding-top:14px; border-top:1px solid var(--border);">
@@ -427,12 +481,12 @@
               </select>
             </div>
             <div>
-              <label>सही विकल्प (0=A, 1=B, 2=C, 3=D)</label>
+              <label>सही विकल्प</label>
               <select id="newQAnswer">
-                <option value="0">विकल्प A (0)</option>
-                <option value="1">विकल्प B (1)</option>
-                <option value="2">विकल्प C (2)</option>
-                <option value="3">विकल्प D (3)</option>
+                <option value="0">विकल्प A</option>
+                <option value="1">विकल्प B</option>
+                <option value="2">विकल्प C</option>
+                <option value="3">विकल्प D</option>
               </select>
             </div>
           </div>
@@ -446,7 +500,7 @@
             <input type="text" id="newQOpt2" placeholder="विकल्प C" />
             <input type="text" id="newQOpt3" placeholder="विकल्प D" />
           </div>
-          <button type="button" class="btn" onclick="addCustomQuestion()">प्रश्न बैंक में जोड़ें</button>
+          <button type="button" class="btn" id="addCustomQBtn">प्रश्न बैंक में जोड़ें</button>
           <div id="addQMsg" class="status"></div>
         </div>
       </div>
@@ -456,8 +510,8 @@
         <div class="top-bar">
           <h3>📋 छात्रों का पूरा हिसाब (Student Records)</h3>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button type="button" class="mode-btn active" onclick="downloadCSV()">CSV डाउनलोड करें</button>
-            <button type="button" class="mode-btn" onclick="clearAllStudentData()">डेटा साफ़ करें</button>
+            <button type="button" class="mode-btn active" id="downloadCsvBtn">CSV डाउनलोड करें</button>
+            <button type="button" class="mode-btn" id="clearRecordsBtn">डेटा साफ़ करें</button>
           </div>
         </div>
 
@@ -485,161 +539,103 @@
   </div>
 
   <script>
-    const RECORDS_KEY = "pj_joshi_portal_records_v4";
-    const CONFIG_KEY = "pj_joshi_portal_config_v2";
-    const CUSTOM_Q_KEY = "pj_joshi_portal_custom_q_v1";
+    (function () {
+      const RECORDS_KEY = "pj_joshi_portal_records_v6";
+      const CONFIG_KEY = "pj_joshi_portal_config_v4";
+      const CUSTOM_Q_KEY = "pj_joshi_portal_custom_q_v3";
 
-    const DEFAULT_GK = [
-      { q: "1. भारत की राजधानी क्या है?", options: ["मुंबई", "नई दिल्ली", "कोलकाता", "चेन्नई"], answer: 1 },
-      { q: "2. राजस्थान का सबसे बड़ा जिला कौन-सा है?", options: ["जयपुर", "जोधपुर", "जैसलमेर", "बीकानेर"], answer: 2 },
-      { q: "3. भारत का राष्ट्रीय पशु कौन-सा है?", options: ["शेर", "बाघ", "हाथी", "चीता"], answer: 1 },
-      { q: "4. संविधान सभा के प्रारूप समिति के अध्यक्ष कौन थे?", options: ["डॉ. राजेंद्र प्रसाद", "डॉ. बी. आर. अम्बेडकर", "जवाहरलाल नेहरू", "सरदार पटेल"], answer: 1 },
-      { q: "5. पृथ्वी पर सबसे बड़ा महासागर कौन-सा है?", options: ["अटलांटिक महासागर", "हिंद महासागर", "प्रशांत महासागर", "आर्कटिक महासागर"], answer: 2 }
-    ];
+      const DEFAULT_GK = [
+        { q: "1. भारत की राजधानी क्या है?", options: ["मुंबई", "नई दिल्ली", "कोलकाता", "चेन्नई"], answer: 1 },
+        { q: "2. राजस्थान का सबसे बड़ा जिला कौन-सा है?", options: ["जयपुर", "जोधपुर", "जैसलमेर", "बीकानेर"], answer: 2 },
+        { q: "3. भारत का राष्ट्रीय पशु कौन-सा है?", options: ["शेर", "बाघ", "हाथी", "चीता"], answer: 1 },
+        { q: "4. संविधान सभा के प्रारूप समिति के अध्यक्ष कौन थे?", options: ["डॉ. राजेंद्र प्रसाद", "डॉ. बी. आर. अम्बेडकर", "जवाहरलाल नेहरू", "सरदार पटेल"], answer: 1 },
+        { q: "5. पृथ्वी पर सबसे बड़ा महासागर कौन-सा है?", options: ["अटलांटिक महासागर", "हिंद महासागर", "प्रशांत महासागर", "आर्कटिक महासागर"], answer: 2 }
+      ];
 
-    const DEFAULT_COMPUTER = [
-      { q: "1. CPU का पूरा नाम क्या है?", options: ["Central Processing Unit", "Computer Personal Unit", "Central Print Unit", "Control Program Utility"], answer: 0 },
-      { q: "2. HTML का उपयोग किस लिए किया जाता है?", options: ["डेटाबेस बनाने के लिए", "वेब पेज की संरचना बनाने के लिए", "ऑपरेटिंग सिस्टम बनाने के लिए", "वीडियो एडिटिंग के लिए"], answer: 1 },
-      { q: "3. RAM किस प्रकार की मेमोरी है?", options: ["Permanent", "Temporary (Volatile)", "Secondary", "Optical"], answer: 1 },
-      { q: "4. MS Excel में फ़ॉर्मूला किस चिह्न से शुरू होता है?", options: ["+", "=", "@", "#"], answer: 1 },
-      { q: "5. IP का पूरा नाम क्या है?", options: ["Internet Protocol", "Internal Program", "Input Process", "Internet Provider"], answer: 0 }
-    ];
+      const DEFAULT_COMPUTER = [
+        { q: "1. CPU का पूरा नाम क्या है?", options: ["Central Processing Unit", "Computer Personal Unit", "Central Print Unit", "Control Program Utility"], answer: 0 },
+        { q: "2. HTML का उपयोग किस लिए किया जाता है?", options: ["डेटाबेस बनाने के लिए", "वेब पेज की संरचना बनाने के लिए", "ऑपरेटिंग सिस्टम बनाने के लिए", "वीडियो एडिटिंग के लिए"], answer: 1 },
+        { q: "3. RAM किस प्रकार की मेमोरी है?", options: ["Permanent", "Temporary (Volatile)", "Secondary", "Optical"], answer: 1 },
+        { q: "4. MS Excel में फ़ॉर्मूला किस चिह्न से शुरू होता है?", options: ["+", "=", "@", "#"], answer: 1 },
+        { q: "5. IP का पूरा नाम क्या है?", options: ["Internet Protocol", "Internal Program", "Input Process", "Internet Provider"], answer: 0 }
+      ];
 
-    function buildFullBank(baseList, label) {
-      const copy = baseList.map(item => ({ ...item, options: [...item.options] }));
-      while (copy.length < 50) {
-        const n = copy.length + 1;
-        copy.push({
-          q: `${n}. ${label} प्रश्न #${n}`,
-          options: ["विकल्प A", "विकल्प B", "विकल्प C", "विकल्प D"],
-          answer: 0
-        });
-      }
-      return copy;
-    }
-
-    const GK_QUESTIONS = buildFullBank(DEFAULT_GK, "सामान्य ज्ञान");
-    const COMPUTER_QUESTIONS = buildFullBank(DEFAULT_COMPUTER, "कंप्यूटर");
-
-    let currentSessionId = null;
-    let currentStudent = null;
-    let activeQuestions = [];
-
-    function nowText() {
-      return new Date().toLocaleString("hi-IN");
-    }
-
-    function getConfig() {
-      const defaults = {
-        adminName: "PJ Joshi",
-        adminPassword: "PJ@Admin2026",
-        adminPin: "PJ@Admin2026",
-        studentUserId: "",
-        studentUserPass: "",
-        subject: "gk",
-        count: 10
-      };
-      try {
-        const saved = JSON.parse(localStorage.getItem(CONFIG_KEY) || "null");
-        if (!saved) return defaults;
-        return {
-          adminName: saved.adminName || defaults.adminName,
-          adminPassword: saved.adminPassword || defaults.adminPassword,
-          adminPin: saved.adminPin || defaults.adminPin,
-          studentUserId: saved.studentUserId || "",
-          studentUserPass: saved.studentUserPass || "",
-          subject: saved.subject === "computer" ? "computer" : "gk",
-          count: Math.min(50, Math.max(1, Number(saved.count) || 10))
-        };
-      } catch {
-        return defaults;
-      }
-    }
-
-    function saveConfig(next) {
-      localStorage.setItem(CONFIG_KEY, JSON.stringify(next));
-      refreshUIState();
-    }
-
-    function getCustomQuestions() {
-      try {
-        const parsed = JSON.parse(localStorage.getItem(CUSTOM_Q_KEY) || "null");
-        if (parsed && Array.isArray(parsed.gk) && Array.isArray(parsed.computer)) {
-          return parsed;
+      function buildFullBank(baseList, label) {
+        const copy = baseList.map(item => ({ q: item.q, options: item.options.slice(), answer: item.answer }));
+        while (copy.length < 50) {
+          const n = copy.length + 1;
+          copy.push({
+            q: n + ". " + label + " प्रश्न #" + n,
+            options: ["विकल्प A", "विकल्प B", "विकल्प C", "विकल्प D"],
+            answer: 0
+          });
         }
-      } catch {}
-      return { gk: [], computer: [] };
-    }
-
-    function getBankForSubject(subject) {
-      const custom = getCustomQuestions();
-      const base = subject === "gk" ? GK_QUESTIONS : COMPUTER_QUESTIONS;
-      const extra = subject === "gk" ? custom.gk : custom.computer;
-      return [...extra, ...base];
-    }
-
-    function refreshUIState() {
-      const cfg = getConfig();
-      const subLabel = cfg.subject === "gk" ? "सामान्य ज्ञान (GK)" : "कंप्यूटर (Computer)";
-
-      const infoEl = document.getElementById("studentExamInfo");
-      if (infoEl) {
-        infoEl.textContent = `आज की परीक्षा: ${subLabel} (${cfg.count} प्रश्न)`;
+        return copy;
       }
 
-      const adminLabel = document.getElementById("activeAdminLabel");
-      if (adminLabel) {
-        adminLabel.textContent = `एडमिन: ${cfg.adminName}`;
+      const GK_QUESTIONS = buildFullBank(DEFAULT_GK, "सामान्य ज्ञान");
+      const COMPUTER_QUESTIONS = buildFullBank(DEFAULT_COMPUTER, "कंप्यूटर");
+
+      let currentSessionId = null;
+      let currentUserId = "";
+      let currentStudent = null;
+      let activeQuestions = [];
+
+      function nowText() {
+        return new Date().toLocaleString("hi-IN");
       }
 
-      const passLabel = document.getElementById("studentPassLabel");
-      if (passLabel) {
-        passLabel.textContent = cfg.studentUserPass
-          ? "यूज़र पासवर्ड (User Password) *"
-          : "यूज़र पासवर्ड (User Password — वैकल्पिक)";
-      }
-    }
-
-    function setTheme(mode, btn) {
-      document.body.classList.remove("dark", "green");
-      if (mode === "dark") document.body.classList.add("dark");
-      if (mode === "green") document.body.classList.add("green");
-
-      document.querySelectorAll(".mode-btn").forEach(b => b.classList.remove("active"));
-      if (btn) btn.classList.add("active");
-    }
-
-    function getRecords() {
-      try {
-        return JSON.parse(localStorage.getItem(RECORDS_KEY) || "[]");
-      } catch {
-        return [];
-      }
-    }
-
-    function saveRecords(records) {
-      localStorage.setItem(RECORDS_KEY, JSON.stringify(records));
-    }
-
-    function startExam() {
-      const cfg = getConfig();
-      const name = document.getElementById("studentName").value.trim();
-      const fatherName = document.getElementById("studentFatherName").value.trim();
-      const userId = document.getElementById("studentUserId").value.trim();
-      const userPass = document.getElementById("studentUserPass").value;
-      const msg = document.getElementById("loginMsg");
-
-      if (!name) {
-        msg.textContent = "कृपया अपना नाम अनिवार्य रूप से भरें।";
-        msg.className = "status err";
-        return;
+      function getConfig() {
+        const defaults = {
+          adminName: "PJ Joshi",
+          adminPassword: "PJ@Admin2026",
+          adminPin: "PJ@Admin2026",
+          studentUserId: "",
+          studentUserPass: "",
+          subject: "gk",
+          count: 10
+        };
+        try {
+          const saved = JSON.parse(localStorage.getItem(CONFIG_KEY) || "null");
+          if (!saved) return defaults;
+          return {
+            adminName: saved.adminName || defaults.adminName,
+            adminPassword: saved.adminPassword || defaults.adminPassword,
+            adminPin: saved.adminPin || defaults.adminPin,
+            studentUserId: saved.studentUserId || "",
+            studentUserPass: saved.studentUserPass || "",
+            subject: saved.subject === "computer" ? "computer" : "gk",
+            count: Math.min(50, Math.max(1, Number(saved.count) || 10))
+          };
+        } catch (e) {
+          return defaults;
+        }
       }
 
-      if (!fatherName) {
-        msg.textContent = "कृपया अपने पिता का नाम अनिवार्य रूप से भरें।";
-        msg.className = "status err";
-        return;
+      function saveConfig(next) {
+        localStorage.setItem(CONFIG_KEY, JSON.stringify(next));
+        refreshUIState();
       }
 
-      if (!userId) {
-        msg.
+      function getCustomQuestions() {
+        try {
+          const parsed = JSON.parse(localStorage.getItem(CUSTOM_Q_KEY) || "null");
+          if (parsed && Array.isArray(parsed.gk) && Array.isArray(parsed.computer)) {
+            return parsed;
+          }
+        } catch (e) {}
+        return { gk: [], computer: [] };
+      }
+
+      function getBankForSubject(subject) {
+        const custom = getCustomQuestions();
+        const base = subject === "gk" ? GK_QUESTIONS : COMPUTER_QUESTIONS;
+        const extra = subject === "gk" ? custom.gk : custom.computer;
+        return extra.concat(base);
+      }
+
+      function refreshUIState() {
+        const cfg = getConfig();
+        const subLabel = cfg.subject === "gk" ? "सामान्य ज्ञान (GK)" : "कंप्यूटर (Computer)";
+
+        co
