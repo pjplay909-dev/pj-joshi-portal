@@ -6,266 +6,50 @@
   <title>PJ Joshi - ऑनलाइन परीक्षा पोर्टल</title>
   <style>
     :root {
-      --bg: #f4f7fb;
-      --card: #ffffff;
-      --text: #111827;
-      --muted: #6b7280;
-      --primary: #2563eb;
-      --primary-hover: #1d4ed8;
-      --border: #e5e7eb;
-      --success: #16a34a;
-      --danger: #dc2626;
+      --bg: #f4f7fb; --card: #ffffff; --text: #111827; --muted: #6b7280;
+      --primary: #2563eb; --primary-hover: #1d4ed8; --border: #e5e7eb;
+      --success: #16a34a; --danger: #dc2626;
     }
-
     body.dark {
-      --bg: #0f172a;
-      --card: #1e293b;
-      --text: #f8fafc;
-      --muted: #94a3b8;
-      --primary: #3b82f6;
-      --primary-hover: #2563eb;
-      --border: #334155;
+      --bg: #0f172a; --card: #1e293b; --text: #f8fafc; --muted: #94a3b8;
+      --primary: #3b82f6; --primary-hover: #2563eb; --border: #334155;
     }
-
     body.green {
-      --bg: #ecfdf5;
-      --card: #ffffff;
-      --text: #064e3b;
-      --muted: #047857;
-      --primary: #059669;
-      --primary-hover: #047857;
-      --border: #a7f3d0;
+      --bg: #ecfdf5; --card: #ffffff; --text: #064e3b; --muted: #047857;
+      --primary: #059669; --primary-hover: #047857; --border: #a7f3d0;
     }
-
-    * {
-      box-sizing: border-box;
-      font-family: system-ui, -apple-system, sans-serif;
-    }
-
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      padding: 16px;
-      transition: background 0.2s, color 0.2s;
-    }
-
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-    }
-
-    .header-card, .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 16px;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
-      position: relative;
-    }
-
-    .header-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      position: relative;
-      z-index: 5;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .logo-box {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
-      background: var(--primary);
-      color: #fff;
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-      font-size: 20px;
-      flex-shrink: 0;
-    }
-
-    .subtle-car-btn {
-      border: 1px solid var(--border);
-      background: var(--bg);
-      color: var(--text);
-      font-size: 22px;
-      line-height: 1;
-      padding: 10px 12px;
-      border-radius: 12px;
-      cursor: pointer;
-      position: relative;
-      z-index: 15;
-      pointer-events: auto;
-      touch-action: manipulation;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .subtle-car-btn:active {
-      transform: scale(0.94);
-    }
-
-    h1, h2, h3, h4, p {
-      margin: 0;
-    }
-
-    .subtitle {
-      color: var(--muted);
-      font-size: 14px;
-      margin-top: 4px;
-    }
-
-    .modes {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 16px;
-    }
-
-    .mode-btn {
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--text);
-      padding: 8px 14px;
-      border-radius: 999px;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 600;
-      touch-action: manipulation;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .mode-btn.active {
-      background: var(--primary);
-      color: #fff;
-      border-color: var(--primary);
-    }
-
-    .form-group {
-      margin-top: 14px;
-    }
-
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
-    }
-
-    label {
-      display: block;
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 12px 14px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: var(--bg);
-      color: var(--text);
-      font-size: 15px;
-    }
-
-    .btn {
-      width: 100%;
-      margin-top: 16px;
-      padding: 13px;
-      border: none;
-      border-radius: 12px;
-      background: var(--primary);
-      color: #fff;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      touch-action: manipulation;
-    }
-
-    .btn:hover {
-      background: var(--primary-hover);
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .section-box {
-      margin-top: 16px;
-      padding: 16px;
-      border: 1px solid var(--border);
-      border-radius: 14px;
-    }
-
-    .question-box {
-      margin-top: 16px;
-      padding: 14px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-    }
-
-    .option {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      margin-top: 8px;
-      cursor: pointer;
-    }
-
-    .option input {
-      width: auto;
-    }
-
-    .status {
-      margin-top: 12px;
-      font-size: 14px;
-      font-weight: 600;
-    }
-
+    * { box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+    body { margin: 0; background: var(--bg); color: var(--text); padding: 16px; transition: background 0.2s, color 0.2s; }
+    .container { max-width: 960px; margin: 0 auto; }
+    .header-card, .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 16px; box-shadow: 0 4px 14px rgba(0,0,0,0.04); position: relative; }
+    .header-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; position: relative; z-index: 5; }
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .logo-box { width: 52px; height: 52px; border-radius: 14px; background: var(--primary); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 20px; flex-shrink: 0; }
+    .subtle-car-btn { border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 22px; line-height: 1; padding: 10px 12px; border-radius: 12px; cursor: pointer; position: relative; z-index: 15; pointer-events: auto; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+    .subtle-car-btn:active { transform: scale(0.94); }
+    h1, h2, h3, h4, p { margin: 0; }
+    .subtitle { color: var(--muted); font-size: 14px; margin-top: 4px; }
+    .modes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .mode-btn { border: 1px solid var(--border); background: transparent; color: var(--text); padding: 8px 14px; border-radius: 999px; cursor: pointer; font-size: 13px; font-weight: 600; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+    .mode-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .form-group { margin-top: 14px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+    label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+    input, select { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 15px; }
+    .btn { width: 100%; margin-top: 16px; padding: 13px; border: none; border-radius: 12px; background: var(--primary); color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; touch-action: manipulation; }
+    .btn:hover { background: var(--primary-hover); }
+    .hidden { display: none !important; }
+    .section-box { margin-top: 16px; padding: 16px; border: 1px solid var(--border); border-radius: 14px; }
+    .question-box { margin-top: 16px; padding: 14px; border: 1px solid var(--border); border-radius: 12px; }
+    .option { display: flex; align-items: center; gap: 10px; padding: 10px; border: 1px solid var(--border); border-radius: 10px; margin-top: 8px; cursor: pointer; }
+    .option input { width: auto; }
+    .status { margin-top: 12px; font-size: 14px; font-weight: 600; }
     .status.ok { color: var(--success); }
     .status.err { color: var(--danger); }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 14px;
-      font-size: 13px;
-    }
-
-    th, td {
-      border: 1px solid var(--border);
-      padding: 8px;
-      text-align: left;
-      white-space: nowrap;
-    }
-
-    .top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .badge {
-      font-size: 12px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(37, 99, 235, 0.12);
-      color: var(--primary);
-      font-weight: 700;
-    }
+    table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 13px; }
+    th, td { border: 1px solid var(--border); padding: 8px; text-align: left; white-space: nowrap; }
+    .top-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .badge { font-size: 12px; padding: 4px 10px; border-radius: 999px; background: rgba(37,99,235,0.12); color: var(--primary); font-weight: 700; }
   </style>
 </head>
 <body>
@@ -280,16 +64,8 @@
             <p class="subtitle" id="activeAdminLabel" style="font-size:12px;"></p>
           </div>
         </div>
-
-        <button
-          type="button"
-          id="carAdminBtn"
-          class="subtle-car-btn"
-          title="Admin Access"
-          aria-label="Admin Access"
-        >🚗</button>
+        <button type="button" id="carAdminBtn" class="subtle-car-btn" title="Admin Access">🚗</button>
       </div>
-
       <div class="modes">
         <button type="button" class="mode-btn active" data-theme="clear">क्लियर मोड</button>
         <button type="button" class="mode-btn" data-theme="dark">डार्क मोड</button>
@@ -297,7 +73,6 @@
       </div>
     </div>
 
-    <!-- Step 1 -->
     <div class="card" id="step1Card">
       <div style="text-align:center;">
         <div class="logo-box" style="margin:0 auto 10px;">PJ</div>
@@ -305,19 +80,12 @@
         <p class="subtitle" style="margin-top:8px;">अपनी यूज़र आईडी और पासवर्ड दर्ज करें।</p>
         <p class="subtitle" id="studentExamInfo" style="margin-top:6px; font-weight:600;"></p>
       </div>
-      <div class="form-group">
-        <label>यूज़र आईडी (User ID) *</label>
-        <input type="text" id="studentUserId" placeholder="यूज़र आईडी दर्ज करें" />
-      </div>
-      <div class="form-group">
-        <label id="studentPassLabel">यूज़र पासवर्ड (User Password)</label>
-        <input type="password" id="studentUserPass" placeholder="पासवर्ड दर्ज करें" />
-      </div>
+      <div class="form-group"><label>यूज़र आईडी (User ID) *</label><input type="text" id="studentUserId" placeholder="यूज़र आईडी दर्ज करें" /></div>
+      <div class="form-group"><label id="studentPassLabel">यूज़र पासवर्ड (User Password)</label><input type="password" id="studentUserPass" placeholder="पासवर्ड दर्ज करें" /></div>
       <button type="button" class="btn" id="step1NextBtn">आगे बढ़ें (Next)</button>
       <div id="step1Msg" class="status"></div>
     </div>
 
-    <!-- Step 2 -->
     <div class="card hidden" id="step2Card">
       <div style="text-align:center;">
         <div class="logo-box" style="margin:0 auto 10px;">PJ</div>
@@ -325,19 +93,12 @@
         <p class="subtitle" style="margin-top:8px;">अपना और पिता का नाम भरें।</p>
         <p class="subtitle" id="step2UserBadge" style="margin-top:6px; font-weight:600;"></p>
       </div>
-      <div class="form-group">
-        <label>अपना नाम (Full Name) *</label>
-        <input type="text" id="studentName" placeholder="अपना नाम दर्ज करें" />
-      </div>
-      <div class="form-group">
-        <label>पिता का नाम (Father's Name) *</label>
-        <input type="text" id="studentFatherName" placeholder="पिता का नाम दर्ज करें" />
-      </div>
+      <div class="form-group"><label>अपना नाम (Full Name) *</label><input type="text" id="studentName" placeholder="अपना नाम दर्ज करें" /></div>
+      <div class="form-group"><label>पिता का नाम (Father's Name) *</label><input type="text" id="studentFatherName" placeholder="पिता का नाम दर्ज करें" /></div>
       <button type="button" class="btn" id="step2NextBtn">परीक्षा शुरू करें</button>
       <div id="step2Msg" class="status"></div>
     </div>
 
-    <!-- Step 3 -->
     <div class="card hidden" id="step3Card">
       <div class="top-bar">
         <div>
@@ -352,27 +113,15 @@
       <div id="examResult" class="status"></div>
     </div>
 
-    <!-- Admin Auth -->
     <div class="card hidden" id="adminAuthCard">
-      <div class="top-bar">
-        <h2>🔒 एडमिन लॉगिन</h2>
-        <button type="button" class="mode-btn close-admin-btn">वापस</button>
-      </div>
-      <div class="form-group">
-        <label>एडमिन पिन / पासवर्ड</label>
-        <input type="password" id="adminPassInput" placeholder="पिन या पासवर्ड दर्ज करें" />
-      </div>
+      <div class="top-bar"><h2>🔒 एडमिन लॉगिन</h2><button type="button" class="mode-btn close-admin-btn">वापस</button></div>
+      <div class="form-group"><label>एडमिन पिन / पासवर्ड</label><input type="password" id="adminPassInput" placeholder="पिन या पासवर्ड दर्ज करें" /></div>
       <button type="button" class="btn" id="verifyAdminBtn">लॉगिन करें</button>
       <div id="adminAuthMsg" class="status"></div>
     </div>
 
-    <!-- Admin Dashboard -->
     <div class="card hidden" id="adminDashboardCard">
-      <div class="top-bar">
-        <h2>📊 एडमिन कंट्रोल पैनल</h2>
-        <button type="button" class="mode-btn close-admin-btn">बंद करें</button>
-      </div>
-
+      <div class="top-bar"><h2>📊 एडमिन कंट्रोल पैनल</h2><button type="button" class="mode-btn close-admin-btn">बंद करें</button></div>
       <div class="section-box">
         <h3>🛡️ क्रेडेंशियल सेटिंग्स</h3>
         <div class="grid-2" style="margin-top:12px;">
@@ -385,90 +134,40 @@
         <button type="button" class="btn" id="saveAdminCredBtn">क्रेडेंशियल सेव करें</button>
         <div id="adminCredMsg" class="status"></div>
       </div>
-
       <div class="section-box">
         <h3>⚙️ परीक्षा सेटिंग्स</h3>
         <div class="grid-2" style="margin-top:12px;">
-          <div>
-            <label>डिफ़ॉल्ट विषय</label>
-            <select id="adminSubjectSelect">
-              <option value="gk">सामान्य ज्ञान (20 प्रश्न)</option>
-              <option value="computer">कंप्यूटर (20 प्रश्न)</option>
-            </select>
-          </div>
-          <div>
-            <label>प्रश्न संख्या (1 से 20)</label>
-            <input type="number" id="adminQuestionCount" min="1" max="20" value="10" />
-          </div>
+          <div><label>डिफ़ॉल्ट विषय</label><select id="adminSubjectSelect"><option value="gk">सामान्य ज्ञान (20)</option><option value="computer">कंप्यूटर (20)</option></select></div>
+          <div><label>प्रश्न संख्या (1-20)</label><input type="number" id="adminQuestionCount" min="1" max="20" value="10" /></div>
         </div>
         <button type="button" class="btn" id="saveExamCfgBtn">सेटिंग्स सेव करें</button>
         <div id="configMsg" class="status"></div>
-
         <div style="margin-top:16px; padding-top:14px; border-top:1px solid var(--border);">
           <h4>➕ नया प्रश्न</h4>
-          <div class="grid-2" style="margin-top:10px;">
-            <select id="newQSubject">
-              <option value="gk">सामान्य ज्ञान</option>
-              <option value="computer">कंप्यूटर</option>
-            </select>
-            <select id="newQAnswer">
-              <option value="0">A</option>
-              <option value="1">B</option>
-              <option value="2">C</option>
-              <option value="3">D</option>
-            </select>
+          <div class="grid-2">
+            <select id="newQSubject"><option value="gk">सामान्य ज्ञान</option><option value="computer">कंप्यूटर</option></select>
+            <select id="newQAnswer"><option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option></select>
           </div>
-          <div class="form-group">
-            <input type="text" id="newQText" placeholder="प्रश्न लिखें" />
-          </div>
-          <div class="grid-2" style="margin-top:10px;">
-            <input type="text" id="newQOpt0" placeholder="A" />
-            <input type="text" id="newQOpt1" placeholder="B" />
-            <input type="text" id="newQOpt2" placeholder="C" />
-            <input type="text" id="newQOpt3" placeholder="D" />
-          </div>
+          <div class="form-group"><input type="text" id="newQText" placeholder="प्रश्न लिखें" /></div>
+          <div class="grid-2"><input type="text" id="newQOpt0" placeholder="A" /><input type="text" id="newQOpt1" placeholder="B" /><input type="text" id="newQOpt2" placeholder="C" /><input type="text" id="newQOpt3" placeholder="D" /></div>
           <button type="button" class="btn" id="addCustomQBtn">जोड़ें</button>
           <div id="addQMsg" class="status"></div>
         </div>
       </div>
-
       <div class="section-box">
-        <div class="top-bar">
-          <h3>📋 छात्रों का रिकॉर्ड</h3>
-          <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button type="button" class="mode-btn active" id="downloadCsvBtn">CSV डाउनलोड</button>
-            <button type="button" class="mode-btn" id="clearRecordsBtn">डेटा साफ़</button>
-          </div>
-        </div>
+        <div class="top-bar"><h3>📋 छात्रों का रिकॉर्ड</h3><div><button type="button" class="mode-btn active" id="downloadCsvBtn">CSV डाउनलोड</button><button type="button" class="mode-btn" id="clearRecordsBtn">डेटा साफ़</button></div></div>
         <div style="overflow-x:auto;">
           <table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>नाम</th>
-                <th>पिता</th>
-                <th>ID</th>
-                <th>विषय</th>
-                <th>सही</th>
-                <th>गलत</th>
-                <th>स्कोर</th>
-                <th>लॉगिन</th>
-                <th>सबमिट</th>
-              </tr>
-            </thead>
+            <thead><tr><th>#</th><th>नाम</th><th>पिता</th><th>ID</th><th>विषय</th><th>सही</th><th>गलत</th><th>स्कोर</th><th>लॉगिन</th><th>सबमिट</th></tr></thead>
             <tbody id="adminTableBody"></tbody>
           </table>
         </div>
       </div>
     </div>
   </div>
-
-  <script>
+    <script>
     (function () {
-      const RECORDS_KEY = "pj_joshi_portal_records_v9";
-      const CONFIG_KEY = "pj_joshi_portal_config_v7";
-      const CUSTOM_Q_KEY = "pj_joshi_portal_custom_q_v6";
-
+      const RECORDS_KEY = "pj_joshi_portal_records_v10", CONFIG_KEY = "pj_joshi_portal_config_v8", CUSTOM_Q_KEY = "pj_joshi_portal_custom_q_v7";
       const DEFAULT_GK = [
         { q: "1. भारत की राजधानी क्या है?", options: ["मुंबई", "नई दिल्ली", "कोलकाता", "चेन्नई"], answer: 1 },
         { q: "2. राजस्थान का सबसे बड़ा जिला कौन-सा है?", options: ["जयपुर", "जोधपुर", "जैसलमेर", "बीकानेर"], answer: 2 },
@@ -476,7 +175,6 @@
         { q: "4. संविधान सभा के प्रारूप समिति के अध्यक्ष कौन थे?", options: ["डॉ. राजेंद्र प्रसाद", "डॉ. बी. आर. अम्बेडकर", "जवाहरलाल नेहरू", "सरदार पटेल"], answer: 1 },
         { q: "5. पृथ्वी पर सबसे बड़ा महासागर कौन-सा है?", options: ["अटलांटिक महासागर", "हिंद महासागर", "प्रशांत महासागर", "आर्कटिक महासागर"], answer: 2 }
       ];
-
       const DEFAULT_COMPUTER = [
         { q: "1. CPU का पूरा नाम क्या है?", options: ["Central Processing Unit", "Computer Personal Unit", "Central Print Unit", "Control Program Utility"], answer: 0 },
         { q: "2. HTML का उपयोग किस लिए किया जाता है?", options: ["डेटाबेस", "वेब संरचना", "OS", "वीडियो एडिटिंग"], answer: 1 },
@@ -484,79 +182,29 @@
         { q: "4. MS Excel फ़ॉर्मूला किस चिह्न से शुरू होता है?", options: ["+", "=", "@", "#"], answer: 1 },
         { q: "5. IP का पूरा नाम क्या है?", options: ["Internet Protocol", "Internal Program", "Input Process", "Internet Provider"], answer: 0 }
       ];
-
       function buildBank(base, label) {
-        const list = base.map(i => ({ q: i.q, options: [...i.options], answer: i.answer }));
-        for (let i = list.length + 1; i <= 20; i++) {
-          list.push({
-            q: `${i}. ${label} प्रश्न #${i}`,
-            options: ["विकल्प A", "विकल्प B", "विकल्प C", "विकल्प D"],
-            answer: 0
-          });
-        }
+        let list = base.map(i => ({ q: i.q, options: [...i.options], answer: i.answer }));
+        for (let i = list.length + 1; i <= 20; i++) list.push({ q: `${i}. ${label} प्रश्न #${i}`, options: ["विकल्प A", "विकल्प B", "विकल्प C", "विकल्प D"], answer: 0 });
         return list;
       }
-
-      const GK_QUESTIONS = buildBank(DEFAULT_GK, "सामान्य ज्ञान");
-      const COMPUTER_QUESTIONS = buildBank(DEFAULT_COMPUTER, "कंप्यूटर");
-
-      let currentSessionId = null;
-      let currentUserId = "";
-      let currentStudent = null;
-      let activeQuestions = [];
-
+      const GK_QUESTIONS = buildBank(DEFAULT_GK, "सामान्य ज्ञान"), COMPUTER_QUESTIONS = buildBank(DEFAULT_COMPUTER, "कंप्यूटर");
+      let currentSessionId = null, currentUserId = "", currentStudent = null, activeQuestions = [];
       const nowText = () => new Date().toLocaleString("hi-IN");
-
       function getConfig() {
-        const defaults = {
-          adminName: "PJ Joshi",
-          adminPassword: "PJ@Admin2026",
-          adminPin: "PJ@Admin2026",
-          studentUserId: "",
-          studentUserPass: "",
-          subject: "gk",
-          count: 10
-        };
-        try {
-          const saved = JSON.parse(localStorage.getItem(CONFIG_KEY));
-          return saved
-            ? { ...defaults, ...saved, count: Math.min(20, Math.max(1, Number(saved.count) || 10)) }
-            : defaults;
-        } catch {
-          return defaults;
-        }
+        const d = { adminName: "PJ Joshi", adminPassword: "PJ@Admin2026", adminPin: "PJ@Admin2026", studentUserId: "", studentUserPass: "", subject: "gk", count: 10 };
+        try { const s = JSON.parse(localStorage.getItem(CONFIG_KEY)); return s ? { ...d, ...s, count: Math.min(20, Math.max(1, Number(s.count) || 10)) } : d; } catch { return d; }
       }
-
-      function saveConfig(next) {
-        localStorage.setItem(CONFIG_KEY, JSON.stringify(next));
-        refreshUIState();
-      }
-
+      const saveConfig = (n) => { localStorage.setItem(CONFIG_KEY, JSON.stringify(n)); refreshUIState(); };
       function getCustomQuestions() {
-        try {
-          const p = JSON.parse(localStorage.getItem(CUSTOM_Q_KEY));
-          return (p && Array.isArray(p.gk) && Array.isArray(p.computer)) ? p : { gk: [], computer: [] };
-        } catch {
-          return { gk: [], computer: [] };
-        }
+        try { const p = JSON.parse(localStorage.getItem(CUSTOM_Q_KEY)); return (p && Array.isArray(p.gk) && Array.isArray(p.computer)) ? p : { gk: [], computer: [] }; } catch { return { gk: [], computer: [] }; }
       }
-
-      function getBank(sub) {
-        const c = getCustomQuestions();
-        return (sub === "gk" ? c.gk : c.computer).concat(sub === "gk" ? GK_QUESTIONS : COMPUTER_QUESTIONS);
-      }
-
+      const getBank = (sub) => { const c = getCustomQuestions(); return (sub === "gk" ? c.gk : c.computer).concat(sub === "gk" ? GK_QUESTIONS : COMPUTER_QUESTIONS); };
       function refreshUIState() {
-        const cfg = getConfig();
-        const subLbl = cfg.subject === "gk" ? "सामान्य ज्ञान (GK)" : "कंप्यूटर (Computer)";
-        const el = document.getElementById("studentExamInfo");
-        if (el) el.textContent = `आज की परीक्षा: ${subLbl} (${cfg.count} प्रश्न)`;
-        const adm = document.getElementById("activeAdminLabel");
-        if (adm) adm.textContent = `एडमिन: ${cfg.adminName}`;
-        const passLbl = document.getElementById("studentPassLabel");
-        if (passLbl) passLbl.textContent = cfg.studentUserPass ? "यूज़र पासवर्ड *" : "यूज़र पासवर्ड (वैकल्पिक)";
+        const cfg = getConfig(), subLbl = cfg.subject === "gk" ? "सामान्य ज्ञान (GK)" : "कंप्यूटर (Computer)";
+        const el = document.getElementById("studentExamInfo"); if (el) el.textContent = `आज की परीक्षा: ${subLbl} (${cfg.count} प्रश्न)`;
+        const adm = document.getElementById("activeAdminLabel"); if (adm) adm.textContent = `एडमिन: ${cfg.adminName}`;
+        const passLbl = document.getElementById("studentPassLabel"); if (passLbl) passLbl.textContent = cfg.studentUserPass ? "यूज़र पासवर्ड *" : "यूज़र पासवर्ड (वैकल्पिक)";
       }
-
       function setTheme(mode, btn) {
         document.body.classList.remove("dark", "green");
         if (mode === "dark") document.body.classList.add("dark");
@@ -564,74 +212,136 @@
         document.querySelectorAll(".mode-btn[data-theme]").forEach(b => b.classList.remove("active"));
         if (btn) btn.classList.add("active");
       }
-
-      function getRecords() {
-        try {
-          return JSON.parse(localStorage.getItem(RECORDS_KEY) || "[]");
-        } catch {
-          return [];
-        }
-      }
-
-      function saveRecords(r) {
-        localStorage.setItem(RECORDS_KEY, JSON.stringify(r));
-      }
-
+      function getRecords() { try { return JSON.parse(localStorage.getItem(RECORDS_KEY) || "[]"); } catch { return []; } }
+      const saveRecords = (r) => localStorage.setItem(RECORDS_KEY, JSON.stringify(r));
       function goToStep2() {
-        const cfg = getConfig();
-        const uId = document.getElementById("studentUserId").value.trim();
-        const uPass = document.getElementById("studentUserPass").value;
-        const msg = document.getElementById("step1Msg");
-
-        if (!uId) {
-          msg.textContent = "यूज़र आईडी भरें।";
-          msg.className = "status err";
-          return;
-        }
-        if (cfg.studentUserId && uId !== cfg.studentUserId) {
-          msg.textContent = "गलत यूज़र आईडी।";
-          msg.className = "status err";
-          return;
-        }
-        if (cfg.studentUserPass && uPass !== cfg.studentUserPass) {
-          msg.textContent = "गलत पासवर्ड।";
-          msg.className = "status err";
-          return;
-        }
-
-        currentUserId = uId;
-        msg.textContent = "";
+        const cfg = getConfig(), uId = document.getElementById("studentUserId").value.trim(), uPass = document.getElementById("studentUserPass").value, msg = document.getElementById("step1Msg");
+        if (!uId) { msg.textContent = "यूज़र आईडी भरें।"; msg.className = "status err"; return; }
+        if (cfg.studentUserId && uId !== cfg.studentUserId) { msg.textContent = "गलत यूज़र आईडी।"; msg.className = "status err"; return; }
+        if (cfg.studentUserPass && uPass !== cfg.studentUserPass) { msg.textContent = "गलत पासवर्ड।"; msg.className = "status err"; return; }
+        currentUserId = uId; msg.textContent = "";
         document.getElementById("step1Card").classList.add("hidden");
         document.getElementById("step2Card").classList.remove("hidden");
         document.getElementById("step2UserBadge").textContent = `लॉगिन ID: ${uId}`;
       }
-
       function goToStep3() {
-        const cfg = getConfig();
-        const name = document.getElementById("studentName").value.trim();
-        const fName = document.getElementById("studentFatherName").value.trim();
-        const msg = document.getElementById("step2Msg");
-
-        if (!name || !fName) {
-          msg.textContent = "नाम और पिता का नाम भरें।";
-          msg.className = "status err";
-          return;
-        }
-
+        const cfg = getConfig(), name = document.getElementById("studentName").value.trim(), fName = document.getElementById("studentFatherName").value.trim(), msg = document.getElementById("step2Msg");
+        if (!name || !fName) { msg.textContent = "नाम और पिता का नाम भरें।"; msg.className = "status err"; return; }
         activeQuestions = getBank(cfg.subject).slice(0, cfg.count);
         const subLbl = cfg.subject === "gk" ? "सामान्य ज्ञान (GK)" : "कंप्यूटर (Computer)";
         currentStudent = { name, fatherName: fName, userId: currentUserId, subjectLabel: subLbl };
         currentSessionId = String(Date.now());
-
         const records = getRecords();
-        records.unshift({
-          id: currentSessionId,
-          name,
-          fatherName: fName,
-          userId: currentUserId,
-          subject: subLbl,
-          correct: "-",
-          wrong: "-",
-          score: "सबमिट नहीं किया",
-          loginTime: nowText(),
-   
+        records.unshift({ id: currentSessionId, name, fatherName: fName, userId: currentUserId, subject: subLbl, correct: "-", wrong: "-", score: "सबमिट नहीं किया", loginTime: nowText(), submitTime: "-" });
+        saveRecords(records);
+        msg.textContent = "";
+        document.getElementById("step2Card").classList.add("hidden");
+        document.getElementById("step3Card").classList.remove("hidden");
+        document.getElementById("welcomeStudent").textContent = `नमस्ते, ${name}`;
+        document.getElementById("studentMetaLine").textContent = `पिता: ${fName} | ID: ${currentUserId}`;
+        document.getElementById("examSubtitle").textContent = `${subLbl} — ${activeQuestions.length} प्रश्न`;
+        document.getElementById("examBadge").textContent = subLbl;
+        document.getElementById("questionsContainer").innerHTML = activeQuestions.map((item, idx) => `
+          <div class="question-box"><strong>${escapeHtml(item.q)}</strong>
+            ${item.options.map((opt, oIdx) => `<label class="option"><input type="radio" name="q${idx}" value="${oIdx}" /><span>${escapeHtml(opt)}</span></label>`).join("")}
+          </div>`).join("");
+      }
+      function submitExam() {
+        if (!currentStudent) return;
+        let correct = 0, wrong = 0;
+        activeQuestions.forEach((item, idx) => { const sel = document.querySelector(`input[name="q${idx}"]:checked`); if (sel && Number(sel.value) === item.answer) correct++; else wrong++; });
+        const total = activeQuestions.length, submitTime = nowText(), records = getRecords(), idx = records.findIndex(r => r.id === currentSessionId);
+        const entry = { id: currentSessionId, ...currentStudent, correct, wrong, score: `${correct} / ${total}`, loginTime: idx !== -1 ? records[idx].loginTime : submitTime, submitTime };
+        if (idx !== -1) records[idx] = entry; else records.unshift(entry);
+        saveRecords(records);
+        const res = document.getElementById("examResult");
+        res.textContent = `सबमिट हो गया! सही: ${correct} | गलत: ${wrong} | स्कोर: ${correct}/${total}`; res.className = "status ok";
+      }
+      let lastTouch = 0;
+      function openAdminPrompt(e) {
+        if (e && e.type === "touchend") { lastTouch = Date.now(); e.preventDefault(); }
+        else if (e && e.type === "click" && Date.now() - lastTouch < 450) return;
+        ["step1Card", "step2Card", "step3Card", "adminDashboardCard"].forEach(id => document.getElementById(id).classList.add("hidden"));
+        document.getElementById("adminAuthCard").classList.remove("hidden");
+        document.getElementById("adminPassInput").value = ""; document.getElementById("adminAuthMsg").textContent = "";
+      }
+      function closeAdmin() {
+        document.getElementById("adminAuthCard").classList.add("hidden");
+        document.getElementById("adminDashboardCard").classList.add("hidden");
+        document.getElementById("step1Card").classList.remove("hidden");
+        refreshUIState();
+      }
+      function verifyAdmin() {
+        const cfg = getConfig(), entered = document.getElementById("adminPassInput").value, msg = document.getElementById("adminAuthMsg");
+        if (entered === cfg.adminPin || entered === cfg.adminPassword) {
+          document.getElementById("cfgAdminName").value = cfg.adminName; document.getElementById("cfgAdminPassword").value = cfg.adminPassword;
+          document.getElementById("cfgAdminPin").value = cfg.adminPin; document.getElementById("cfgStudentUserId").value = cfg.studentUserId;
+          document.getElementById("cfgStudentUserPass").value = cfg.studentUserPass; document.getElementById("adminSubjectSelect").value = cfg.subject;
+          document.getElementById("adminQuestionCount").value = cfg.count;
+          document.getElementById("adminAuthCard").classList.add("hidden"); document.getElementById("adminDashboardCard").classList.remove("hidden");
+          renderAdminTable();
+        } else { msg.textContent = "गलत पिन या पासवर्ड।"; msg.className = "status err"; }
+      }
+      function saveAdminCredentials() {
+        const c = getConfig();
+        saveConfig({ ...c, adminName: document.getElementById("cfgAdminName").value.trim() || c.adminName, adminPassword: document.getElementById("cfgAdminPassword").value.trim() || c.adminPassword, adminPin: document.getElementById("cfgAdminPin").value.trim() || c.adminPin, studentUserId: document.getElementById("cfgStudentUserId").value.trim(), studentUserPass: document.getElementById("cfgStudentUserPass").value.trim() });
+        const m = document.getElementById("adminCredMsg"); m.textContent = "क्रेडेंशियल्स सेव हो गए।"; m.className = "status ok";
+      }
+      function saveExamConfig() {
+        const c = getConfig();
+        saveConfig({ ...c, subject: document.getElementById("adminSubjectSelect").value, count: Math.min(20, Math.max(1, Number(document.getElementById("adminQuestionCount").value) || 10)) });
+        const m = document.getElementById("configMsg"); m.textContent = "परीक्षा सेटिंग्स सेव हो गईं।"; m.className = "status ok";
+      }
+      function addCustomQuestion() {
+        const sub = document.getElementById("newQSubject").value, ans = Number(document.getElementById("newQAnswer").value), text = document.getElementById("newQText").value.trim();
+        const opts = [document.getElementById("newQOpt0").value.trim(), document.getElementById("newQOpt1").value.trim(), document.getElementById("newQOpt2").value.trim(), document.getElementById("newQOpt3").value.trim()];
+        const msg = document.getElementById("addQMsg");
+        if (!text || opts.some(o => !o)) { msg.textContent = "प्रश्न और सभी विकल्प भरें।"; msg.className = "status err"; return; }
+        const cust = getCustomQuestions(), list = sub === "gk" ? cust.gk : cust.computer;
+        list.unshift({ q: `${list.length + 1}. ${text}`, options: opts, answer: ans });
+        localStorage.setItem(CUSTOM_Q_KEY, JSON.stringify(cust));
+        ["newQText", "newQOpt0", "newQOpt1", "newQOpt2", "newQOpt3"].forEach(id => document.getElementById(id).value = "");
+        msg.textContent = "प्रश्न जुड़ गया।"; msg.className = "status ok";
+      }
+      function renderAdminTable() {
+        const tbody = document.getElementById("adminTableBody"), recs = getRecords();
+        if (recs.length === 0) { tbody.innerHTML = '<tr><td colspan="10">कोई डेटा नहीं है।</td></tr>'; return; }
+        tbody.innerHTML = recs.map((r, i) => `<tr><td>${i+1}</td><td>${escapeHtml(r.name)}</td><td>${escapeHtml(r.fatherName||"-")}</td><td>${escapeHtml(r.userId||"-")}</td><td>${escapeHtml(r.subject||"-")}</td><td>${r.correct}</td><td>${r.wrong}</td><td>${r.score}</td><td>${escapeHtml(r.loginTime||"-")}</td><td>${escapeHtml(r.submitTime||"-")}</td></tr>`).join("");
+      }
+      function downloadCSV() {
+        const recs = getRecords(), rows = [["ID", "Name", "Father Name", "User ID", "Subject", "Correct", "Wrong", "Score", "Login Time", "Submit Time"]];
+        recs.forEach((r, i) => rows.push([i+1, r.name, r.fatherName||"-", r.userId||"-", r.subject||"-", r.correct, r.wrong, r.score, r.loginTime||"-", r.submitTime||"-"]));
+        const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\n");
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" }), url = URL.createObjectURL(blob), a = document.createElement("a");
+        a.href = url; a.download = "pj_joshi_students_report.csv"; a.click(); URL.revokeObjectURL(url);
+      }
+      const escapeHtml = (str) => String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+      const carBtn = document.getElementById("carAdminBtn");
+      carBtn.addEventListener("touchend", openAdminPrompt, { passive: false });
+      carBtn.addEventListener("click", openAdminPrompt);
+      document.querySelectorAll(".mode-btn[data-theme]").forEach(btn => {
+        let lt = 0;
+        const trig = function (e) {
+          if (e && e.type === "touchend") { lt = Date.now(); e.preventDefault(); }
+          else if (e && e.type === "click" && Date.now() - lt < 450) return;
+          setTheme(this.getAttribute("data-theme"), this);
+        };
+        btn.addEventListener("touchend", trig, { passive: false });
+        btn.addEventListener("click", trig);
+      });
+      document.getElementById("step1NextBtn").addEventListener("click", goToStep2);
+      document.getElementById("step2NextBtn").addEventListener("click", goToStep3);
+      document.getElementById("submitExamBtn").addEventListener("click", submitExam);
+      document.querySelectorAll(".close-admin-btn").forEach(btn => btn.addEventListener("click", closeAdmin));
+      document.getElementById("verifyAdminBtn").addEventListener("click", verifyAdmin);
+      document.getElementById("saveAdminCredBtn").addEventListener("click", saveAdminCredentials);
+      document.getElementById("saveExamCfgBtn").addEventListener("click", saveExamConfig);
+      document.getElementById("addCustomQBtn").addEventListener("click", addCustomQuestion);
+      document.getElementById("downloadCsvBtn").addEventListener("click", downloadCSV);
+      document.getElementById("clearRecordsBtn").addEventListener("click", () => { localStorage.removeItem(RECORDS_KEY); renderAdminTable(); });
+      refreshUIState();
+    })();
+  </script>
+</body>
+</html>
