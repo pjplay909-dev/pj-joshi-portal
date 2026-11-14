@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PJ Joshi - ऑनलाइन परीक्षा एवं अभ्यास पोर्टल</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --border: #e5e7eb;
+      --success: #16a34a;
+      --danger: #dc2626;
+    }
+
+    body.dark {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --primary: #3b82f6;
+      --primary-hover: #2563eb;
+      --border: #334155;
+    }
+
+    body.green {
+      --bg: #ecfdf5;
+      --card: #ffffff;
+      --text: #064e3b;
+      --muted: #047857;
+      --primary: #059669;
+      --primary-hover: #047857;
+      --border: #a7f3d0;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      padding: 16px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .header-card, .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-box {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: var(--primary);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    /* छोटा सा शांत हाथ का आइकन (Admin के लिए) */
+    .subtle-hand-btn {
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      opacity: 0.45;
+      font-size: 16px;
+      line-height: 1;
+      padding: 6px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+
+    .subtle-hand-btn:hover {
+      opacity: 0.95;
+      transform: scale(1.08);
+    }
+
+    h1, h2, h3, p {
+      margin: 0;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    .modes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .mode-btn {
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      padding: 8px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .mode-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    .form-group {
+      margin-top: 14px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .btn {
+      width: 100%;
+      margin-top: 16px;
+      padding: 13px;
+      border: none;
+      border-radius: 12px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: var(--primary-hover);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .question-box {
+      margin-top: 16px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-top: 8px;
+      cursor: pointer;
+    }
+
+    .option input {
+      width: auto;
+    }
+
+    .status {
+      margin-top: 12px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .status.ok { color: var(--success); }
+    .status.err { color: var(--danger); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      font-size: 13px;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 8px;
+      text-align: left;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(37, 99, 235, 0.12);
+      color: var(--primary);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header के अंदर ही छोटा सा हाथ (🖐) आइकन -->
+    <div class="header-card">
+      <div class="header-top">
+        <div class="brand">
+          <div class="logo-box">PJ</div>
+          <div>
+            <h1>PJ Joshi</h1>
+            <p class="subtitle">ऑनलाइन परीक्षा एवं अभ्यास पोर्टल</p>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="subtle-hand-btn"
+          onclick="openAdminPrompt()"
+          aria-label="Workspace control"
+        >🖐</button>
+      </div>
+
+      <div class="modes">
+        <button class="mode-btn active" onclick="setTheme('clear', this)">* क्लियर मोड</button>
+        <button class="mode-btn" onclick="setTheme('dark', this)">☾ डार्क मोड</button>
+        <button class="mode-btn" onclick="setTheme('green', this)">✿ ग्रीन मोड</button>
+      </div>
+    </div>
+
+    <!-- Student Login -->
+    <div class="card" id="studentLoginCard">
+      <div style="text-align:center;">
+        <div class="logo-box" style="margin:0 auto 10px;">PJ</div>
+        <h2>विद्यार्थी लॉगिन</h2>
+        <p class="subtitle" style="margin-top:6px;">
+          परीक्षा खोलने के लिए अपना पूरा नाम और यूज़रनेम दर्ज करें।
+        </p>
+        <p class="subtitle" id="studentExamInfo" style="margin-top:6px; font-weight:600;"></p>
+      </div>
+
+      <div class="form-group">
+        <label>पूरा नाम (Full Name) *</label>
+        <input type="text" id="studentName" placeholder="अपना नाम दर्ज करें" />
+      </div>
+
+      <div class="form-group">
+        <label>यूज़रनेम (Username) *</label>
+        <input type="text" id="studentUsername" placeholder="अपना यूज़रनेम दर्ज करें" />
+      </div>
+
+      <button class="btn" onclick="startExam()">परीक्षा शुरू करें</button>
+      <div id="loginMsg" class="status"></div>
+    </div>
+
+    <!-- Exam Area -->
+    <div class="card hidden" id="examCard">
+      <div class="top-bar">
+        <div>
+          <h2 id="welcomeStudent"></h2>
+          <p class="subtitle" id="examSubtitle">अभ्यास परीक्षा — सभी प्रश्नों के उत्तर दें</p>
+        </div>
+        <span class="badge" id="examBadge">Student Mode</span>
+      </div>
+
+      <div id="questionsContainer"></div>
+
+      <button class="btn" onclick="submitExam()">परीक्षा सबमिट करें</button>
+      <div id="examResult" class="status"></div>
+    </div>
+
+    <!-- Admin Password Box (सिर्फ 🖐 आइकन दबाने पर खुलेगा) -->
+    <div class="card hidden" id="adminAuthCard">
+      <div class="top-bar">
+        <h2>🔒 एडमिन लॉगिन</h2>
+        <button class="mode-btn" onclick="closeAdmin()">वापस</button>
+      </div>
+      <p class="subtitle" style="margin-top:6px;">एडमिन पैनल खोलने के लिए पासवर्ड दर्ज करें।</p>
+
+      <div class="form-group">
+        <label>एडमिन पासवर्ड</label>
+        <input type="password" id="adminPassInput" placeholder="एडमिन पासवर्ड दर्ज करें" />
+      </div>
+      <button class="btn" onclick="verifyAdmin()">लॉगिन करें</button>
+      <div id="adminAuthMsg" class="status"></div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div class="card hidden" id="adminDashboardCard">
+      <div class="top-bar">
+        <h2>📊 एडमिन डैशबोर्ड</h2>
+        <button class="mode-btn" onclick="closeAdmin()">बंद करें</button>
+      </div>
+      <p class="subtitle" style="margin-top:6px;">
+        यहाँ से आप डिफ़ॉल्ट विषय और प्रश्नों की संख्या (10, 20 आदि) सेट कर सकते हैं तथा छात्रों का डेटा देख सकते हैं।
+      </p>
+
+      <!-- Admin Exam Config -->
+      <div class="question-box">
+        <h3>⚙️ डिफ़ॉल्ट परीक्षा सेटिंग (50 GK + 50 Computer बैंक से)</h3>
+        <div class="grid-2" style="margin-top:12px;">
+          <div>
+            <label>डिफ़ॉल्ट विषय (Subject)</label>
+            <select id="adminSubjectSelect">
+              <option value="gk">सामान्य ज्ञान (50 प्रश्न)</option>
+              <option value="computer">कंप्यूटर (50 प्रश्न)</option>
+            </select>
+          </div>
+          <div>
+            <label>कितने प्रश्न डिफ़ॉल्ट देने हैं? (1 से 50)</label>
+            <input type="number" id="adminQuestionCount" min="1" max="50" value="10" />
+          </div>
+        </div>
+        <button class="btn" onclick="saveExamConfig()">डिफ़ॉल्ट सेटिंग सेव करें</button>
+        <div id="configMsg" class="status"></div>
+      </div>
+
+      <!-- Student Records -->
+      <div style="margin-top:18px;">
+        <div class="top-bar">
+          <h3>छात्रों का डेटा (Student Data)</h3>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="mode-btn active" onclick="downloadCSV()">CSV डाउनलोड करें</button>
+            <button class="mode-btn" onclick="clearAllStudentData()">डेटा साफ़ करें</button>
+          </div>
+        </div>
+
+        <div style="overflow-x:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>नाम</th>
+                <th>यूज़रनेम</th>
+                <th>विषय</th>
+                <th>स्कोर</th>
+                <th>समय</th>
+              </tr>
+            </thead>
+            <tbody id="adminTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const ADMIN_SECRET_PASS = "PJ@Admin2026";
+    const RECORDS_KEY = "pj_joshi_portal_records_v2";
+    const CONFIG_KEY = "pj_joshi_portal_config_v1";
+
+    // 50 सामान्य ज्ञान (GK) प्रश्न (हमेशा कोड में सेव)
+    const GK_QUESTIONS = [
+      {
+        q: "1. भारत की राजधानी क्या है?",
+        options: ["मुंबई", "नई दिल्ली", "कोलकाता", "चेन्नई"],
+        answer: 1
+      },
+      {
+        q: "2. राजस्थान का सबसे बड़ा जिला क्षेत्रफल की दृष्टि से कौन-सा है?",
+        options: ["जयपुर", "जोधपुर", "जैसलमेर", "बीकानेर"],
+        answer: 2
+      },
+      {
+        q: "3. भारत का राष्ट्रीय पशु कौन-सा है?",
+        options: ["शेर", "बाघ", "हाथी", "चीता"],
+        answer: 1
+      },
+      {
+        q: "4. संविधान सभा के प्रारूप समिति के अध्यक्ष कौन थे?",
+        options: ["डॉ. राजेंद्र प्रसाद", "डॉ. बी. आर. अम्बेडकर", "जवाहरलाल नेहरू", "सरदार पटेल"],
+        answer: 1
+      },
+      {
+        q: "5. पृथ्वी पर सबसे बड़ा महासागर कौन-सा है?",
+        options: ["अटलांटिक महासागर", "हिंद महासागर", "प्रशांत महासागर", "आर्कटिक महासागर"],
+        answer: 2
+      }
+    ];
+
+    // 50 कंप्यूटर (Computer) प्रश्न (हमेशा कोड में सेव)
+    const COMPUTER_QUESTIONS = [
+      {
+        q: "1. CPU का पूरा नाम क्या है?",
+        options: ["Central Processing Unit", "Computer Personal Unit", "Central Print Unit", "Control Program Utility"],
+        answer: 0
+      },
+      {
+        q: "2. HTML का उपयोग किस लिए किया जाता है?",
+        options: ["डेटाबेस बनाने के लिए", "वेब पेज की संरचना बनाने के लिए", "ऑपरेटिंग सिस्टम बनाने के लिए", "वीडियो एडिटिंग के लिए"],
+        answer: 1
+      },
+      {
+        q: "3. RAM किस प्रकार की मेमोरी है?",
+        options: ["Permanent", "Temporary (Volatile)", "Secondary", "Optical"],
+        answer: 1
+      },
+      {
+        q: "4. MS Excel में फ़ॉर्मूला किस चिह्न से शुरू होता है?",
+        options: ["+", "=", "@", "#"],
+        answer: 1
+      },
+      {
+        q: "5. IP का पूरा नाम क्या है?",
+        options: ["Internet Protocol", "Internal Program", "Input Process", "Internet Provider"],
+        answer: 0
+      }
+    ];
+
+    // 50 पूरे करने के लिए स्लॉट (आप इन्हें असली प्रश्नों से बदल सकते हैं)
+    while (GK_QUESTIONS.length < 50) {
+      const n = GK_QUESTIONS.length + 1;
+      GK_QUESTIONS.push({
+        q: `${n}. सामान्य ज्ञान प्रश्न #${n} (यहाँ अपना प्रश्न लिखें)`,
+        options: ["विकल्प A", "विकल्प B", "विकल्प C", "विकल्प D"],
+        answer: 0
+      });
+    }
+
+    while (COMPUTER_QUESTIONS.length < 50) {
+      const n = COMPUTER_QUESTIONS.length + 1;
+      COMPUTER_QUESTIONS.push({
+        q: `${n}. कंप्यूटर प्रश्न #${n} (यहाँ अपना प्रश्न लिखें)`,
+        options: ["विकल्प A", "विकल्प B", "विकल्प C", "विकल्प D"],
+        answer: 0
+      });
+    }
+
+    let currentStudent = null;
+    let activeQuestions = [];
+
+    function getExamConfig() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(CONFIG_KEY) || "null");
+        if (saved && (saved.subject === "gk" || saved.subject === "computer")) {
+          const count = Math.min(50, Math.max(1, Number(saved.count) || 10));
+          return { subject: saved.subject, count };
+        }
+      } catch {}
+      return { subject: "gk", count: 10 };
+    }
+
+    function saveExamConfig() {
+      const subject = document.getElementById("adminSubjectSelect").value;
+      const rawCount = Number(document.getElementById("adminQuestionCount").value);
+      const count = Math.min(50, Math.max(1, rawCount || 10));
+
+      localStorage.setItem(CONFIG_KEY, JSON.stringify({ subject, count }));
+      updateStudentExamBanner();
+
+      const msg = document.getElementById("configMsg");
+      const subLabel = subject === "gk" ? "सामान्य ज्ञान (GK)" : "कंप्यूटर (Computer)";
+      msg.textContent = `डिफ़ॉल्ट सेटिंग सेव हो गई: ${subLabel} — ${count} प्रश्न।`;
+      msg.className = "status ok";
+    }
+
+    function updateStudentExamBanner() {
+      const cfg = getExamConfig();
+      const subLabel = cfg.subject === "gk" ? "सामान्य ज्ञान (GK)" : "कंप्यूटर (Computer)";
+      const el = document.getElementById("studentExamInfo");
+      if (el) {
+        el.textContent = `आज की परीक्षा: ${subLabel} (${cfg.count} प्रश्न)`;
+      }
+    }
+
+    function setTheme(mode, btn) {
+      document.body.classList.remove("dark", "green");
+      if (mode === "dark") document.body.classList.add("dark");
+      if (mode === "green") document.body.classList.add("green");
+
+      document.querySelectorAll(".mode-btn").forEach(b => b.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+    }
+
+    function getRecords() {
+      try {
+        return JSON.parse(localStorage.getItem(RECORDS_KEY) || "[]");
+      } catch {
+        return [];
+      }
+    }
+
+    function saveRecord(record) {
+      const records = getRecords();
+      records.unshift(record);
+      localStorage.setItem(RECORDS_KEY, JSON.stringify(records));
+    }
+
+    function startExam() {
+      const name = document.getElementById("studentName").value.trim();
+      const username = document.getElementById("studentUsername").value.trim();
+      const msg = document.getElementById("loginMsg");
+
+      if (!name || !username) {
+        msg.textContent = "कृपया नाम और यूज़रनेम दोनों भरें।";
+        msg.className = "status err";
+        return;
+      }
+
+      const cfg = getExamConfig();
+      const bank = cfg.subject === "gk" ? GK_QUESTIONS : COMPUTER_QUESTIONS;
+      activeQuestions = bank.slice(0, cfg.count);
+
+      const subLabel = cfg.subject === "gk" ? "सामान्य ज्ञान (GK)" : "कंप्यूटर (Computer)";
+      currentStudent = { name, username, subjectLabel: subLabel };
+
+      saveRecord({
+        name,
+        username,
+        subject: subLabel,
+        score: "In Progress",
+        time: new Date().toLocaleString("hi-IN")
+      });
+
+      document.getElementById("studentLoginCard").classList.add("hidden");
+      document.getElementById("examCard").classList.remove("hidden");
+      document.getElementById("welcomeStudent").textContent = `नमस्ते, ${name}`;
+      document.getElementById("examSubtitle").textContent = `${subLabel} — कुल ${activeQuestions.length} प्रश्न`;
+      document.getElementById("examBadge").textContent = subLabel;
+
+      renderQuestions();
+    }
+
+    function renderQuestions() {
+      const container = document.getElementById("questionsContainer");
+      container.innerHTML = activeQuestions.map((item, idx) => `
+        <div class="question-box">
+          <strong>${item.q}</strong>
+          ${item.options.map((opt, oIdx) => `
+            <label class="option">
+              <input type="radio" name="q${idx}" value="${oIdx}" />
+              <span>${opt}</span>
+            </label>
+          `).join("")}
+        </div>
+      `).join("");
+    }
+
+    function submitExam() {
+      if (!currentStudent) return;
+      let score = 0;
+
+      activeQuestions.forEach((item, idx) => {
+        const selected = document.querySelector(`input[name="q${idx}"]:checked`);
+        if (selected && Number(selected.value) === item.answer) {
+          score++;
+        }
+      });
+
+      const resultText = `${score} / ${activeQuestions.length}`;
+      saveRecord({
+        name: currentStudent.name,
+        username: currentStudent.username,
+        subject: currentStudent.subjectLabel,
+        score: resultText,
+        time: new Date().toLocaleString("hi-IN")
+      });
+
+      const resEl = document.getElementById("examResult");
+      resEl.textContent = `आपका स्कोर: ${resultText} — आपका डेटा सेव हो गया है।`;
+      resEl.className = "status ok";
+    }
+
+    // 🖐 आइकन दबाने पर एडमिन लॉगिन बॉक्स खुलेगा
+    function openAdminPrompt() {
+      document.getElementById("studentLoginCard").classList.add("hidden");
+      document.getElementById("examCard").classList.add("hidden");
+      document.getElementById("adminDashboardCard").classList.add("hidden");
+      document.getElementById("adminAuthCard").classList.remove("hidden");
+      document.getElementById("adminPassInput").value = "";
+      document.getElementById("adminAuthMsg").textContent = "";
+    }
+
+    function closeAdmin() {
+      document.getElementById("adminAuthCard").classList.add("hidden");
+      document.getElementById("adminDashboardCard").classList.add("hidden");
+      document.getElementById("studentLoginCard").classList.remove("hidden");
+      updateStudentExamBanner();
+    }
+
+    function verifyAdmin() {
+      const pass = document.getElementById("adminPassInput").value;
+      const msg = document.getElementById("adminAuthMsg");
+
+      if (pass === ADMIN_SECRET_PASS) {
+        const cfg = getExamConfig();
+        document.getElementById("adminSubjectSelect").value = cfg.subject;
+        document.getElementById("adminQuestionCount").value = cfg.count;
+
+        document.getElementById("adminAuthCard").classList.add("hidden");
+        document.getElementById("adminDashboardCard").classList.remove("hidden");
+        renderAdminTable();
+      } else {
+        msg.textContent = "गलत पासवर्ड!";
+        msg.className = "status err";
+      }
+    }
+
+    function renderAdminTable() {
+      const tbody = document.getElementById("adminTableBody");
+      const records = getRecords();
+
+      if (records.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6">अभी कोई डेटा सेव नहीं है।</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = records.map((r, i) => `
+        <tr>
+          <td>${i + 1}</td>
+          <td>${escapeHtml(r.name)}</td>
+          <td>${escapeHtml(r.username)}</td>
+          <td>${escapeHtml(r.subject || "-")}</td>
+          <td>${escapeHtml(r.score)}</td>
+          <td>${escapeHtml(r.time)}</td>
+        </tr>
+      `).join("");
+    }
+
+    function downloadCSV() {
+      const records = getRecords();
+      const rows = [["ID", "Name", "Username", "Subject", "Score", "Time"]];
+      records.forEach((r, idx) => rows.push([idx + 1, r.name, r.username, r.subject || "-", r.score, r.time]));
+
+      const csv = rows.map(r => r.map(v => `"${String(v).replaceAl
