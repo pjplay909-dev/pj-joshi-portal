@@ -62,6 +62,7 @@
       padding: 20px;
       margin-bottom: 16px;
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+      position: relative;
     }
 
     .header-top {
@@ -69,6 +70,8 @@
       justify-content: space-between;
       align-items: flex-start;
       gap: 12px;
+      position: relative;
+      z-index: 5;
     }
 
     .brand {
@@ -94,12 +97,16 @@
       border: 1px solid var(--border);
       background: var(--bg);
       color: var(--text);
-      opacity: 0.8;
+      opacity: 0.85;
       font-size: 22px;
       line-height: 1;
       padding: 8px 10px;
       border-radius: 10px;
       cursor: pointer;
+      position: relative;
+      z-index: 10;
+      pointer-events: auto;
+      touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
     }
 
@@ -133,33 +140,11 @@
       cursor: pointer;
       font-size: 13px;
       font-weight: 600;
+      touch-action: manipulation;
       -webkit-tap-highlight-color: transparent;
     }
 
     .mode-btn.active {
-      background: var(--primary);
-      color: #fff;
-      border-color: var(--primary);
-    }
-
-    .step-indicator {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 12px;
-      justify-content: center;
-    }
-
-    .step-pill {
-      font-size: 12px;
-      font-weight: 700;
-      padding: 5px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      color: var(--muted);
-    }
-
-    .step-pill.active {
       background: var(--primary);
       color: #fff;
       border-color: var(--primary);
@@ -203,6 +188,7 @@
       font-size: 15px;
       font-weight: 700;
       cursor: pointer;
+      touch-action: manipulation;
     }
 
     .btn:hover {
@@ -317,11 +303,6 @@
       <div style="text-align:center;">
         <div class="logo-box" style="margin:0 auto 10px;">PJ</div>
         <h2>चरण 1: यूज़र लॉगिन</h2>
-        <div class="step-indicator">
-          <span class="step-pill active">1. यूज़र आईडी / पासवर्ड</span>
-          <span class="step-pill">2. नाम व पिता का नाम</span>
-          <span class="step-pill">3. प्रश्न</span>
-        </div>
         <p class="subtitle" style="margin-top:8px;">
           पहले अपनी यूज़र आईडी और यूज़र पासवर्ड दर्ज करें।
         </p>
@@ -347,11 +328,6 @@
       <div style="text-align:center;">
         <div class="logo-box" style="margin:0 auto 10px;">PJ</div>
         <h2>चरण 2: विद्यार्थी विवरण</h2>
-        <div class="step-indicator">
-          <span class="step-pill">1. यूज़र आईडी / पासवर्ड</span>
-          <span class="step-pill active">2. नाम व पिता का नाम</span>
-          <span class="step-pill">3. प्रश्न</span>
-        </div>
         <p class="subtitle" style="margin-top:8px;">
           अपना पूरा नाम और पिता का नाम अनिवार्य रूप से भरें।
         </p>
@@ -376,11 +352,6 @@
     <div class="card hidden" id="step3Card">
       <div class="top-bar">
         <div>
-          <div class="step-indicator" style="justify-content:flex-start; margin-top:0; margin-bottom:8px;">
-            <span class="step-pill">1. यूज़र आईडी / पासवर्ड</span>
-            <span class="step-pill">2. नाम व पिता का नाम</span>
-            <span class="step-pill active">3. प्रश्न</span>
-          </div>
           <h2 id="welcomeStudent"></h2>
           <p class="subtitle" id="studentMetaLine"></p>
           <p class="subtitle" id="examSubtitle">अभ्यास परीक्षा — सभी प्रश्नों के उत्तर दें</p>
@@ -540,9 +511,9 @@
 
   <script>
     (function () {
-      const RECORDS_KEY = "pj_joshi_portal_records_v6";
-      const CONFIG_KEY = "pj_joshi_portal_config_v4";
-      const CUSTOM_Q_KEY = "pj_joshi_portal_custom_q_v3";
+      const RECORDS_KEY = "pj_joshi_portal_records_v7";
+      const CONFIG_KEY = "pj_joshi_portal_config_v5";
+      const CUSTOM_Q_KEY = "pj_joshi_portal_custom_q_v4";
 
       const DEFAULT_GK = [
         { q: "1. भारत की राजधानी क्या है?", options: ["मुंबई", "नई दिल्ली", "कोलकाता", "चेन्नई"], answer: 1 },
@@ -638,4 +609,30 @@
         const cfg = getConfig();
         const subLabel = cfg.subject === "gk" ? "सामान्य ज्ञान (GK)" : "कंप्यूटर (Computer)";
 
-        co
+        const infoEl = document.getElementById("studentExamInfo");
+        if (infoEl) {
+          infoEl.textContent = "आज की परीक्षा: " + subLabel + " (" + cfg.count + " प्रश्न)";
+        }
+
+        const adminLabel = document.getElementById("activeAdminLabel");
+        if (adminLabel) {
+          adminLabel.textContent = "एडमिन: " + cfg.adminName;
+        }
+
+        const passLabel = document.getElementById("studentPassLabel");
+        if (passLabel) {
+          passLabel.textContent = cfg.studentUserPass
+            ? "यूज़र पासवर्ड (User Password) *"
+            : "यूज़र पासवर्ड (User Password — वैकल्पिक)";
+        }
+      }
+
+      function setTheme(mode, btn) {
+        document.body.classList.remove("dark", "green");
+        if (mode === "dark") document.body.classList.add("dark");
+        if (mode === "green") document.body.classList.add("green");
+
+        document.querySelectorAll(".mode-btn[data-theme]").forEach(function (b) {
+          b.classList.remove("active");
+        });
+      
