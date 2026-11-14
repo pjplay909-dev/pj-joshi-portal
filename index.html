@@ -82,7 +82,6 @@
       </div>
     </div>
 
-    <!-- चरण 1: यूजर लॉगिन -->
     <div class="card" id="step1Card">
       <div style="text-align:center;">
         <div class="logo-box" style="margin:0 auto 10px;">PJ</div>
@@ -96,7 +95,6 @@
       <div id="step1Msg" class="status"></div>
     </div>
 
-    <!-- चरण 2: विद्यार्थी विवरण -->
     <div class="card hidden" id="step2Card">
       <div style="text-align:center;">
         <div class="logo-box" style="margin:0 auto 10px;">PJ</div>
@@ -110,7 +108,6 @@
       <div id="step2Msg" class="status"></div>
     </div>
 
-    <!-- चरण 3: परीक्षा स्क्रीन -->
     <div class="card hidden" id="step3Card">
       <div class="top-bar">
         <div>
@@ -129,25 +126,20 @@
       <div id="examResult" class="status"></div>
       <div id="finalSummaryBox" class="summary-box hidden"></div>
     </div>
-
-    <!-- एडमिन लॉगिन -->
-    <div class="card hidden" id="adminAuthCard">
+        <div class="card hidden" id="adminAuthCard">
       <div class="top-bar"><h2>🔒 एडमिन लॉगिन</h2><button type="button" class="mode-btn close-admin-btn">वापस जाएं</button></div>
       <div class="form-group"><label>एडमिन पिन / पासवर्ड</label><input type="password" id="adminPassInput" placeholder="एडमिन पिन या पासवर्ड दर्ज करें" /></div>
       <button type="button" class="btn" id="verifyAdminBtn">लॉगिन करें</button>
       <div id="adminAuthMsg" class="status"></div>
     </div>
 
-    <!-- एडमिन कंट्रोल पैनल -->
     <div class="card hidden" id="adminDashboardCard">
       <div class="top-bar"><h2>📊 एडमिन कंट्रोल पैनल</h2><button type="button" class="mode-btn close-admin-btn">बंद करें</button></div>
 
       <div class="section-box">
         <h3>📲 WhatsApp ग्रुप नोटिस बॉक्स (अपने आप अपडेट)</h3>
         <p class="subtitle">शुरू समय, समाप्त समय, प्रश्न संख्या, User ID या Password बदलते ही नीचे मैसेज अपने आप तैयार हो जाएगा।</p>
-        <div class="form-group">
-          <textarea id="whatsappShareText" readonly></textarea>
-        </div>
+        <div class="form-group"><textarea id="whatsappShareText" readonly></textarea></div>
         <button type="button" class="btn" id="copyWhatsappBtn">📋 WhatsApp मैसेज कॉपी करें</button>
         <div id="whatsappCopyMsg" class="status"></div>
       </div>
@@ -208,10 +200,10 @@
         </div>
       </div>
     </div>
-  </div>
-    <script>
+                                                                                                                   </div>
+                                                                                                                     <script>
     (function () {
-      const RECORDS_KEY = "pj_portal_rec_hi_sched_v1", CONFIG_KEY = "pj_portal_cfg_hi_sched_v1", QUEUE_KEY = "pj_portal_queue_hi_sched_v1";
+      const RECORDS_KEY = "pj_portal_rec_6p_v1", CONFIG_KEY = "pj_portal_cfg_6p_v1", QUEUE_KEY = "pj_portal_queue_6p_v1";
 
       const GK_POOL = [
         { sub: "GK", q: "भारत की राजधानी क्या है?", options: ["मुंबई", "नई दिल्ली", "कोलकाता", "चेन्नई"], answer: 1 },
@@ -265,8 +257,7 @@
         { sub: "GK", q: "सूरतगढ़ किस जिले में स्थित है?", options: ["बीकानेर", "श्रीगंगानगर", "हनुमानगढ़", "चूरू"], answer: 1 },
         { sub: "GK", q: "भारत की मुद्रा क्या है?", options: ["डॉलर", "रुपया", "येन", "पाउंड"], answer: 1 }
       ];
-
-      const COMP_POOL = [
+                                                                                                                             const COMP_POOL = [
         { sub: "Computer", q: "CPU का पूरा नाम क्या है?", options: ["Central Processing Unit", "Computer Personal Unit", "Central Print Unit", "Control Program Utility"], answer: 0 },
         { sub: "Computer", q: "HTML का उपयोग किस लिए किया जाता है?", options: ["डेटाबेस", "वेब पेज संरचना", "ऑपरेटिंग सिस्टम", "वीडियो एडिटिंग"], answer: 1 },
         { sub: "Computer", q: "RAM किस प्रकार की मेमोरी है?", options: ["स्थायी", "अस्थायी", "द्वितीयक", "ऑप्टिकल"], answer: 1 },
@@ -325,11 +316,9 @@
       const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
 
       function formatSec(sec) {
-        const m = Math.floor(sec / 60);
-        const s = sec % 60;
+        const m = Math.floor(sec / 60), s = sec % 60;
         return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
       }
-
       function format12Hour(hhmm) {
         if (!hhmm || !/^\d{2}:\d{2}$/.test(hhmm)) return "सेट नहीं है";
         let [h, m] = hhmm.split(":").map(Number);
@@ -337,42 +326,18 @@
         h = h % 12 || 12;
         return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")} ${suffix}`;
       }
-
       function parseTodayTime(hhmm) {
         if (!hhmm || !/^\d{2}:\d{2}$/.test(hhmm)) return null;
         const [h, m] = hhmm.split(":").map(Number);
-        const d = new Date();
-        d.setHours(h, m, 0, 0);
-        return d;
+        const d = new Date(); d.setHours(h, m, 0, 0); return d;
       }
-
       function getScheduleState(cfg) {
-        const startObj = parseTodayTime(cfg.startTime);
-        const endObj = parseTodayTime(cfg.endTime);
-        const now = new Date();
-
-        if (!startObj && !endObj) {
-          return { allowed: true, statusText: "परीक्षा अभी खुली है (कोई तय Start/End समय सेट नहीं है)" };
-        }
-        if (startObj && now < startObj) {
-          return {
-            allowed: false,
-            statusText: `⏳ परीक्षा अभी शुरू नहीं हुई है! तय समय: ${format12Hour(cfg.startTime)} पर शुरू होगी।`
-          };
-        }
-        if (endObj && now >= endObj) {
-          return {
-            allowed: false,
-            statusText: `⛔ परीक्षा का समय समाप्त हो चुका है! तय समाप्ति समय: ${format12Hour(cfg.endTime)}`
-          };
-        }
-        const endText = endObj ? ` | समाप्ति समय: ${format12Hour(cfg.endTime)}` : "";
-        return {
-          allowed: true,
-          statusText: `✅ परीक्षा चालू है${endText}`
-        };
+        const startObj = parseTodayTime(cfg.startTime), endObj = parseTodayTime(cfg.endTime), now = new Date();
+        if (!startObj && !endObj) return { allowed: true, statusText: "परीक्षा अभी खुली है (कोई तय Start/End समय सेट नहीं है)" };
+        if (startObj && now < startObj) return { allowed: false, statusText: `⏳ परीक्षा अभी शुरू नहीं हुई है! तय समय: ${format12Hour(cfg.startTime)} पर शुरू होगी।` };
+        if (endObj && now >= endObj) return { allowed: false, statusText: `⛔ परीक्षा का समय समाप्त हो चुका है! तय समाप्ति समय: ${format12Hour(cfg.endTime)}` };
+        return { allowed: true, statusText: `✅ परीक्षा चालू है${endObj ? ` | समाप्ति समय: ${format12Hour(cfg.endTime)}` : ""}` };
       }
-
       function shuffle(arr) {
         const copy = arr.map(x => ({ ...x, options: [...x.options] }));
         for (let i = copy.length - 1; i > 0; i--) {
@@ -381,75 +346,33 @@
         }
         return copy;
       }
-
       function getCfg() {
-        const d = {
-          adminName: "PJ Joshi",
-          adminPassword: "PJ@Admin2026",
-          adminPin: "PJ@Admin2026",
-          studentUserId: "",
-          studentUserPass: "",
-          subject: "all100",
-          count: 50,
-          minutes: 30,
-          startTime: "",
-          endTime: ""
-        };
+        const d = { adminName: "PJ Joshi", adminPassword: "PJ@Admin2026", adminPin: "PJ@Admin2026", studentUserId: "", studentUserPass: "", subject: "all100", count: 50, minutes: 30, startTime: "", endTime: "" };
         try {
           const s = JSON.parse(localStorage.getItem(CONFIG_KEY));
-          return s ? {
-            ...d,
-            ...s,
-            count: Math.min(100, Math.max(1, Number(s.count) || 50)),
-            minutes: Math.min(180, Math.max(1, Number(s.minutes) || 30))
-          } : d;
+          return s ? { ...d, ...s, count: Math.min(100, Math.max(1, Number(s.count) || 50)), minutes: Math.min(180, Math.max(1, Number(s.minutes) || 30)) } : d;
         } catch { return d; }
       }
-
-      function saveCfg(n) {
-        localStorage.setItem(CONFIG_KEY, JSON.stringify(n));
-        refreshUI();
-        updateWhatsappBox();
-      }
+      function saveCfg(n) { localStorage.setItem(CONFIG_KEY, JSON.stringify(n)); refreshUI(); updateWhatsappBox(); }
 
       function updateWhatsappBox() {
         const ta = document.getElementById("whatsappShareText");
         if (!ta) return;
-
-        const subSel = document.getElementById("adminSubjectSelect");
-        const cntInp = document.getElementById("adminQuestionCount");
-        const minInp = document.getElementById("adminExamMinutes");
-        const stInp = document.getElementById("adminStartTime");
-        const enInp = document.getElementById("adminEndTime");
-        const uidInp = document.getElementById("cfgStudentUserId");
-        const upwInp = document.getElementById("cfgStudentUserPass");
-        const admInp = document.getElementById("cfgAdminName");
-
         const saved = getCfg();
-        const modeVal = subSel ? subSel.value : saved.subject;
-        const countVal = cntInp ? Math.min(100, Math.max(1, Number(cntInp.value) || saved.count)) : saved.count;
-        const minVal = minInp ? Math.min(180, Math.max(1, Number(minInp.value) || saved.minutes)) : saved.minutes;
-        const startVal = stInp ? stInp.value : saved.startTime;
-        const endVal = enInp ? enInp.value : saved.endTime;
-        const userIdVal = uidInp ? uidInp.value.trim() : saved.studentUserId;
-        const userPassVal = upwInp ? upwInp.value.trim() : saved.studentUserPass;
-        const adminVal = admInp ? (admInp.value.trim() || saved.adminName) : saved.adminName;
-
-        const modeLabel = modeVal === "gk"
-          ? "केवल सामान्य ज्ञान (GK रैंडम)"
-          : modeVal === "computer"
-          ? "केवल कंप्यूटर (Computer रैंडम)"
-          : "50 GK + 50 Computer (रैंडम मिक्स)";
-
+        const modeVal = document.getElementById("adminSubjectSelect")?.value || saved.subject;
+        const countVal = Math.min(100, Math.max(1, Number(document.getElementById("adminQuestionCount")?.value) || saved.count));
+        const minVal = Math.min(180, Math.max(1, Number(document.getElementById("adminExamMinutes")?.value) || saved.minutes));
+        const startVal = document.getElementById("adminStartTime")?.value ?? saved.startTime;
+        const endVal = document.getElementById("adminEndTime")?.value ?? saved.endTime;
+        const userIdVal = (document.getElementById("cfgStudentUserId")?.value ?? saved.studentUserId).trim();
+        const userPassVal = (document.getElementById("cfgStudentUserPass")?.value ?? saved.studentUserPass).trim();
+        const adminVal = (document.getElementById("cfgAdminName")?.value ?? saved.adminName).trim() || saved.adminName;
+        const modeLabel = modeVal === "gk" ? "केवल सामान्य ज्ञान (GK रैंडम)" : modeVal === "computer" ? "केवल कंप्यूटर (Computer रैंडम)" : "50 GK + 50 Computer (रैंडम मिक्स)";
         ta.value = [
-          `🎓 *${adminVal} — ऑनलाइन परीक्षा सूचना*`,
-          `━━━━━━━━━━━━━━━━━━`,
-          `📚 *विषय / मोड:* ${modeLabel}`,
-          `❓ *कुल प्रश्न:* ${countVal} प्रश्न`,
-          `⏱️ *परीक्षा अवधि:* ${minVal} मिनट`,
-          `🟢 *परीक्षा शुरू होने का समय:* ${format12Hour(startVal)}`,
-          `🔴 *परीक्षा समाप्त होने का समय:* ${format12Hour(endVal)}`,
-          `👤 *User ID:* ${userIdVal || "कोई भी User ID दर्ज करें"}`,
+          `🎓 *${adminVal} — ऑनलाइन परीक्षा सूचना*`, `━━━━━━━━━━━━━━━━━━`,
+          `📚 *विषय / मोड:* ${modeLabel}`, `❓ *कुल प्रश्न:* ${countVal} प्रश्न`,
+          `⏱️ *परीक्षा अवधि:* ${minVal} मिनट`, `🟢 *परीक्षा शुरू होने का समय:* ${format12Hour(startVal)}`,
+          `🔴 *परीक्षा समाप्त होने का समय:* ${format12Hour(endVal)}`, `👤 *User ID:* ${userIdVal || "कोई भी User ID दर्ज करें"}`,
           `🔑 *Password:* ${userPassVal || "आवश्यक नहीं (वैकल्पिक)"}`,
           `📝 *निर्देश:* तय समय शुरू होने पर User ID व Password डालें, फिर नाम व पिता का नाम भरकर परीक्षा शुरू करें।`,
           `🔗 *पोर्टल लिंक:* ${window.location.href}`
@@ -458,77 +381,37 @@
 
       function buildRandomSet(cfg) {
         const totalCount = Math.min(100, Math.max(1, Number(cfg.count) || 50));
-        let pool = [];
-        if (cfg.subject === "gk") {
-          pool = shuffle(GK_POOL);
-        } else if (cfg.subject === "computer") {
-          pool = shuffle(COMP_POOL);
-        } else {
+        let pool = cfg.subject === "gk" ? shuffle(GK_POOL) : cfg.subject === "computer" ? shuffle(COMP_POOL) : (() => {
           const half = Math.ceil(totalCount / 2);
-          const gkPart = shuffle(GK_POOL).slice(0, half);
-          const compPart = shuffle(COMP_POOL).slice(0, totalCount - gkPart.length);
-          pool = shuffle(gkPart.concat(compPart));
-        }
-        const selected = pool.slice(0, totalCount).map((item, idx) => ({
-          ...item,
-          q: `${idx + 1}. [${item.sub}] ${item.q}`
-        }));
-        const queuePayload = {
-          generatedAt: nowStr(),
-          mode: cfg.subject,
-          count: selected.length,
-          minutes: cfg.minutes,
-          startTime: cfg.startTime,
-          endTime: cfg.endTime,
-          questions: selected
-        };
-        localStorage.setItem(QUEUE_KEY, JSON.stringify(queuePayload));
-        renderAdminPreview();
-        return selected;
-      }
-
-      function getQueuedSet() {
-        try { return JSON.parse(localStorage.getItem(QUEUE_KEY)); } catch { return null; }
+          return shuffle(shuffle(GK_POOL).slice(0, half).concat(shuffle(COMP_POOL).slice(0, totalCount - half)));
+        })();
+        const selected = pool.slice(0, totalCount).map((item, idx) => ({ ...item, q: `${idx + 1}. [${item.sub}] ${item.q}` }));
+        localStorage.setItem(QUEUE_KEY, JSON.stringify({ generatedAt: nowStr(), mode: cfg.subject, count: selected.length, minutes: cfg.minutes, startTime: cfg.startTime, endTime: cfg.endTime, questions: selected }));
+        renderAdminPreview(); return selected;
       }
 
       function renderAdminPreview() {
-        const qData = getQueuedSet();
-        const meta = document.getElementById("previewMetaText");
-        const box = document.getElementById("adminQuestionPreviewList");
+        const meta = document.getElementById("previewMetaText"), box = document.getElementById("adminQuestionPreviewList");
         if (!meta || !box) return;
-        if (!qData || !Array.isArray(qData.questions) || qData.questions.length === 0) {
-          meta.textContent = "अभी कोई रैंडम सेट तैयार नहीं है।";
-          box.innerHTML = "";
-          return;
-        }
+        let qData = null;
+        try { qData = JSON.parse(localStorage.getItem(QUEUE_KEY)); } catch {}
+        if (!qData || !Array.isArray(qData.questions) || !qData.questions.length) { meta.textContent = "अभी कोई रैंडम सेट तैयार नहीं है।"; box.innerHTML = ""; return; }
         meta.textContent = `समय: ${qData.generatedAt} | कुल प्रश्न: ${qData.questions.length} | अवधि: ${qData.minutes} मिनट`;
-        box.innerHTML = qData.questions.map(item => `
-          <div class="preview-item">
-            <strong>${esc(item.q)}</strong><br/>
-            <span>सही उत्तर: ${esc(item.options[item.answer])}</span>
-          </div>
-        `).join("");
+        box.innerHTML = qData.questions.map(item => `<div class="preview-item"><strong>${esc(item.q)}</strong><br/><span>सही उत्तर: ${esc(item.options[item.answer])}</span></div>`).join("");
       }
 
       function refreshUI() {
-        const c = getCfg();
+        const c = getCfg(), sched = getScheduleState(c);
         const lbl = c.subject === "gk" ? "केवल GK" : c.subject === "computer" ? "केवल Computer" : "50 GK + 50 Computer";
         document.getElementById("studentExamInfo").textContent = `परीक्षा: ${lbl} (${c.count} प्रश्न | ${c.minutes} मिनट)`;
         document.getElementById("activeAdminLabel").textContent = `एडमिन: ${c.adminName}`;
         document.getElementById("studentPassLabel").textContent = c.studentUserPass ? "पासवर्ड (Password) *" : "पासवर्ड (Password - वैकल्पिक)";
-
-        const sched = getScheduleState(c);
-        const startTxt = c.startTime ? format12Hour(c.startTime) : "तय नहीं";
-        const endTxt = c.endTime ? format12Hour(c.endTime) : "तय नहीं";
-        document.getElementById("globalScheduleBanner").textContent =
-          `🕒 शुरू समय: ${startTxt} | 🏁 समाप्त समय: ${endTxt} — ${sched.statusText}`;
+        const startTxt = c.startTime ? format12Hour(c.startTime) : "तय नहीं", endTxt = c.endTime ? format12Hour(c.endTime) : "तय नहीं";
+        document.getElementById("globalScheduleBanner").textContent = `🕒 शुरू समय: ${startTxt} | 🏁 समाप्त समय: ${endTxt} — ${sched.statusText}`;
         document.getElementById("step1ScheduleStatus").textContent = sched.statusText;
         document.getElementById("step2ScheduleStatus").textContent = sched.statusText;
         document.getElementById("step3EndTimeLine").textContent = `तय समाप्ति समय: ${endTxt}`;
-
-        if (!timerInterval) {
-          document.getElementById("examTimerDisplay").textContent = `बाकी समय: ${formatSec(c.minutes * 60)}`;
-        }
+        if (!timerInterval) document.getElementById("examTimerDisplay").textContent = `बाकी समय: ${formatSec(c.minutes * 60)}`;
       }
 
       function setTheme(mode, btn) {
@@ -539,50 +422,29 @@
         if (btn) btn.classList.add("active");
       }
 
-      function getRecs() { try { return JSON.parse(localStorage.getItem(RECORDS_KEY) || "[]"); } catch { return []; } }
-      function saveRecs(r) { localStorage.setItem(RECORDS_KEY, JSON.stringify(r)); }
+      const getRecs = () => { try { return JSON.parse(localStorage.getItem(RECORDS_KEY) || "[]"); } catch { return []; } };
+      const saveRecs = (r) => localStorage.setItem(RECORDS_KEY, JSON.stringify(r));
 
       function startTimer(minutes) {
-        clearInterval(timerInterval);
-        clearInterval(scheduleWatchInterval);
-        remainingSeconds = minutes * 60;
-        examStartTime = Date.now();
-        examSubmitted = false;
+        clearInterval(timerInterval); clearInterval(scheduleWatchInterval);
+        remainingSeconds = minutes * 60; examStartTime = Date.now(); examSubmitted = false;
         const disp = document.getElementById("examTimerDisplay");
         disp.textContent = `बाकी समय: ${formatSec(remainingSeconds)}`;
-
         timerInterval = setInterval(() => {
           remainingSeconds--;
           disp.textContent = `बाकी समय: ${formatSec(Math.max(0, remainingSeconds))}`;
-          if (remainingSeconds <= 0) {
-            clearInterval(timerInterval);
-            clearInterval(scheduleWatchInterval);
-            if (!examSubmitted) submitExam(true, "अवधि समाप्त");
-          }
+          if (remainingSeconds <= 0) { clearInterval(timerInterval); clearInterval(scheduleWatchInterval); if (!examSubmitted) submitExam(true, "अवधि समाप्त"); }
         }, 1000);
-
         scheduleWatchInterval = setInterval(() => {
-          const c = getCfg();
-          const endObj = parseTodayTime(c.endTime);
-          if (endObj && new Date() >= endObj && !examSubmitted) {
-            clearInterval(timerInterval);
-            clearInterval(scheduleWatchInterval);
-            submitExam(true, "तय समाप्ति समय पूरा");
-          }
+          const endObj = parseTodayTime(getCfg().endTime);
+          if (endObj && new Date() >= endObj && !examSubmitted) { clearInterval(timerInterval); clearInterval(scheduleWatchInterval); submitExam(true, "तय समाप्ति समय पूरा"); }
         }, 1000);
       }
 
       document.getElementById("step1NextBtn").onclick = () => {
-        const c = getCfg();
-        const sched = getScheduleState(c);
-        const msg = document.getElementById("step1Msg");
-        if (!sched.allowed) {
-          msg.textContent = sched.statusText;
-          msg.className = "status err";
-          return;
-        }
-        const id = document.getElementById("studentUserId").value.trim();
-        const pw = document.getElementById("studentUserPass").value;
+        const c = getCfg(), sched = getScheduleState(c), msg = document.getElementById("step1Msg");
+        if (!sched.allowed) { msg.textContent = sched.statusText; msg.className = "status err"; return; }
+        const id = document.getElementById("studentUserId").value.trim(), pw = document.getElementById("studentUserPass").value;
         if (!id) { msg.textContent = "कृपया User ID दर्ज करें।"; msg.className = "status err"; return; }
         if (c.studentUserId && id !== c.studentUserId) { msg.textContent = "गलत User ID।"; msg.className = "status err"; return; }
         if (c.studentUserPass && pw !== c.studentUserPass) { msg.textContent = "गलत Password।"; msg.className = "status err"; return; }
@@ -593,153 +455,71 @@
       };
 
       document.getElementById("step2NextBtn").onclick = () => {
-        const c = getCfg();
-        const sched = getScheduleState(c);
-        const msg = document.getElementById("step2Msg");
-        if (!sched.allowed) {
-          msg.textContent = sched.statusText;
-          msg.className = "status err";
-          return;
-        }
-        const name = document.getElementById("studentName").value.trim();
-        const father = document.getElementById("studentFatherName").value.trim();
+        const c = getCfg(), sched = getScheduleState(c), msg = document.getElementById("step2Msg");
+        if (!sched.allowed) { msg.textContent = sched.statusText; msg.className = "status err"; return; }
+        const name = document.getElementById("studentName").value.trim(), father = document.getElementById("studentFatherName").value.trim();
         if (!name || !father) { msg.textContent = "कृपया छात्र का नाम और पिता का नाम दोनों भरें।"; msg.className = "status err"; return; }
-
         activeQ = buildRandomSet(c);
         const subLbl = c.subject === "gk" ? "GK रैंडम" : c.subject === "computer" ? "Computer रैंडम" : "50 GK + 50 Computer";
-        student = { name, father, userId, subject: subLbl };
-        sessionId = String(Date.now());
+        student = { name, father, userId, subject: subLbl }; sessionId = String(Date.now());
         const recs = getRecs();
         recs.unshift({ id: sessionId, name, father, userId, subject: subLbl, correct: "-", wrong: "-", score: "चल रही है", duration: "-", submitTime: "-" });
         saveRecs(recs);
-
-        msg.textContent = "";
-        document.getElementById("examResult").textContent = "";
-        document.getElementById("finalSummaryBox").classList.add("hidden");
-        document.getElementById("finalSummaryBox").innerHTML = "";
+        msg.textContent = ""; document.getElementById("examResult").textContent = "";
+        const box = document.getElementById("finalSummaryBox"); box.classList.add("hidden"); box.innerHTML = "";
         document.getElementById("step2Card").classList.add("hidden");
         document.getElementById("step3Card").classList.remove("hidden");
         document.getElementById("welcomeStudent").textContent = `नमस्ते, ${name}`;
         document.getElementById("studentMetaLine").textContent = `पिता का नाम: ${father} | User ID: ${userId}`;
         document.getElementById("examSubtitle").textContent = `${subLbl} — ${activeQ.length} प्रश्न (${c.minutes} मिनट)`;
         document.getElementById("examBadge").textContent = subLbl;
-
-        document.getElementById("questionsContainer").innerHTML = activeQ.map((item, idx) => `
-          <div class="question-box">
-            <strong>${esc(item.q)}</strong>
-            ${item.options.map((opt, oIdx) => `
-              <label class="option">
-                <input type="radio" name="q${idx}" value="${oIdx}" />
-                <span>${esc(opt)}</span>
-              </label>
-            `).join("")}
-          </div>
-        `).join("");
-
+        document.getElementById("questionsContainer").innerHTML = activeQ.map((item, idx) => `<div class="question-box"><strong>${esc(item.q)}</strong>${item.options.map((opt, oIdx) => `<label class="option"><input type="radio" name="q${idx}" value="${oIdx}" /><span>${esc(opt)}</span></label>`).join("")}</div>`).join("");
         startTimer(c.minutes);
       };
 
       function submitExam(autoByTime = false, reasonText = "") {
         if (!student || examSubmitted) return;
-        examSubmitted = true;
-        clearInterval(timerInterval);
-        clearInterval(scheduleWatchInterval);
-
+        examSubmitted = true; clearInterval(timerInterval); clearInterval(scheduleWatchInterval);
         let correct = 0, wrong = 0, attempted = 0;
         activeQ.forEach((item, idx) => {
           const sel = document.querySelector(`input[name="q${idx}"]:checked`);
-          if (sel) {
-            attempted++;
-            if (Number(sel.value) === item.answer) correct++;
-            else wrong++;
-          } else {
-            wrong++;
-          }
+          if (sel) { attempted++; if (Number(sel.value) === item.answer) correct++; else wrong++; } else wrong++;
         });
-
-        const total = activeQ.length;
-        const elapsedSec = Math.max(1, Math.floor((Date.now() - examStartTime) / 1000));
-        const durationStr = formatSec(elapsedSec);
-        const submitTime = nowStr();
-
-        const recs = getRecs();
-        const i = recs.findIndex(r => r.id === sessionId);
-        const row = {
-          id: sessionId,
-          ...student,
-          correct,
-          wrong,
-          score: `${correct}/${total}`,
-          duration: durationStr,
-          submitTime
-        };
+        const total = activeQ.length, durationStr = formatSec(Math.max(1, Math.floor((Date.now() - examStartTime) / 1000))), submitTime = nowStr();
+        const recs = getRecs(), i = recs.findIndex(r => r.id === sessionId);
+        const row = { id: sessionId, ...student, correct, wrong, score: `${correct}/${total}`, duration: durationStr, submitTime };
         if (i !== -1) recs[i] = row; else recs.unshift(row);
         saveRecs(recs);
-
         const resEl = document.getElementById("examResult");
-        resEl.textContent = autoByTime
-          ? `${reasonText || "समय समाप्त"} — परीक्षा अपने आप सबमिट हो गई!`
-          : "परीक्षा सफलतापूर्वक सबमिट हो गई — परिणाम नीचे बॉक्स में है!";
+        resEl.textContent = autoByTime ? `${reasonText || "समय समाप्त"} — परीक्षा अपने आप सबमिट हो गई!` : "परीक्षा सफलतापूर्वक सबमिट हो गई — परिणाम नीचे बॉक्स में है!";
         resEl.className = "status ok";
-
-        const box = document.getElementById("finalSummaryBox");
-        box.classList.remove("hidden");
-        box.innerHTML = `
-          <h3>📄 छात्र अंतिम परिणाम विवरण</h3>
-          <div class="summary-grid">
-            <div class="summary-item"><strong>छात्र का नाम:</strong> ${esc(student.name)}</div>
-            <div class="summary-item"><strong>पिता का नाम:</strong> ${esc(student.father)}</div>
-            <div class="summary-item"><strong>User ID:</strong> ${esc(student.userId)}</div>
-            <div class="summary-item"><strong>परीक्षा मोड:</strong> ${esc(student.subject)}</div>
-            <div class="summary-item"><strong>कुल प्रश्न:</strong> ${total}</div>
-            <div class="summary-item"><strong>हल किए गए प्रश्न:</strong> ${attempted}</div>
-            <div class="summary-item"><strong>सही उत्तर:</strong> ${correct}</div>
-            <div class="summary-item"><strong>गलत उत्तर:</strong> ${wrong}</div>
-            <div class="summary-item"><strong>कुल स्कोर:</strong> ${correct} / ${total}</div>
-            <div class="summary-item"><strong>लिया गया समय:</strong> ${esc(durationStr)}</div>
-            <div class="summary-item" style="grid-column: 1 / -1;"><strong>सबमिट समय:</strong> ${esc(submitTime)}</div>
-          </div>
-        `;
+        const box = document.getElementById("finalSummaryBox"); box.classList.remove("hidden");
+        box.innerHTML = `<h3>📄 छात्र अंतिम परिणाम विवरण</h3><div class="summary-grid"><div class="summary-item"><strong>छात्र का नाम:</strong> ${esc(student.name)}</div><div class="summary-item"><strong>पिता का नाम:</strong> ${esc(student.father)}</div><div class="summary-item"><strong>User ID:</strong> ${esc(student.userId)}</div><div class="summary-item"><strong>परीक्षा मोड:</strong> ${esc(student.subject)}</div><div class="summary-item"><strong>कुल प्रश्न:</strong> ${total}</div><div class="summary-item"><strong>हल किए गए प्रश्न:</strong> ${attempted}</div><div class="summary-item"><strong>सही उत्तर:</strong> ${correct}</div><div class="summary-item"><strong>गलत उत्तर:</strong> ${wrong}</div><div class="summary-item"><strong>कुल स्कोर:</strong> ${correct} / ${total}</div><div class="summary-item"><strong>लिया गया समय:</strong> ${esc(durationStr)}</div><div class="summary-item" style="grid-column: 1 / -1;"><strong>सबमिट समय:</strong> ${esc(submitTime)}</div></div>`;
         box.scrollIntoView({ behavior: "smooth" });
       }
 
       document.getElementById("submitExamBtn").onclick = () => submitExam(false);
-
-      function openAdmin() {
-        clearInterval(timerInterval);
-        clearInterval(scheduleWatchInterval);
-        timerInterval = null;
+      document.getElementById("carAdminBtn").onclick = () => {
+        clearInterval(timerInterval); clearInterval(scheduleWatchInterval); timerInterval = null;
         ["step1Card", "step2Card", "step3Card", "adminDashboardCard"].forEach(id => document.getElementById(id).classList.add("hidden"));
         document.getElementById("adminAuthCard").classList.remove("hidden");
-        document.getElementById("adminPassInput").value = "";
-        document.getElementById("adminAuthMsg").textContent = "";
-      }
-      document.getElementById("carAdminBtn").onclick = openAdmin;
+        document.getElementById("adminPassInput").value = ""; document.getElementById("adminAuthMsg").textContent = "";
+      };
       document.querySelectorAll(".close-admin-btn").forEach(b => b.onclick = () => {
         ["adminAuthCard", "adminDashboardCard"].forEach(id => document.getElementById(id).classList.add("hidden"));
-        document.getElementById("step1Card").classList.remove("hidden");
-        refreshUI();
+        document.getElementById("step1Card").classList.remove("hidden"); refreshUI();
       });
 
       document.getElementById("verifyAdminBtn").onclick = () => {
-        const c = getCfg();
-        const v = document.getElementById("adminPassInput").value;
+        const c = getCfg(), v = document.getElementById("adminPassInput").value;
         if (v === c.adminPin || v === c.adminPassword) {
-          document.getElementById("cfgAdminName").value = c.adminName;
-          document.getElementById("cfgAdminPassword").value = c.adminPassword;
-          document.getElementById("cfgAdminPin").value = c.adminPin;
-          document.getElementById("cfgStudentUserId").value = c.studentUserId;
-          document.getElementById("cfgStudentUserPass").value = c.studentUserPass;
-          document.getElementById("adminSubjectSelect").value = c.subject;
-          document.getElementById("adminQuestionCount").value = c.count;
-          document.getElementById("adminExamMinutes").value = c.minutes;
-          document.getElementById("adminStartTime").value = c.startTime || "";
-          document.getElementById("adminEndTime").value = c.endTime || "";
+          ["cfgAdminName", "cfgAdminPassword", "cfgAdminPin", "cfgStudentUserId", "cfgStudentUserPass", "adminSubjectSelect", "adminQuestionCount", "adminExamMinutes", "adminStartTime", "adminEndTime"].forEach(k => {
+            const map = { cfgAdminName: c.adminName, cfgAdminPassword: c.adminPassword, cfgAdminPin: c.adminPin, cfgStudentUserId: c.studentUserId, cfgStudentUserPass: c.studentUserPass, adminSubjectSelect: c.subject, adminQuestionCount: c.count, adminExamMinutes: c.minutes, adminStartTime: c.startTime || "", adminEndTime: c.endTime || "" };
+            document.getElementById(k).value = map[k];
+          });
           document.getElementById("adminAuthCard").classList.add("hidden");
           document.getElementById("adminDashboardCard").classList.remove("hidden");
-          updateWhatsappBox();
-          renderAdminPreview();
-          renderTable();
+          updateWhatsappBox(); renderAdminPreview(); renderTable();
         } else {
           document.getElementById("adminAuthMsg").textContent = "गलत पिन या पासवर्ड।";
           document.getElementById("adminAuthMsg").className = "status err";
@@ -748,13 +528,48 @@
 
       ["adminSubjectSelect", "adminQuestionCount", "adminExamMinutes", "adminStartTime", "adminEndTime", "cfgStudentUserId", "cfgStudentUserPass", "cfgAdminName"].forEach(id => {
         const el = document.getElementById(id);
-        if (el) {
-          el.addEventListener("input", updateWhatsappBox);
-          el.addEventListener("change", updateWhatsappBox);
-        }
+        if (el) { el.addEventListener("input", updateWhatsappBox); el.addEventListener("change", updateWhatsappBox); }
       });
 
       document.getElementById("copyWhatsappBtn").onclick = async () => {
-        const ta = document.getElementById("whatsappShareText");
-        const msg = document.getElementById("whatsappCopyMsg");
-     
+        const ta = document.getElementById("whatsappShareText"), msg = document.getElementById("whatsappCopyMsg");
+        try { await navigator.clipboard.writeText(ta.value); } catch { ta.select(); document.execCommand("copy"); }
+        msg.textContent = "WhatsApp मैसेज कॉपी हो गया! अब ग्रुप में पेस्ट करें।"; msg.className = "status ok";
+      };
+
+      document.getElementById("generatePreviewSetBtn").onclick = () => buildRandomSet(getCfg());
+      document.getElementById("saveAdminCredBtn").onclick = () => {
+        const c = getCfg();
+        saveCfg({ ...c, adminName: document.getElementById("cfgAdminName").value.trim() || c.adminName, adminPassword: document.getElementById("cfgAdminPassword").value.trim() || c.adminPassword, adminPin: document.getElementById("cfgAdminPin").value.trim() || c.adminPin, studentUserId: document.getElementById("cfgStudentUserId").value.trim(), studentUserPass: document.getElementById("cfgStudentUserPass").value.trim() });
+        document.getElementById("adminCredMsg").textContent = "क्रेडेंशियल सेव हो गए और WhatsApp बॉक्स अपडेट हो गया।";
+        document.getElementById("adminCredMsg").className = "status ok";
+      };
+
+      document.getElementById("saveExamCfgBtn").onclick = () => {
+        const c = getCfg(), stVal = document.getElementById("adminStartTime").value, enVal = document.getElementById("adminEndTime").value, msgEl = document.getElementById("configMsg");
+        if (stVal && enVal && stVal >= enVal) { msgEl.textContent = "समाप्ति समय (End Time), शुरू समय (Start Time) के बाद होना चाहिए।"; msgEl.className = "status err"; return; }
+        const nextCfg = { ...c, subject: document.getElementById("adminSubjectSelect").value, count: Math.min(100, Math.max(1, Number(document.getElementById("adminQuestionCount").value) || 50)), minutes: Math.min(180, Math.max(1, Number(document.getElementById("adminExamMinutes").value) || 30)), startTime: stVal, endTime: enVal };
+        saveCfg(nextCfg); buildRandomSet(nextCfg);
+        msgEl.textContent = `सेटिंग्स सेव हो गईं! शुरू: ${format12Hour(stVal)} | समाप्त: ${format12Hour(enVal)}`; msgEl.className = "status ok";
+      };
+
+      function renderTable() {
+        const recs = getRecs();
+        document.getElementById("adminTableBody").innerHTML = recs.length ? recs.map((r, i) => `<tr><td>${i+1}</td><td>${esc(r.name)}</td><td>${esc(r.father||"-")}</td><td>${esc(r.userId||"-")}</td><td>${esc(r.subject||"-")}</td><td>${r.correct}</td><td>${r.wrong}</td><td>${r.score}</td><td>${esc(r.duration||"-")}</td><td>${esc(r.submitTime||"-")}</td></tr>`).join("") : '<tr><td colspan="10">कोई रिकॉर्ड नहीं है।</td></tr>';
+      }
+
+      document.getElementById("downloadCsvBtn").onclick = () => {
+        const recs = getRecs(), rows = [["#", "Name", "Father", "User ID", "Mode", "Correct", "Wrong", "Score", "Duration", "Submit"]];
+        recs.forEach((r, i) => rows.push([i+1, r.name, r.father||"-", r.userId||"-", r.subject||"-", r.correct, r.wrong, r.score, r.duration||"-", r.submitTime||"-"]));
+        const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
+        const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8;" })); a.download = "pj_joshi_exam_results.csv"; a.click();
+      };
+
+      document.getElementById("clearRecordsBtn").onclick = () => { localStorage.removeItem(RECORDS_KEY); renderTable(); };
+      document.querySelectorAll(".mode-btn[data-theme]").forEach(btn => { btn.onclick = () => setTheme(btn.dataset.theme, btn); });
+
+      refreshUI(); updateWhatsappBox(); renderAdminPreview(); setInterval(refreshUI, 15000);
+    })();
+  </script>
+</body>
+</html>
