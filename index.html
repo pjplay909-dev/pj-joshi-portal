@@ -25,19 +25,17 @@
     .header-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; position: relative; z-index: 5; }
     .brand { display: flex; align-items: center; gap: 14px; }
     .logo-box { width: 52px; height: 52px; border-radius: 14px; background: var(--primary); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 20px; flex-shrink: 0; }
-    .subtle-car-btn { border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 22px; line-height: 1; padding: 10px 12px; border-radius: 12px; cursor: pointer; position: relative; z-index: 15; pointer-events: auto; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
-    .subtle-car-btn:active { transform: scale(0.94); }
+    .subtle-car-btn { border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 22px; line-height: 1; padding: 10px 12px; border-radius: 12px; cursor: pointer; position: relative; z-index: 15; touch-action: manipulation; }
     h1, h2, h3, h4, p { margin: 0; }
     .subtitle { color: var(--muted); font-size: 14px; margin-top: 4px; }
     .modes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-    .mode-btn { border: 1px solid var(--border); background: transparent; color: var(--text); padding: 8px 14px; border-radius: 999px; cursor: pointer; font-size: 13px; font-weight: 600; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+    .mode-btn { border: 1px solid var(--border); background: transparent; color: var(--text); padding: 8px 14px; border-radius: 999px; cursor: pointer; font-size: 13px; font-weight: 600; touch-action: manipulation; }
     .mode-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
     .form-group { margin-top: 14px; }
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
     label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
     input, select { width: 100%; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 15px; }
     .btn { width: 100%; margin-top: 16px; padding: 13px; border: none; border-radius: 12px; background: var(--primary); color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; touch-action: manipulation; }
-    .btn:hover { background: var(--primary-hover); }
     .hidden { display: none !important; }
     .section-box { margin-top: 16px; padding: 16px; border: 1px solid var(--border); border-radius: 14px; }
     .question-box { margin-top: 16px; padding: 14px; border: 1px solid var(--border); border-radius: 12px; }
@@ -46,6 +44,11 @@
     .status { margin-top: 12px; font-size: 14px; font-weight: 600; }
     .status.ok { color: var(--success); }
     .status.err { color: var(--danger); }
+    .summary-box { margin-top: 16px; padding: 16px; border: 2px solid var(--primary); border-radius: 14px; background: var(--bg); }
+    .summary-box p { margin-top: 6px; font-size: 14px; }
+    .preview-list { margin-top: 10px; max-height: 280px; overflow-y: auto; border: 1px solid var(--border); border-radius: 10px; padding: 10px; font-size: 13px; }
+    .preview-item { padding: 6px 0; border-bottom: 1px solid var(--border); }
+    .preview-item:last-child { border-bottom: none; }
     table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 13px; }
     th, td { border: 1px solid var(--border); padding: 8px; text-align: left; white-space: nowrap; }
     .top-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -64,7 +67,7 @@
             <p class="subtitle" id="activeAdminLabel" style="font-size:12px;"></p>
           </div>
         </div>
-        <button type="button" id="carAdminBtn" class="subtle-car-btn" title="Admin Access">🚗</button>
+        <button type="button" id="carAdminBtn" class="subtle-car-btn" title="Admin">🚗</button>
       </div>
       <div class="modes">
         <button type="button" class="mode-btn active" data-theme="clear">क्लियर मोड</button>
@@ -77,12 +80,11 @@
       <div style="text-align:center;">
         <div class="logo-box" style="margin:0 auto 10px;">PJ</div>
         <h2>चरण 1: यूज़र लॉगिन</h2>
-        <p class="subtitle" style="margin-top:8px;">अपनी यूज़र आईडी और पासवर्ड दर्ज करें।</p>
-        <p class="subtitle" id="studentExamInfo" style="margin-top:6px; font-weight:600;"></p>
+        <p class="subtitle" id="studentExamInfo" style="margin-top:8px; font-weight:600;"></p>
       </div>
-      <div class="form-group"><label>यूज़र आईडी (User ID) *</label><input type="text" id="studentUserId" placeholder="यूज़र आईडी दर्ज करें" /></div>
-      <div class="form-group"><label id="studentPassLabel">यूज़र पासवर्ड (User Password)</label><input type="password" id="studentUserPass" placeholder="पासवर्ड दर्ज करें" /></div>
-      <button type="button" class="btn" id="step1NextBtn">आगे बढ़ें (Next)</button>
+      <div class="form-group"><label>यूज़र आईडी *</label><input type="text" id="studentUserId" placeholder="यूज़र आईडी दर्ज करें" /></div>
+      <div class="form-group"><label id="studentPassLabel">यूज़र पासवर्ड</label><input type="password" id="studentUserPass" placeholder="पासवर्ड दर्ज करें" /></div>
+      <button type="button" class="btn" id="step1NextBtn">आगे बढ़ें</button>
       <div id="step1Msg" class="status"></div>
     </div>
 
@@ -90,11 +92,10 @@
       <div style="text-align:center;">
         <div class="logo-box" style="margin:0 auto 10px;">PJ</div>
         <h2>चरण 2: विद्यार्थी विवरण</h2>
-        <p class="subtitle" style="margin-top:8px;">अपना और पिता का नाम भरें।</p>
-        <p class="subtitle" id="step2UserBadge" style="margin-top:6px; font-weight:600;"></p>
+        <p class="subtitle" id="step2UserBadge" style="margin-top:8px; font-weight:600;"></p>
       </div>
-      <div class="form-group"><label>अपना नाम (Full Name) *</label><input type="text" id="studentName" placeholder="अपना नाम दर्ज करें" /></div>
-      <div class="form-group"><label>पिता का नाम (Father's Name) *</label><input type="text" id="studentFatherName" placeholder="पिता का नाम दर्ज करें" /></div>
+      <div class="form-group"><label>छात्र का नाम *</label><input type="text" id="studentName" placeholder="अपना नाम लिखें" /></div>
+      <div class="form-group"><label>पिता का नाम *</label><input type="text" id="studentFatherName" placeholder="पिता का नाम लिखें" /></div>
       <button type="button" class="btn" id="step2NextBtn">परीक्षा शुरू करें</button>
       <div id="step2Msg" class="status"></div>
     </div>
@@ -104,24 +105,33 @@
         <div>
           <h2 id="welcomeStudent"></h2>
           <p class="subtitle" id="studentMetaLine"></p>
-          <p class="subtitle" id="examSubtitle">अभ्यास परीक्षा</p>
+          <p class="subtitle" id="examSubtitle"></p>
         </div>
-        <span class="badge" id="examBadge">Student Mode</span>
+        <span class="badge" id="examBadge">Random Exam</span>
       </div>
       <div id="questionsContainer"></div>
       <button type="button" class="btn" id="submitExamBtn">परीक्षा सबमिट करें</button>
       <div id="examResult" class="status"></div>
+      <div id="finalSummaryBox" class="summary-box hidden"></div>
     </div>
 
     <div class="card hidden" id="adminAuthCard">
       <div class="top-bar"><h2>🔒 एडमिन लॉगिन</h2><button type="button" class="mode-btn close-admin-btn">वापस</button></div>
-      <div class="form-group"><label>एडमिन पिन / पासवर्ड</label><input type="password" id="adminPassInput" placeholder="पिन या पासवर्ड दर्ज करें" /></div>
+      <div class="form-group"><label>एडमिन पिन / पासवर्ड</label><input type="password" id="adminPassInput" placeholder="पिन या पासवर्ड" /></div>
       <button type="button" class="btn" id="verifyAdminBtn">लॉगिन करें</button>
       <div id="adminAuthMsg" class="status"></div>
     </div>
 
     <div class="card hidden" id="adminDashboardCard">
       <div class="top-bar"><h2>📊 एडमिन कंट्रोल पैनल</h2><button type="button" class="mode-btn close-admin-btn">बंद करें</button></div>
+
+      <div class="section-box">
+        <h3>👁️ Selected Questions Preview (Admin को पहले से दिखेंगे)</h3>
+        <p class="subtitle" id="previewMetaText">अभी कोई Random Set तैयार नहीं है।</p>
+        <button type="button" class="btn" id="generatePreviewSetBtn">नया Random सेट अभी तैयार करें</button>
+        <div id="adminQuestionPreviewList" class="preview-list"></div>
+      </div>
+
       <div class="section-box">
         <h3>🛡️ क्रेडेंशियल सेटिंग्स</h3>
         <div class="grid-2" style="margin-top:12px;">
@@ -131,31 +141,35 @@
           <div><label>तय यूज़र आईडी</label><input type="text" id="cfgStudentUserId" /></div>
           <div><label>तय यूज़र पासवर्ड</label><input type="text" id="cfgStudentUserPass" /></div>
         </div>
-        <button type="button" class="btn" id="saveAdminCredBtn">क्रेडेंशियल सेव करें</button>
+        <button type="button" class="btn" id="saveAdminCredBtn">सेव करें</button>
         <div id="adminCredMsg" class="status"></div>
       </div>
+
       <div class="section-box">
-        <h3>⚙️ परीक्षा सेटिंग्स</h3>
+        <h3>⚙️ परीक्षा सेटिंग्स (50 GK + 50 Computer)</h3>
         <div class="grid-2" style="margin-top:12px;">
-          <div><label>डिफ़ॉल्ट विषय</label><select id="adminSubjectSelect"><option value="gk">सामान्य ज्ञान (20)</option><option value="computer">कंप्यूटर (20)</option></select></div>
-          <div><label>प्रश्न संख्या (1-20)</label><input type="number" id="adminQuestionCount" min="1" max="20" value="10" /></div>
+          <div>
+            <label>विषय चुनें</label>
+            <select id="adminSubjectSelect">
+              <option value="all100">दोनों विषय Random (50 GK + 50 Computer)</option>
+              <option value="gk">केवल सामान्य ज्ञान (50 Random GK)</option>
+              <option value="computer">केवल कंप्यूटर (50 Random Computer)</option>
+            </select>
+          </div>
+          <div><label>प्रश्न संख्या (1 से 100)</label><input type="number" id="adminQuestionCount" min="1" max="100" value="50" /></div>
         </div>
         <button type="button" class="btn" id="saveExamCfgBtn">सेटिंग्स सेव करें</button>
         <div id="configMsg" class="status"></div>
-        <div style="margin-top:16px; padding-top:14px; border-top:1px solid var(--border);">
-          <h4>➕ नया प्रश्न</h4>
-          <div class="grid-2">
-            <select id="newQSubject"><option value="gk">सामान्य ज्ञान</option><option value="computer">कंप्यूटर</option></select>
-            <select id="newQAnswer"><option value="0">A</option><option value="1">B</option><option value="2">C</option><option value="3">D</option></select>
-          </div>
-          <div class="form-group"><input type="text" id="newQText" placeholder="प्रश्न लिखें" /></div>
-          <div class="grid-2"><input type="text" id="newQOpt0" placeholder="A" /><input type="text" id="newQOpt1" placeholder="B" /><input type="text" id="newQOpt2" placeholder="C" /><input type="text" id="newQOpt3" placeholder="D" /></div>
-          <button type="button" class="btn" id="addCustomQBtn">जोड़ें</button>
-          <div id="addQMsg" class="status"></div>
-        </div>
       </div>
+
       <div class="section-box">
-        <div class="top-bar"><h3>📋 छात्रों का रिकॉर्ड</h3><div><button type="button" class="mode-btn active" id="downloadCsvBtn">CSV डाउनलोड</button><button type="button" class="mode-btn" id="clearRecordsBtn">डेटा साफ़</button></div></div>
+        <div class="top-bar">
+          <h3>📋 छात्रों का रिकॉर्ड</h3>
+          <div style="display:flex; gap:8px;">
+            <button type="button" class="mode-btn active" id="downloadCsvBtn">CSV</button>
+            <button type="button" class="mode-btn" id="clearRecordsBtn">साफ़ करें</button>
+          </div>
+        </div>
         <div style="overflow-x:auto;">
           <table>
             <thead><tr><th>#</th><th>नाम</th><th>पिता</th><th>ID</th><th>विषय</th><th>सही</th><th>गलत</th><th>स्कोर</th><th>लॉगिन</th><th>सबमिट</th></tr></thead>
@@ -164,47 +178,197 @@
         </div>
       </div>
     </div>
-  </div>
-    <script>
+          </div>
+  <script>
     (function () {
-      const RECORDS_KEY = "pj_joshi_portal_records_v10", CONFIG_KEY = "pj_joshi_portal_config_v8", CUSTOM_Q_KEY = "pj_joshi_portal_custom_q_v7";
-      const DEFAULT_GK = [
-        { q: "1. भारत की राजधानी क्या है?", options: ["मुंबई", "नई दिल्ली", "कोलकाता", "चेन्नई"], answer: 1 },
-        { q: "2. राजस्थान का सबसे बड़ा जिला कौन-सा है?", options: ["जयपुर", "जोधपुर", "जैसलमेर", "बीकानेर"], answer: 2 },
-        { q: "3. भारत का राष्ट्रीय पशु कौन-सा है?", options: ["शेर", "बाघ", "हाथी", "चीता"], answer: 1 },
-        { q: "4. संविधान सभा के प्रारूप समिति के अध्यक्ष कौन थे?", options: ["डॉ. राजेंद्र प्रसाद", "डॉ. बी. आर. अम्बेडकर", "जवाहरलाल नेहरू", "सरदार पटेल"], answer: 1 },
-        { q: "5. पृथ्वी पर सबसे बड़ा महासागर कौन-सा है?", options: ["अटलांटिक महासागर", "हिंद महासागर", "प्रशांत महासागर", "आर्कटिक महासागर"], answer: 2 }
+      const RECORDS_KEY = "pj_portal_rec_100", CONFIG_KEY = "pj_portal_cfg_100", QUEUE_KEY = "pj_portal_queue_100";
+
+      const GK_POOL = [
+        { sub: "GK", q: "भारत की राजधानी क्या है?", options: ["मुंबई", "नई दिल्ली", "कोलकाता", "चेन्नई"], answer: 1 },
+        { sub: "GK", q: "राजस्थान का सबसे बड़ा जिला कौन-सा है?", options: ["जयपुर", "जोधपुर", "जैसलमेर", "बीकानेर"], answer: 2 },
+        { sub: "GK", q: "भारत का राष्ट्रीय पशु कौन-सा है?", options: ["शेर", "बाघ", "हाथी", "चीता"], answer: 1 },
+        { sub: "GK", q: "संविधान सभा की प्रारूप समिति के अध्यक्ष कौन थे?", options: ["डॉ. राजेंद्र प्रसाद", "डॉ. बी. आर. अम्बेडकर", "नेहरू", "सरदार पटेल"], answer: 1 },
+        { sub: "GK", q: "पृथ्वी पर सबसे बड़ा महासागर कौन-सा है?", options: ["अटलांटिक", "हिंद", "प्रशांत", "आर्कटिक"], answer: 2 },
+        { sub: "GK", q: "भारत का राष्ट्रीय पक्षी कौन-सा है?", options: ["तोता", "मोर", "कबूतर", "हंस"], answer: 1 },
+        { sub: "GK", q: "'जय जवान जय किसान' का नारा किसने दिया?", options: ["गांधीजी", "लाल बहादुर शास्त्री", "बोस", "भगत सिंह"], answer: 1 },
+        { sub: "GK", q: "राजस्थान की राजधानी क्या है?", options: ["उदयपुर", "जोधपुर", "जयपुर", "अजमेर"], answer: 2 },
+        { sub: "GK", q: "भारत में कुल कितने राज्य हैं?", options: ["27", "28", "29", "30"], answer: 1 },
+        { sub: "GK", q: "ताजमहल कहाँ स्थित है?", options: ["दिल्ली", "आगरा", "जयपुर", "लखनऊ"], answer: 1 },
+        { sub: "GK", q: "भारत का राष्ट्रीय फूल कौन-सा है?", options: ["गुलाब", "कमल", "सूरजमुखी", "गेंदा"], answer: 1 },
+        { sub: "GK", q: "सौरमंडल का सबसे बड़ा ग्रह कौन-सा है?", options: ["मंगल", "शनि", "बृहस्पति", "शुक्र"], answer: 2 },
+        { sub: "GK", q: "भारतीय संविधान कब लागू हुआ?", options: ["15 अगस्त 1947", "26 जनवरी 1950", "26 नवंबर 1949", "2 अक्टूबर 1950"], answer: 1 },
+        { sub: "GK", q: "'गुलाबी शहर' किस शहर को कहा जाता है?", options: ["जोधपुर", "उदयपुर", "जयपुर", "बीकानेर"], answer: 2 },
+        { sub: "GK", q: "भारत की सबसे लंबी नदी कौन-सी है?", options: ["यमुना", "गंगा", "ब्रह्मपुत्र", "गोदावरी"], answer: 1 },
+        { sub: "GK", q: "'स्वराज मेरा जन्मसिद्ध अधिकार है' किसने कहा?", options: ["बाल गंगाधर तिलक", "लाला लाजपत राय", "बिपिन चंद्र पाल", "मदन मोहन मालवीय"], answer: 0 },
+        { sub: "GK", q: "सूर्य के सबसे नजदीक ग्रह कौन-सा है?", options: ["शुक्र", "बुध", "मंगल", "पृथ्वी"], answer: 1 },
+        { sub: "GK", q: "थार मरुस्थल मुख्य रूप से किस राज्य में है?", options: ["गुजरात", "पंजाब", "राजस्थान", "हरियाणा"], answer: 2 },
+        { sub: "GK", q: "भारत का राष्ट्रीय गीत क्या है?", options: ["जन गण मन", "वंदे मातरम्", "सारे जहाँ से अच्छा", "कदम कदम बढ़ाए जा"], answer: 1 },
+        { sub: "GK", q: "नोबेल पुरस्कार पाने वाले पहले भारतीय कौन थे?", options: ["सी. वी. रमन", "रवींद्रनाथ टैगोर", "अमर्त्य सेन", "मदर टेरेसा"], answer: 1 },
+        { sub: "GK", q: "हवा महल कहाँ स्थित है?", options: ["उदयपुर", "जयपुर", "जोधपुर", "कोटा"], answer: 1 },
+        { sub: "GK", q: "क्षेत्रफल की दृष्टि से भारत का सबसे बड़ा राज्य कौन-सा है?", options: ["मध्य प्रदेश", "उत्तर प्रदेश", "राजस्थान", "महाराष्ट्र"], answer: 2 },
+        { sub: "GK", q: "महात्मा गांधी का जन्म कब हुआ था?", options: ["2 अक्टूबर 1869", "15 अगस्त 1869", "26 जनवरी 1869", "30 जनवरी 1869"], answer: 0 },
+        { sub: "GK", q: "अरावली पर्वतमाला का सबसे ऊँचा शिखर कौन-सा है?", options: ["गुरु शिखर", "अचलगढ़", "तारागढ़", "कुंभलगढ़"], answer: 0 },
+        { sub: "GK", q: "भारत का राष्ट्रगान किसने लिखा?", options: ["बंकिमचंद्र चटर्जी", "रवींद्रनाथ टैगोर", "सरोजिनी नायडू", "प्रेमचंद"], answer: 1 },
+        { sub: "GK", q: "विश्व का सबसे बड़ा महाद्वीप कौन-सा है?", options: ["अफ्रीका", "एशिया", "यूरोप", "ऑस्ट्रेलिया"], answer: 1 },
+        { sub: "GK", q: "विश्व की सबसे ऊँची पर्वत चोटी कौन-सी है?", options: ["K2", "कंचनजंगा", "माउंट एवरेस्ट", "नंदा देवी"], answer: 2 },
+        { sub: "GK", q: "भारत के पहले प्रधानमंत्री कौन थे?", options: ["सरदार पटेल", "जवाहरलाल नेहरू", "राजेंद्र प्रसाद", "लाल बहादुर शास्त्री"], answer: 1 },
+        { sub: "GK", q: "भारत के पहले राष्ट्रपति कौन थे?", options: ["डॉ. राजेंद्र प्रसाद", "डॉ. राधाकृष्णन", "जाकिर हुसैन", "वी. वी. गिरि"], answer: 0 },
+        { sub: "GK", q: "लाल किला कहाँ स्थित है?", options: ["आगरा", "दिल्ली", "जयपुर", "मुंबई"], answer: 1 },
+        { sub: "GK", q: "गेटवे ऑफ इंडिया कहाँ स्थित है?", options: ["दिल्ली", "मुंबई", "कोलकाता", "चेन्नई"], answer: 1 },
+        { sub: "GK", q: "इंडिया गेट कहाँ स्थित है?", options: ["नई दिल्ली", "मुंबई", "लखनऊ", "भोपाल"], answer: 0 },
+        { sub: "GK", q: "भारत में शिक्षक दिवस कब मनाया जाता है?", options: ["5 सितंबर", "14 नवंबर", "2 अक्टूबर", "15 जनवरी"], answer: 0 },
+        { sub: "GK", q: "बाल दिवस कब मनाया जाता है?", options: ["5 सितंबर", "14 नवंबर", "8 मार्च", "1 मई"], answer: 1 },
+        { sub: "GK", q: "अंतरराष्ट्रीय योग दिवस कब मनाया जाता है?", options: ["21 जून", "5 जून", "11 जुलाई", "10 दिसंबर"], answer: 0 },
+        { sub: "GK", q: "विश्व पर्यावरण दिवस कब मनाया जाता है?", options: ["21 जून", "5 जून", "22 अप्रैल", "16 सितंबर"], answer: 1 },
+        { sub: "GK", q: "पृथ्वी दिवस कब मनाया जाता है?", options: ["22 मार्च", "22 अप्रैल", "5 जून", "1 दिसंबर"], answer: 1 },
+        { sub: "GK", q: "जल दिवस कब मनाया जाता है?", options: ["22 मार्च", "22 अप्रैल", "8 मई", "14 सितंबर"], answer: 0 },
+        { sub: "GK", q: "हिंदी दिवस कब मनाया जाता है?", options: ["14 सितंबर", "10 जनवरी", "26 जनवरी", "15 अगस्त"], answer: 0 },
+        { sub: "GK", q: "भारत का राष्ट्रीय वृक्ष कौन-सा है?", options: ["पीपल", "बरगद", "नीम", "आम"], answer: 1 },
+        { sub: "GK", q: "भारत का राष्ट्रीय फल कौन-सा है?", options: ["केला", "सेब", "आम", "संतरा"], answer: 2 },
+        { sub: "GK", q: "भारत का राष्ट्रीय जलीय जीव कौन-सा है?", options: ["मगरमच्छ", "गंगा डॉल्फिन", "कछुआ", "व्हेल"], answer: 1 },
+        { sub: "GK", q: "'लौह पुरुष' किसे कहा जाता है?", options: ["भगत सिंह", "सरदार वल्लभभाई पटेल", "सुभाष चंद्र बोस", "बाल गंगाधर तिलक"], answer: 1 },
+        { sub: "GK", q: "'नेताजी' किसका उपनाम है?", options: ["जवाहरलाल नेहरू", "सुभाष चंद्र बोस", "चंद्रशेखर आजाद", "गोपाल कृष्ण गोखले"], answer: 1 },
+        { sub: "GK", q: "राजस्थान का राज्य पक्षी कौन-सा है?", options: ["मोर", "गोडावण", "सारस", "कबूतर"], answer: 1 },
+        { sub: "GK", q: "राजस्थान का राज्य पशु (वन्यजीव) कौन-सा है?", options: ["बाघ", "चिंकारा", "हिरण", "भालू"], answer: 1 },
+        { sub: "GK", q: "राजस्थान का राज्य वृक्ष कौन-सा है?", options: ["नीम", "खेजड़ी", "बबूल", "पीपल"], answer: 1 },
+        { sub: "GK", q: "राजस्थान का राज्य पुष्प कौन-सा है?", options: ["कमल", "रोहिड़ा", "गुलाब", "गेंदा"], answer: 1 },
+        { sub: "GK", q: "सूरतगढ़ किस जिले में स्थित है?", options: ["बीकानेर", "श्रीगंगानगर", "हनुमानगढ़", "चूरू"], answer: 1 },
+        { sub: "GK", q: "भारत की मुद्रा क्या है?", options: ["डॉलर", "रुपया", "येन", "पाउंड"], answer: 1 }
       ];
-      const DEFAULT_COMPUTER = [
-        { q: "1. CPU का पूरा नाम क्या है?", options: ["Central Processing Unit", "Computer Personal Unit", "Central Print Unit", "Control Program Utility"], answer: 0 },
-        { q: "2. HTML का उपयोग किस लिए किया जाता है?", options: ["डेटाबेस", "वेब संरचना", "OS", "वीडियो एडिटिंग"], answer: 1 },
-        { q: "3. RAM किस प्रकार की मेमोरी है?", options: ["Permanent", "Temporary", "Secondary", "Optical"], answer: 1 },
-        { q: "4. MS Excel फ़ॉर्मूला किस चिह्न से शुरू होता है?", options: ["+", "=", "@", "#"], answer: 1 },
-        { q: "5. IP का पूरा नाम क्या है?", options: ["Internet Protocol", "Internal Program", "Input Process", "Internet Provider"], answer: 0 }
+
+      const COMP_POOL = [
+        { sub: "Computer", q: "CPU का पूरा नाम क्या है?", options: ["Central Processing Unit", "Computer Personal Unit", "Central Print Unit", "Control Program Utility"], answer: 0 },
+        { sub: "Computer", q: "HTML का उपयोग किस लिए होता है?", options: ["डेटाबेस", "वेब पेज संरचना", "OS", "वीडियो एडिटिंग"], answer: 1 },
+        { sub: "Computer", q: "RAM किस प्रकार की मेमोरी है?", options: ["Permanent", "Temporary (Volatile)", "Secondary", "Optical"], answer: 1 },
+        { sub: "Computer", q: "MS Excel फ़ॉर्मूला किस चिह्न से शुरू होता है?", options: ["+", "=", "@", "#"], answer: 1 },
+        { sub: "Computer", q: "IP का पूरा नाम क्या है?", options: ["Internet Protocol", "Internal Program", "Input Process", "Internet Provider"], answer: 0 },
+        { sub: "Computer", q: "कंप्यूटर का मस्तिष्क किसे कहते हैं?", options: ["Monitor", "Keyboard", "CPU", "Mouse"], answer: 2 },
+        { sub: "Computer", q: "1 Byte में कितने Bits होते हैं?", options: ["4", "8", "16", "32"], answer: 1 },
+        { sub: "Computer", q: "ROM का पूरा नाम क्या है?", options: ["Read Only Memory", "Random Only Memory", "Run Only Memory", "Read On Memory"], answer: 0 },
+        { sub: "Computer", q: "MS Word किस प्रकार का सॉफ्टवेयर है?", options: ["Spreadsheet", "Word Processor", "Database", "Browser"], answer: 1 },
+        { sub: "Computer", q: "Ctrl + C किस लिए होता है?", options: ["Paste", "Cut", "Copy", "Undo"], answer: 2 },
+        { sub: "Computer", q: "Ctrl + V किस लिए होता है?", options: ["Paste", "Save", "Print", "Select All"], answer: 0 },
+        { sub: "Computer", q: "WWW का पूरा नाम क्या है?", options: ["World Wide Web", "World Web Wide", "Wide World Web", "Web World Wide"], answer: 0 },
+        { sub: "Computer", q: "Input Device कौन-सा है?", options: ["Monitor", "Printer", "Keyboard", "Speaker"], answer: 2 },
+        { sub: "Computer", q: "Output Device कौन-सा है?", options: ["Mouse", "Scanner", "Monitor", "Mic"], answer: 2 },
+        { sub: "Computer", q: "Hard Disk किस प्रकार की स्टोरेज है?", options: ["Volatile", "Non-Volatile", "Cache", "Register"], answer: 1 },
+        { sub: "Computer", q: "URL का पूरा नाम क्या है?", options: ["Uniform Resource Locator", "Universal Resource Link", "Uniform Record Locator", "Universal Record Link"], answer: 0 },
+        { sub: "Computer", q: "Ctrl + Z क्या करता है?", options: ["Redo", "Undo", "Cut", "Find"], answer: 1 },
+        { sub: "Computer", q: "Operating System कौन-सा है?", options: ["MS Paint", "Windows", "Chrome", "Photoshop"], answer: 1 },
+        { sub: "Computer", q: "PDF का पूरा नाम क्या है?", options: ["Portable Document Format", "Personal Data File", "Printable Document File", "Public Document Format"], answer: 0 },
+        { sub: "Computer", q: "Email भेजने का प्रोटोकॉल कौन-सा है?", options: ["HTTP", "SMTP", "FTP", "DHCP"], answer: 1 },
+        { sub: "Computer", q: "Windows में Select All का शॉर्टकट क्या है?", options: ["Ctrl + A", "Ctrl + S", "Ctrl + X", "Ctrl + D"], answer: 0 },
+        { sub: "Computer", q: "Binary प्रणाली में कितने अंक होते हैं?", options: ["1", "2", "8", "10"], answer: 1 },
+        { sub: "Computer", q: "Pen Drive किस पोर्ट में लगती hai?", options: ["HDMI", "USB", "VGA", "LAN"], answer: 1 },
+        { sub: "Computer", q: "MS PowerPoint किस लिए उपयोग होता है?", options: ["Presentation", "Sheet", "Code", "Paint"], answer: 0 },
+        { sub: "Computer", q: "Firewall का मुख्य कार्य क्या है?", options: ["Cooling", "Security", "Printing", "Scanning"], answer: 1 },
+        { sub: "Computer", q: "1 KB (Kilobyte) में कितने Bytes होते हैं?", options: ["1000", "1024", "512", "2048"], answer: 1 },
+        { sub: "Computer", q: "1 MB में कितने KB होते हैं?", options: ["1000", "1024", "500", "256"], answer: 1 },
+        { sub: "Computer", q: "1 GB में कितने MB होते हैं?", options: ["1024", "1000", "512", "128"], answer: 0 },
+        { sub: "Computer", q: "Ctrl + X का उपयोग किस लिए होता है?", options: ["Copy", "Cut", "Paste", "Save"], answer: 1 },
+        { sub: "Computer", q: "Ctrl + S का उपयोग किस लिए होता है?", options: ["Save", "Select", "Search", "Send"], answer: 0 },
+        { sub: "Computer", q: "Ctrl + P का उपयोग किस लिए होता है?", options: ["Paste", "Print", "Preview", "Page"], answer: 1 },
+        { sub: "Computer", q: "LAN का पूरा नाम क्या है?", options: ["Local Area Network", "Large Area Network", "Long Area Network", "Light Area Network"], answer: 0 },
+        { sub: "Computer", q: "WAN का पूरा नाम क्या है?", options: ["Wide Area Network", "World Area Network", "Web Area Network", "Wireless Area Network"], answer: 0 },
+        { sub: "Computer", q: "MAN का पूरा नाम क्या है?", options: ["Metropolitan Area Network", "Main Area Network", "Medium Area Network", "Mobile Area Network"], answer: 0 },
+        { sub: "Computer", q: "Wi-Fi का पूरा नाम क्या है?", options: ["Wireless Fidelity", "Wired Fidelity", "Wide Fidelity", "Web Fidelity"], answer: 0 },
+        { sub: "Computer", q: "USB का पूरा नाम क्या है?", options: ["Universal Serial Bus", "United Serial Bus", "Universal System Bus", "User Serial Bus"], answer: 0 },
+        { sub: "Computer", q: "HTTP का पूरा नाम क्या है?", options: ["HyperText Transfer Protocol", "HighText Transfer Protocol", "HyperText Transport Program", "HyperTool Transfer Protocol"], answer: 0 },
+        { sub: "Computer", q: "HTTPS में 'S' का अर्थ क्या है?", options: ["Secure", "System", "Server", "Simple"], answer: 0 },
+        { sub: "Computer", q: "BIOS का पूरा नाम क्या है?", options: ["Basic Input Output System", "Binary Input Output System", "Basic Internal Output System", "Bus Input Output System"], answer: 0 },
+        { sub: "Computer", q: "ALU का पूरा नाम क्या है?", options: ["Arithmetic Logic Unit", "Application Logic Unit", "Array Logic Unit", "Automatic Logic Unit"], answer: 0 },
+        { sub: "Computer", q: "CU का पूरा नाम क्या है?", options: ["Control Unit", "Central Unit", "Computer Unit", "Cache Unit"], answer: 0 },
+        { sub: "Computer", q: "SSD का पूरा नाम क्या है?", options: ["Solid State Drive", "Super State Drive", "System State Disk", "Solid Storage Disk"], answer: 0 },
+        { sub: "Computer", q: "HDD का पूरा नाम क्या है?", options: ["Hard Disk Drive", "High Disk Drive", "Hard Data Drive", "Hybrid Disk Drive"], answer: 0 },
+        { sub: "Computer", q: "LCD का पूरा नाम क्या है?", options: ["Liquid Crystal Display", "Light Crystal Display", "Liquid Clear Display", "Low Crystal Display"], answer: 0 },
+        { sub: "Computer", q: "LED का पूरा नाम क्या है?", options: ["Light Emitting Diode", "Liquid Emitting Diode", "Light Electronic Display", "Low Energy Diode"], answer: 0 },
+        { sub: "Computer", q: "GUI का पूरा नाम क्या है?", options: ["Graphical User Interface", "General User Interface", "Global User Interface", "Graphical Utility Interface"], answer: 0 },
+        { sub: "Computer", q: "OS का पूरा नाम क्या है?", options: ["Operating System", "Open System", "Optical System", "Output System"], answer: 0 },
+        { sub: "Computer", q: "कंप्यूटर का जनक किसे कहा जाता है?", options: ["चार्ल्स बैबेज", "एलन ट्यूरिंग", "बिल गेट्स", "स्टीव जॉब्स"], answer: 0 },
+        { sub: "Computer", q: "Web Browser इनमें से कौन-सा है?", options: ["Google Chrome", "MS Excel", "Windows 11", "VLC Player"], answer: 0 },
+        { sub: "Computer", q: "Search Engine इनमें से कौन-सा है?", options: ["Google", "WhatsApp", "Photoshop", "Notepad"], answer: 0 }
       ];
-      function buildBank(base, label) {
-        let list = base.map(i => ({ q: i.q, options: [...i.options], answer: i.answer }));
-        for (let i = list.length + 1; i <= 20; i++) list.push({ q: `${i}. ${label} प्रश्न #${i}`, options: ["विकल्प A", "विकल्प B", "विकल्प C", "विकल्प D"], answer: 0 });
-        return list;
+          let sessionId = null, userId = "", student = null, activeQ = [];
+      const nowStr = () => new Date().toLocaleString("hi-IN");
+      const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
+
+      function shuffle(arr) {
+        const copy = arr.map(x => ({ ...x, options: [...x.options] }));
+        for (let i = copy.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+        return copy;
       }
-      const GK_QUESTIONS = buildBank(DEFAULT_GK, "सामान्य ज्ञान"), COMPUTER_QUESTIONS = buildBank(DEFAULT_COMPUTER, "कंप्यूटर");
-      let currentSessionId = null, currentUserId = "", currentStudent = null, activeQuestions = [];
-      const nowText = () => new Date().toLocaleString("hi-IN");
-      function getConfig() {
-        const d = { adminName: "PJ Joshi", adminPassword: "PJ@Admin2026", adminPin: "PJ@Admin2026", studentUserId: "", studentUserPass: "", subject: "gk", count: 10 };
-        try { const s = JSON.parse(localStorage.getItem(CONFIG_KEY)); return s ? { ...d, ...s, count: Math.min(20, Math.max(1, Number(s.count) || 10)) } : d; } catch { return d; }
+
+      function getCfg() {
+        const d = { adminName: "PJ Joshi", adminPassword: "PJ@Admin2026", adminPin: "PJ@Admin2026", studentUserId: "", studentUserPass: "", subject: "all100", count: 50 };
+        try {
+          const s = JSON.parse(localStorage.getItem(CONFIG_KEY));
+          return s ? { ...d, ...s, count: Math.min(100, Math.max(1, Number(s.count) || 50)) } : d;
+        } catch { return d; }
       }
-      const saveConfig = (n) => { localStorage.setItem(CONFIG_KEY, JSON.stringify(n)); refreshUIState(); };
-      function getCustomQuestions() {
-        try { const p = JSON.parse(localStorage.getItem(CUSTOM_Q_KEY)); return (p && Array.isArray(p.gk) && Array.isArray(p.computer)) ? p : { gk: [], computer: [] }; } catch { return { gk: [], computer: [] }; }
+      function saveCfg(n) { localStorage.setItem(CONFIG_KEY, JSON.stringify(n)); refreshUI(); }
+
+      function buildRandomSet(cfg) {
+        const totalCount = Math.min(100, Math.max(1, Number(cfg.count) || 50));
+        let pool = [];
+        if (cfg.subject === "gk") {
+          pool = shuffle(GK_POOL);
+        } else if (cfg.subject === "computer") {
+          pool = shuffle(COMP_POOL);
+        } else {
+          const half = Math.ceil(totalCount / 2);
+          const gkPart = shuffle(GK_POOL).slice(0, half);
+          const compPart = shuffle(COMP_POOL).slice(0, totalCount - gkPart.length);
+          pool = shuffle(gkPart.concat(compPart));
+        }
+        const selected = pool.slice(0, totalCount).map((item, idx) => ({
+          ...item,
+          q: `${idx + 1}. [${item.sub}] ${item.q}`
+        }));
+        const queuePayload = {
+          generatedAt: nowStr(),
+          mode: cfg.subject,
+          count: selected.length,
+          questions: selected
+        };
+        localStorage.setItem(QUEUE_KEY, JSON.stringify(queuePayload));
+        renderAdminPreview();
+        return selected;
       }
-      const getBank = (sub) => { const c = getCustomQuestions(); return (sub === "gk" ? c.gk : c.computer).concat(sub === "gk" ? GK_QUESTIONS : COMPUTER_QUESTIONS); };
-      function refreshUIState() {
-        const cfg = getConfig(), subLbl = cfg.subject === "gk" ? "सामान्य ज्ञान (GK)" : "कंप्यूटर (Computer)";
-        const el = document.getElementById("studentExamInfo"); if (el) el.textContent = `आज की परीक्षा: ${subLbl} (${cfg.count} प्रश्न)`;
-        const adm = document.getElementById("activeAdminLabel"); if (adm) adm.textContent = `एडमिन: ${cfg.adminName}`;
-        const passLbl = document.getElementById("studentPassLabel"); if (passLbl) passLbl.textContent = cfg.studentUserPass ? "यूज़र पासवर्ड *" : "यूज़र पासवर्ड (वैकल्पिक)";
+
+      function getQueuedSet() {
+        try { return JSON.parse(localStorage.getItem(QUEUE_KEY)); } catch { return null; }
       }
+
+      function renderAdminPreview() {
+        const qData = getQueuedSet();
+        const meta = document.getElementById("previewMetaText");
+        const box = document.getElementById("adminQuestionPreviewList");
+        if (!meta || !box) return;
+        if (!qData || !Array.isArray(qData.questions) || qData.questions.length === 0) {
+          meta.textContent = "अभी कोई Random Set तैयार नहीं है।";
+          box.innerHTML = "";
+          return;
+        }
+        meta.textContent = `तैयार समय: ${qData.generatedAt} | कुल प्रश्न: ${qData.questions.length}`;
+        box.innerHTML = qData.questions.map(item => `
+          <div class="preview-item">
+            <strong>${esc(item.q)}</strong><br/>
+            <span>सही उत्तर: ${esc(item.options[item.answer])}</span>
+          </div>
+        `).join("");
+      }
+
+      function refreshUI() {
+        const c = getCfg();
+        const lbl = c.subject === "gk" ? "सामान्य ज्ञान (GK)" : c.subject === "computer" ? "कंप्यूटर (Computer)" : "50 GK + 50 Computer Random";
+        document.getElementById("studentExamInfo").textContent = `परीक्षा: ${lbl} (${c.count} प्रश्न)`;
+        document.getElementById("activeAdminLabel").textContent = `एडमिन: ${c.adminName}`;
+        document.getElementById("studentPassLabel").textContent = c.studentUserPass ? "यूज़र पासवर्ड *" : "यूज़र पासवर्ड (वैकल्पिक)";
+      }
+
       function setTheme(mode, btn) {
         document.body.classList.remove("dark", "green");
         if (mode === "dark") document.body.classList.add("dark");
@@ -212,135 +376,187 @@
         document.querySelectorAll(".mode-btn[data-theme]").forEach(b => b.classList.remove("active"));
         if (btn) btn.classList.add("active");
       }
-      function getRecords() { try { return JSON.parse(localStorage.getItem(RECORDS_KEY) || "[]"); } catch { return []; } }
-      const saveRecords = (r) => localStorage.setItem(RECORDS_KEY, JSON.stringify(r));
-      function goToStep2() {
-        const cfg = getConfig(), uId = document.getElementById("studentUserId").value.trim(), uPass = document.getElementById("studentUserPass").value, msg = document.getElementById("step1Msg");
-        if (!uId) { msg.textContent = "यूज़र आईडी भरें।"; msg.className = "status err"; return; }
-        if (cfg.studentUserId && uId !== cfg.studentUserId) { msg.textContent = "गलत यूज़र आईडी।"; msg.className = "status err"; return; }
-        if (cfg.studentUserPass && uPass !== cfg.studentUserPass) { msg.textContent = "गलत पासवर्ड।"; msg.className = "status err"; return; }
-        currentUserId = uId; msg.textContent = "";
+
+      function getRecs() { try { return JSON.parse(localStorage.getItem(RECORDS_KEY) || "[]"); } catch { return []; } }
+      function saveRecs(r) { localStorage.setItem(RECORDS_KEY, JSON.stringify(r)); }
+
+      document.getElementById("step1NextBtn").onclick = () => {
+        const c = getCfg();
+        const id = document.getElementById("studentUserId").value.trim();
+        const pw = document.getElementById("studentUserPass").value;
+        const msg = document.getElementById("step1Msg");
+        if (!id) { msg.textContent = "यूज़र आईडी भरें।"; msg.className = "status err"; return; }
+        if (c.studentUserId && id !== c.studentUserId) { msg.textContent = "गलत यूज़र आईडी।"; msg.className = "status err"; return; }
+        if (c.studentUserPass && pw !== c.studentUserPass) { msg.textContent = "गलत पासवर्ड।"; msg.className = "status err"; return; }
+        userId = id; msg.textContent = "";
         document.getElementById("step1Card").classList.add("hidden");
         document.getElementById("step2Card").classList.remove("hidden");
-        document.getElementById("step2UserBadge").textContent = `लॉगिन ID: ${uId}`;
-      }
-      function goToStep3() {
-        const cfg = getConfig(), name = document.getElementById("studentName").value.trim(), fName = document.getElementById("studentFatherName").value.trim(), msg = document.getElementById("step2Msg");
-        if (!name || !fName) { msg.textContent = "नाम और पिता का नाम भरें।"; msg.className = "status err"; return; }
-        activeQuestions = getBank(cfg.subject).slice(0, cfg.count);
-        const subLbl = cfg.subject === "gk" ? "सामान्य ज्ञान (GK)" : "कंप्यूटर (Computer)";
-        currentStudent = { name, fatherName: fName, userId: currentUserId, subjectLabel: subLbl };
-        currentSessionId = String(Date.now());
-        const records = getRecords();
-        records.unshift({ id: currentSessionId, name, fatherName: fName, userId: currentUserId, subject: subLbl, correct: "-", wrong: "-", score: "सबमिट नहीं किया", loginTime: nowText(), submitTime: "-" });
-        saveRecords(records);
+        document.getElementById("step2UserBadge").textContent = `यूज़र आईडी: ${id}`;
+      };
+
+      document.getElementById("step2NextBtn").onclick = () => {
+        const c = getCfg();
+        const name = document.getElementById("studentName").value.trim();
+        const father = document.getElementById("studentFatherName").value.trim();
+        const msg = document.getElementById("step2Msg");
+        if (!name || !father) { msg.textContent = "नाम और पिता का नाम दोनों भरें।"; msg.className = "status err"; return; }
+
+        activeQ = buildRandomSet(c);
+        const subLbl = c.subject === "gk" ? "GK Random" : c.subject === "computer" ? "Computer Random" : "GK + Computer Random";
+        student = { name, father, userId, subject: subLbl };
+        sessionId = String(Date.now());
+        const recs = getRecs();
+        recs.unshift({ id: sessionId, name, father, userId, subject: subLbl, correct: "-", wrong: "-", score: "सबमिट नहीं", loginTime: nowStr(), submitTime: "-" });
+        saveRecs(recs);
+
         msg.textContent = "";
+        document.getElementById("examResult").textContent = "";
+        document.getElementById("finalSummaryBox").classList.add("hidden");
         document.getElementById("step2Card").classList.add("hidden");
         document.getElementById("step3Card").classList.remove("hidden");
         document.getElementById("welcomeStudent").textContent = `नमस्ते, ${name}`;
-        document.getElementById("studentMetaLine").textContent = `पिता: ${fName} | ID: ${currentUserId}`;
-        document.getElementById("examSubtitle").textContent = `${subLbl} — ${activeQuestions.length} प्रश्न`;
+        document.getElementById("studentMetaLine").textContent = `पिता का नाम: ${father} | ID: ${userId}`;
+        document.getElementById("examSubtitle").textContent = `${subLbl} — ${activeQ.length} प्रश्न`;
         document.getElementById("examBadge").textContent = subLbl;
-        document.getElementById("questionsContainer").innerHTML = activeQuestions.map((item, idx) => `
-          <div class="question-box"><strong>${escapeHtml(item.q)}</strong>
-            ${item.options.map((opt, oIdx) => `<label class="option"><input type="radio" name="q${idx}" value="${oIdx}" /><span>${escapeHtml(opt)}</span></label>`).join("")}
-          </div>`).join("");
-      }
-      function submitExam() {
-        if (!currentStudent) return;
+
+        document.getElementById("questionsContainer").innerHTML = activeQ.map((item, idx) => `
+          <div class="question-box">
+            <strong>${esc(item.q)}</strong>
+            ${item.options.map((opt, oIdx) => `
+              <label class="option">
+                <input type="radio" name="q${idx}" value="${oIdx}" />
+                <span>${esc(opt)}</span>
+              </label>
+            `).join("")}
+          </div>
+        `).join("");
+      };
+
+      document.getElementById("submitExamBtn").onclick = () => {
+        if (!student) return;
         let correct = 0, wrong = 0;
-        activeQuestions.forEach((item, idx) => { const sel = document.querySelector(`input[name="q${idx}"]:checked`); if (sel && Number(sel.value) === item.answer) correct++; else wrong++; });
-        const total = activeQuestions.length, submitTime = nowText(), records = getRecords(), idx = records.findIndex(r => r.id === currentSessionId);
-        const entry = { id: currentSessionId, ...currentStudent, correct, wrong, score: `${correct} / ${total}`, loginTime: idx !== -1 ? records[idx].loginTime : submitTime, submitTime };
-        if (idx !== -1) records[idx] = entry; else records.unshift(entry);
-        saveRecords(records);
-        const res = document.getElementById("examResult");
-        res.textContent = `सबमिट हो गया! सही: ${correct} | गलत: ${wrong} | स्कोर: ${correct}/${total}`; res.className = "status ok";
-      }
-      let lastTouch = 0;
-      function openAdminPrompt(e) {
-        if (e && e.type === "touchend") { lastTouch = Date.now(); e.preventDefault(); }
-        else if (e && e.type === "click" && Date.now() - lastTouch < 450) return;
+        activeQ.forEach((item, idx) => {
+          const sel = document.querySelector(`input[name="q${idx}"]:checked`);
+          if (sel && Number(sel.value) === item.answer) correct++;
+          else wrong++;
+        });
+        const total = activeQ.length;
+        const submitTime = nowStr();
+        const recs = getRecs();
+        const i = recs.findIndex(r => r.id === sessionId);
+        const row = { id: sessionId, ...student, correct, wrong, score: `${correct}/${total}`, loginTime: i !== -1 ? recs[i].loginTime : submitTime, submitTime };
+        if (i !== -1) recs[i] = row; else recs.unshift(row);
+        saveRecs(recs);
+
+        document.getElementById("examResult").textContent = "परीक्षा सबमिट हो गई!";
+        document.getElementById("examResult").className = "status ok";
+        const box = document.getElementById("finalSummaryBox");
+        box.classList.remove("hidden");
+        box.innerHTML = `
+          <h3>📄 अंतिम परिणाम (Result Summary)</h3>
+          <p><strong>छात्र का नाम:</strong> ${esc(student.name)}</p>
+          <p><strong>पिता का नाम:</strong> ${esc(student.father)}</p>
+          <p><strong>यूज़र आईडी:</strong> ${esc(student.userId)}</p>
+          <p><strong>विषय:</strong> ${esc(student.subject)}</p>
+          <p><strong>कुल प्रश्न:</strong> ${total}</p>
+          <p><strong>सही उत्तर:</strong> ${correct}</p>
+          <p><strong>गलत उत्तर:</strong> ${wrong}</p>
+          <p><strong>टोटल स्कोर:</strong> ${correct} / ${total}</p>
+          <p><strong>सबमिट समय:</strong> ${esc(submitTime)}</p>
+        `;
+        box.scrollIntoView({ behavior: "smooth" });
+      };
+
+      function openAdmin() {
         ["step1Card", "step2Card", "step3Card", "adminDashboardCard"].forEach(id => document.getElementById(id).classList.add("hidden"));
         document.getElementById("adminAuthCard").classList.remove("hidden");
-        document.getElementById("adminPassInput").value = ""; document.getElementById("adminAuthMsg").textContent = "";
+        document.getElementById("adminPassInput").value = "";
+        document.getElementById("adminAuthMsg").textContent = "";
       }
-      function closeAdmin() {
-        document.getElementById("adminAuthCard").classList.add("hidden");
-        document.getElementById("adminDashboardCard").classList.add("hidden");
+      document.getElementById("carAdminBtn").onclick = openAdmin;
+      document.querySelectorAll(".close-admin-btn").forEach(b => b.onclick = () => {
+        ["adminAuthCard", "adminDashboardCard"].forEach(id => document.getElementById(id).classList.add("hidden"));
         document.getElementById("step1Card").classList.remove("hidden");
-        refreshUIState();
-      }
-      function verifyAdmin() {
-        const cfg = getConfig(), entered = document.getElementById("adminPassInput").value, msg = document.getElementById("adminAuthMsg");
-        if (entered === cfg.adminPin || entered === cfg.adminPassword) {
-          document.getElementById("cfgAdminName").value = cfg.adminName; document.getElementById("cfgAdminPassword").value = cfg.adminPassword;
-          document.getElementById("cfgAdminPin").value = cfg.adminPin; document.getElementById("cfgStudentUserId").value = cfg.studentUserId;
-          document.getElementById("cfgStudentUserPass").value = cfg.studentUserPass; document.getElementById("adminSubjectSelect").value = cfg.subject;
-          document.getElementById("adminQuestionCount").value = cfg.count;
-          document.getElementById("adminAuthCard").classList.add("hidden"); document.getElementById("adminDashboardCard").classList.remove("hidden");
-          renderAdminTable();
-        } else { msg.textContent = "गलत पिन या पासवर्ड।"; msg.className = "status err"; }
-      }
-      function saveAdminCredentials() {
-        const c = getConfig();
-        saveConfig({ ...c, adminName: document.getElementById("cfgAdminName").value.trim() || c.adminName, adminPassword: document.getElementById("cfgAdminPassword").value.trim() || c.adminPassword, adminPin: document.getElementById("cfgAdminPin").value.trim() || c.adminPin, studentUserId: document.getElementById("cfgStudentUserId").value.trim(), studentUserPass: document.getElementById("cfgStudentUserPass").value.trim() });
-        const m = document.getElementById("adminCredMsg"); m.textContent = "क्रेडेंशियल्स सेव हो गए।"; m.className = "status ok";
-      }
-      function saveExamConfig() {
-        const c = getConfig();
-        saveConfig({ ...c, subject: document.getElementById("adminSubjectSelect").value, count: Math.min(20, Math.max(1, Number(document.getElementById("adminQuestionCount").value) || 10)) });
-        const m = document.getElementById("configMsg"); m.textContent = "परीक्षा सेटिंग्स सेव हो गईं।"; m.className = "status ok";
-      }
-      function addCustomQuestion() {
-        const sub = document.getElementById("newQSubject").value, ans = Number(document.getElementById("newQAnswer").value), text = document.getElementById("newQText").value.trim();
-        const opts = [document.getElementById("newQOpt0").value.trim(), document.getElementById("newQOpt1").value.trim(), document.getElementById("newQOpt2").value.trim(), document.getElementById("newQOpt3").value.trim()];
-        const msg = document.getElementById("addQMsg");
-        if (!text || opts.some(o => !o)) { msg.textContent = "प्रश्न और सभी विकल्प भरें।"; msg.className = "status err"; return; }
-        const cust = getCustomQuestions(), list = sub === "gk" ? cust.gk : cust.computer;
-        list.unshift({ q: `${list.length + 1}. ${text}`, options: opts, answer: ans });
-        localStorage.setItem(CUSTOM_Q_KEY, JSON.stringify(cust));
-        ["newQText", "newQOpt0", "newQOpt1", "newQOpt2", "newQOpt3"].forEach(id => document.getElementById(id).value = "");
-        msg.textContent = "प्रश्न जुड़ गया।"; msg.className = "status ok";
-      }
-      function renderAdminTable() {
-        const tbody = document.getElementById("adminTableBody"), recs = getRecords();
-        if (recs.length === 0) { tbody.innerHTML = '<tr><td colspan="10">कोई डेटा नहीं है।</td></tr>'; return; }
-        tbody.innerHTML = recs.map((r, i) => `<tr><td>${i+1}</td><td>${escapeHtml(r.name)}</td><td>${escapeHtml(r.fatherName||"-")}</td><td>${escapeHtml(r.userId||"-")}</td><td>${escapeHtml(r.subject||"-")}</td><td>${r.correct}</td><td>${r.wrong}</td><td>${r.score}</td><td>${escapeHtml(r.loginTime||"-")}</td><td>${escapeHtml(r.submitTime||"-")}</td></tr>`).join("");
-      }
-      function downloadCSV() {
-        const recs = getRecords(), rows = [["ID", "Name", "Father Name", "User ID", "Subject", "Correct", "Wrong", "Score", "Login Time", "Submit Time"]];
-        recs.forEach((r, i) => rows.push([i+1, r.name, r.fatherName||"-", r.userId||"-", r.subject||"-", r.correct, r.wrong, r.score, r.loginTime||"-", r.submitTime||"-"]));
-        const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(",")).join("\n");
-        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" }), url = URL.createObjectURL(blob), a = document.createElement("a");
-        a.href = url; a.download = "pj_joshi_students_report.csv"; a.click(); URL.revokeObjectURL(url);
-      }
-      const escapeHtml = (str) => String(str).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-
-      const carBtn = document.getElementById("carAdminBtn");
-      carBtn.addEventListener("touchend", openAdminPrompt, { passive: false });
-      carBtn.addEventListener("click", openAdminPrompt);
-      document.querySelectorAll(".mode-btn[data-theme]").forEach(btn => {
-        let lt = 0;
-        const trig = function (e) {
-          if (e && e.type === "touchend") { lt = Date.now(); e.preventDefault(); }
-          else if (e && e.type === "click" && Date.now() - lt < 450) return;
-          setTheme(this.getAttribute("data-theme"), this);
-        };
-        btn.addEventListener("touchend", trig, { passive: false });
-        btn.addEventListener("click", trig);
+        refreshUI();
       });
-      document.getElementById("step1NextBtn").addEventListener("click", goToStep2);
-      document.getElementById("step2NextBtn").addEventListener("click", goToStep3);
-      document.getElementById("submitExamBtn").addEventListener("click", submitExam);
-      document.querySelectorAll(".close-admin-btn").forEach(btn => btn.addEventListener("click", closeAdmin));
-      document.getElementById("verifyAdminBtn").addEventListener("click", verifyAdmin);
-      document.getElementById("saveAdminCredBtn").addEventListener("click", saveAdminCredentials);
-      document.getElementById("saveExamCfgBtn").addEventListener("click", saveExamConfig);
-      document.getElementById("addCustomQBtn").addEventListener("click", addCustomQuestion);
-      document.getElementById("downloadCsvBtn").addEventListener("click", downloadCSV);
-      document.getElementById("clearRecordsBtn").addEventListener("click", () => { localStorage.removeItem(RECORDS_KEY); renderAdminTable(); });
-      refreshUIState();
+
+      document.getElementById("verifyAdminBtn").onclick = () => {
+        const c = getCfg();
+        const v = document.getElementById("adminPassInput").value;
+        if (v === c.adminPin || v === c.adminPassword) {
+          document.getElementById("cfgAdminName").value = c.adminName;
+          document.getElementById("cfgAdminPassword").value = c.adminPassword;
+          document.getElementById("cfgAdminPin").value = c.adminPin;
+          document.getElementById("cfgStudentUserId").value = c.studentUserId;
+          document.getElementById("cfgStudentUserPass").value = c.studentUserPass;
+          document.getElementById("adminSubjectSelect").value = c.subject;
+          document.getElementById("adminQuestionCount").value = c.count;
+          document.getElementById("adminAuthCard").classList.add("hidden");
+          document.getElementById("adminDashboardCard").classList.remove("hidden");
+          renderAdminPreview();
+          renderTable();
+        } else {
+          document.getElementById("adminAuthMsg").textContent = "गलत पिन या पासवर्ड।";
+          document.getElementById("adminAuthMsg").className = "status err";
+        }
+      };
+
+      document.getElementById("generatePreviewSetBtn").onclick = () => {
+        buildRandomSet(getCfg());
+      };
+
+      document.getElementById("saveAdminCredBtn").onclick = () => {
+        const c = getCfg();
+        saveCfg({
+          ...c,
+          adminName: document.getElementById("cfgAdminName").value.trim() || c.adminName,
+          adminPassword: document.getElementById("cfgAdminPassword").value.trim() || c.adminPassword,
+          adminPin: document.getElementById("cfgAdminPin").value.trim() || c.adminPin,
+          studentUserId: document.getElementById("cfgStudentUserId").value.trim(),
+          studentUserPass: document.getElementById("cfgStudentUserPass").value.trim()
+        });
+        document.getElementById("adminCredMsg").textContent = "सेव हो गया।";
+        document.getElementById("adminCredMsg").className = "status ok";
+      };
+
+      document.getElementById("saveExamCfgBtn").onclick = () => {
+        const c = getCfg();
+        const nextCfg = {
+          ...c,
+          subject: document.getElementById("adminSubjectSelect").value,
+          count: Math.min(100, Math.max(1, Number(document.getElementById("adminQuestionCount").value) || 50))
+        };
+        saveCfg(nextCfg);
+        buildRandomSet(nextCfg);
+        document.getElementById("configMsg").textContent = "सेटिंग्स सेव और नया Random सेट तैयार है।";
+        document.getElementById("configMsg").className = "status ok";
+      };
+
+      function renderTable() {
+        const recs = getRecs();
+        document.getElementById("adminTableBody").innerHTML = recs.length
+          ? recs.map((r, i) => `<tr><td>${i+1}</td><td>${esc(r.name)}</td><td>${esc(r.father||"-")}</td><td>${esc(r.userId||"-")}</td><td>${esc(r.subject||"-")}</td><td>${r.correct}</td><td>${r.wrong}</td><td>${r.score}</td><td>${esc(r.loginTime||"-")}</td><td>${esc(r.submitTime||"-")}</td></tr>`).join("")
+          : '<tr><td colspan="10">कोई रिकॉर्ड नहीं है।</td></tr>';
+      }
+
+      document.getElementById("downloadCsvBtn").onclick = () => {
+        const recs = getRecs();
+        const rows = [["#", "Name", "Father", "User ID", "Subject", "Correct", "Wrong", "Score", "Login", "Submit"]];
+        recs.forEach((r, i) => rows.push([i+1, r.name, r.father||"-", r.userId||"-", r.subject||"-", r.correct, r.wrong, r.score, r.loginTime||"-", r.submitTime||"-"]));
+        const csv = rows.map(r => r.map(v => `"${String(v).replace(/"/g,'""')}"`).join(",")).join("\n");
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8;" }));
+        a.download = "pj_joshi_100_random_results.csv";
+        a.click();
+      };
+
+      document.getElementById("clearRecordsBtn").onclick = () => { localStorage.removeItem(RECORDS_KEY); renderTable(); };
+      document.querySelectorAll(".mode-btn[data-theme]").forEach(btn => {
+        btn.onclick = () => setTheme(btn.dataset.theme, btn);
+      });
+
+      refreshUI();
+      renderAdminPreview();
     })();
   </script>
 </body>
