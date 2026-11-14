@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -86,8 +86,8 @@
         <h2>Step 1: User Login</h2>
         <p class="subtitle" id="studentExamInfo" style="margin-top:8px; font-weight:600;"></p>
       </div>
-      <div class="form-group"><label>User ID *</label><input type="text" id="studentUserId" placeholder="User ID darj karein" /></div>
-      <div class="form-group"><label id="studentPassLabel">User Password</label><input type="password" id="studentUserPass" placeholder="Password darj karein" /></div>
+      <div class="form-group"><label>User ID *</label><input type="text" id="studentUserId" placeholder="Enter User ID" /></div>
+      <div class="form-group"><label id="studentPassLabel">User Password</label><input type="password" id="studentUserPass" placeholder="Enter Password" /></div>
       <button type="button" class="btn" id="step1NextBtn">Next</button>
       <div id="step1Msg" class="status"></div>
     </div>
@@ -98,8 +98,8 @@
         <h2>Step 2: Student Details</h2>
         <p class="subtitle" id="step2UserBadge" style="margin-top:8px; font-weight:600;"></p>
       </div>
-      <div class="form-group"><label>Student Name *</label><input type="text" id="studentName" placeholder="Apna naam likhein" /></div>
-      <div class="form-group"><label>Father's Name *</label><input type="text" id="studentFatherName" placeholder="Papa ka naam likhein" /></div>
+      <div class="form-group"><label>Student Name *</label><input type="text" id="studentName" placeholder="Enter Full Name" /></div>
+      <div class="form-group"><label>Father's Name *</label><input type="text" id="studentFatherName" placeholder="Enter Father's Name" /></div>
       <button type="button" class="btn" id="step2NextBtn">Start Exam</button>
       <div id="step2Msg" class="status"></div>
     </div>
@@ -124,7 +124,7 @@
 
     <div class="card hidden" id="adminAuthCard">
       <div class="top-bar"><h2>🔒 Admin Login</h2><button type="button" class="mode-btn close-admin-btn">Back</button></div>
-      <div class="form-group"><label>Admin PIN / Password</label><input type="password" id="adminPassInput" placeholder="Admin PIN ya Password" /></div>
+      <div class="form-group"><label>Admin PIN / Password</label><input type="password" id="adminPassInput" placeholder="Enter Admin PIN or Password" /></div>
       <button type="button" class="btn" id="verifyAdminBtn">Login</button>
       <div id="adminAuthMsg" class="status"></div>
     </div>
@@ -134,18 +134,18 @@
 
       <div class="section-box">
         <h3>📲 WhatsApp Group Notice Box (Auto-Updated)</h3>
-        <p class="subtitle">Time, Questions, User ID या Password बदलते ही नीचे मैसेज अपने आप बन जाएगा।</p>
+        <p class="subtitle">Automatically updates when Time, Questions, User ID, or Password changes.</p>
         <div class="form-group">
           <textarea id="whatsappShareText" readonly></textarea>
         </div>
-        <button type="button" class="btn" id="copyWhatsappBtn">📋 WhatsApp मैसेज कॉपी करें</button>
+        <button type="button" class="btn" id="copyWhatsappBtn">📋 Copy WhatsApp Message</button>
         <div id="whatsappCopyMsg" class="status"></div>
       </div>
 
       <div class="section-box">
-        <h3>👁️ Selected Questions Preview (Admin ko Pehle Se Dikhenge)</h3>
-        <p class="subtitle" id="previewMetaText">Abhi koi Random Set taiyar nahi hai.</p>
-        <button type="button" class="btn" id="generatePreviewSetBtn">Naya Random Set Abhi Taiyar Karein</button>
+        <h3>👁️ Selected Questions Preview (Admin Pre-View)</h3>
+        <p class="subtitle" id="previewMetaText">No random set generated yet.</p>
+        <button type="button" class="btn" id="generatePreviewSetBtn">Generate New Random Set Now</button>
         <div id="adminQuestionPreviewList" class="preview-list"></div>
       </div>
 
@@ -199,117 +199,117 @@
   </div>
     <script>
     (function () {
-      const RECORDS_KEY = "pj_portal_rec_wa_v1", CONFIG_KEY = "pj_portal_cfg_wa_v1", QUEUE_KEY = "pj_portal_queue_wa_v1";
+      const RECORDS_KEY = "pj_portal_rec_en_ui_v1", CONFIG_KEY = "pj_portal_cfg_en_ui_v1", QUEUE_KEY = "pj_portal_queue_en_ui_v1";
 
       const GK_POOL = [
-        { sub: "GK", q: "Bharat ki rajdhani kya hai?", options: ["Mumbai", "New Delhi", "Kolkata", "Chennai"], answer: 1 },
-        { sub: "GK", q: "Rajasthan ka sabse bada zila kaunsa hai?", options: ["Jaipur", "Jodhpur", "Jaisalmer", "Bikaner"], answer: 2 },
-        { sub: "GK", q: "Bharat ka rashtriya pashu kaunsa hai?", options: ["Sher", "Bagh", "Haathi", "Cheeta"], answer: 1 },
-        { sub: "GK", q: "Samvidhan sabha ki praroop samiti ke adhyaksh kaun the?", options: ["Dr. Rajendra Prasad", "Dr. B. R. Ambedkar", "Nehru", "Sardar Patel"], answer: 1 },
-        { sub: "GK", q: "Prithvi par sabse bada mahasagar kaunsa hai?", options: ["Atlantic", "Hind", "Prashant", "Arctic"], answer: 2 },
-        { sub: "GK", q: "Bharat ka rashtriya pakshi kaunsa hai?", options: ["Tota", "Mor", "Kabutar", "Hans"], answer: 1 },
-        { sub: "GK", q: "'Jai Jawan Jai Kisan' kisne kaha?", options: ["Gandhi ji", "Lal Bahadur Shastri", "Bose", "Bhagat Singh"], answer: 1 },
-        { sub: "GK", q: "Rajasthan ki rajdhani kya hai?", options: ["Udaipur", "Jodhpur", "Jaipur", "Ajmer"], answer: 2 },
-        { sub: "GK", q: "Bharat mein kul kitne rajya hain?", options: ["27", "28", "29", "30"], answer: 1 },
-        { sub: "GK", q: "Taj Mahal kahan sthit hai?", options: ["Delhi", "Agra", "Jaipur", "Lucknow"], answer: 1 },
-        { sub: "GK", q: "Bharat ka rashtriya phool kaunsa hai?", options: ["Gulab", "Kamal", "Surajmukhi", "Genda"], answer: 1 },
-        { sub: "GK", q: "Saurmandal ka sabse bada grah kaunsa hai?", options: ["Mangal", "Shani", "Brihaspati", "Shukra"], answer: 2 },
-        { sub: "GK", q: "Bharatiya samvidhan kab lagu hua?", options: ["15 Aug 1947", "26 Jan 1950", "26 Nov 1949", "2 Oct 1950"], answer: 1 },
-        { sub: "GK", q: "'Pink City' kis shehar ko kaha jata hai?", options: ["Jodhpur", "Udaipur", "Jaipur", "Bikaner"], answer: 2 },
-        { sub: "GK", q: "Bharat ki sabse lambi nadi kaunsi hai?", options: ["Yamuna", "Ganga", "Brahmaputra", "Godavari"], answer: 1 },
-        { sub: "GK", q: "'Swaraj mera janmasiddh adhikar hai' kisne kaha?", options: ["Bal Gangadhar Tilak", "Lala Lajpat Rai", "Bipin Chandra Pal", "Madan Mohan Malviya"], answer: 0 },
-        { sub: "GK", q: "Surya ke sabse nazdeek grah kaunsa hai?", options: ["Shukra", "Budh", "Mangal", "Prithvi"], answer: 1 },
-        { sub: "GK", q: "Thar marusthal kis rajya mein hai?", options: ["Gujarat", "Punjab", "Rajasthan", "Haryana"], answer: 2 },
-        { sub: "GK", q: "Bharat ka rashtriya geet kya hai?", options: ["Jana Gana Mana", "Vande Mataram", "Sare Jahan Se Achha", "Kadam Kadam Badhaye Ja"], answer: 1 },
-        { sub: "GK", q: "Nobel puraskar pane wale pehle Bharatiya kaun the?", options: ["C. V. Raman", "Rabindranath Tagore", "Amartya Sen", "Mother Teresa"], answer: 1 },
-        { sub: "GK", q: "Hawa Mahal kahan sthit hai?", options: ["Udaipur", "Jaipur", "Jodhpur", "Kota"], answer: 1 },
-        { sub: "GK", q: "Bharat ka sabse bada rajya kshetraphal ke hisab se?", options: ["MP", "UP", "Rajasthan", "Maharashtra"], answer: 2 },
-        { sub: "GK", q: "Mahatma Gandhi ka janm kab hua?", options: ["2 Oct 1869", "15 Aug 1869", "26 Jan 1869", "30 Jan 1869"], answer: 0 },
-        { sub: "GK", q: "Aravalli parvatmala ka sabse uncha shikhar?", options: ["Guru Shikhar", "Achalgarh", "Taragarh", "Kumbhalgarh"], answer: 0 },
-        { sub: "GK", q: "Bharat ka rashtragaan kisne likha?", options: ["Bankim Chandra", "Rabindranath Tagore", "Sarojini Naidu", "Premchand"], answer: 1 },
-        { sub: "GK", q: "Vishwa ka sabse bada mahadweep kaunsa hai?", options: ["Africa", "Asia", "Europe", "Australia"], answer: 1 },
-        { sub: "GK", q: "Vishwa ki sabse unchi choti kaunsi hai?", options: ["K2", "Kanchenjunga", "Mount Everest", "Nanda Devi"], answer: 2 },
-        { sub: "GK", q: "Bharat ke pehle Pradhan Mantri kaun the?", options: ["Sardar Patel", "Jawaharlal Nehru", "Rajendra Prasad", "Lal Bahadur Shastri"], answer: 1 },
-        { sub: "GK", q: "Bharat ke pehle Rashtrapati kaun the?", options: ["Dr. Rajendra Prasad", "Dr. Radhakrishnan", "Zakir Hussain", "V. V. Giri"], answer: 0 },
-        { sub: "GK", q: "Lal Qila kahan sthit hai?", options: ["Agra", "Delhi", "Jaipur", "Mumbai"], answer: 1 },
-        { sub: "GK", q: "Gateway of India kahan sthit hai?", options: ["Delhi", "Mumbai", "Kolkata", "Chennai"], answer: 1 },
-        { sub: "GK", q: "India Gate kahan sthit hai?", options: ["New Delhi", "Mumbai", "Lucknow", "Bhopal"], answer: 0 },
-        { sub: "GK", q: "Teachers Day kab manaya jata hai?", options: ["5 Sep", "14 Nov", "2 Oct", "15 Jan"], answer: 0 },
-        { sub: "GK", q: "Children's Day kab manaya jata hai?", options: ["5 Sep", "14 Nov", "8 Mar", "1 May"], answer: 1 },
-        { sub: "GK", q: "International Yoga Day kab manaya jata hai?", options: ["21 June", "5 June", "11 July", "10 Dec"], answer: 0 },
-        { sub: "GK", q: "World Environment Day kab manaya jata hai?", options: ["21 June", "5 June", "22 Apr", "16 Sep"], answer: 1 },
-        { sub: "GK", q: "Earth Day kab manaya jata hai?", options: ["22 Mar", "22 Apr", "5 June", "1 Dec"], answer: 1 },
-        { sub: "GK", q: "World Water Day kab manaya jata hai?", options: ["22 Mar", "22 Apr", "8 May", "14 Sep"], answer: 0 },
-        { sub: "GK", q: "Hindi Diwas kab manaya jata hai?", options: ["14 Sep", "10 Jan", "26 Jan", "15 Aug"], answer: 0 },
-        { sub: "GK", q: "Bharat ka rashtriya vriksh kaunsa hai?", options: ["Peepal", "Bargad", "Neem", "Aam"], answer: 1 },
-        { sub: "GK", q: "Bharat ka rashtriya phal kaunsa hai?", options: ["Kela", "Seb", "Aam", "Santra"], answer: 2 },
-        { sub: "GK", q: "Bharat ka rashtriya jaliya jeev kaunsa hai?", options: ["Magarmach", "Ganga Dolphin", "Kachhua", "Whale"], answer: 1 },
-        { sub: "GK", q: "'Iron Man of India' kise kaha jata hai?", options: ["Bhagat Singh", "Sardar Vallabhbhai Patel", "Subhash Chandra Bose", "Tilak"], answer: 1 },
-        { sub: "GK", q: "'Netaji' kiska upnaam hai?", options: ["Nehru", "Subhash Chandra Bose", "Chandrashekhar Azad", "Gokhale"], answer: 1 },
-        { sub: "GK", q: "Rajasthan ka rajya pakshi kaunsa hai?", options: ["Mor", "Godawan", "Saras", "Kabutar"], answer: 1 },
-        { sub: "GK", q: "Rajasthan ka rajya pashu (wildlife) kaunsa hai?", options: ["Bagh", "Chinkara", "Hiran", "Bhalu"], answer: 1 },
-        { sub: "GK", q: "Rajasthan ka rajya vriksh kaunsa hai?", options: ["Neem", "Khejri", "Babool", "Peepal"], answer: 1 },
-        { sub: "GK", q: "Rajasthan ka rajya pushp kaunsa hai?", options: ["Kamal", "Rohida", "Gulab", "Genda"], answer: 1 },
-        { sub: "GK", q: "Suratgarh kis zile mein sthit hai?", options: ["Bikaner", "Sriganganagar", "Hanumangarh", "Churu"], answer: 1 },
-        { sub: "GK", q: "Bharat ki mudra kya hai?", options: ["Dollar", "Rupee", "Yen", "Pound"], answer: 1 }
+        { sub: "GK", q: "भारत की राजधानी क्या है?", options: ["मुंबई", "नई दिल्ली", "कोलकाता", "चेन्नई"], answer: 1 },
+        { sub: "GK", q: "राजस्थान का सबसे बड़ा जिला कौन-सा है?", options: ["जयपुर", "जोधपुर", "जैसलमेर", "बीकानेर"], answer: 2 },
+        { sub: "GK", q: "भारत का राष्ट्रीय पशु कौन-सा है?", options: ["शेर", "बाघ", "हाथी", "चीता"], answer: 1 },
+        { sub: "GK", q: "संविधान सभा की प्रारूप समिति के अध्यक्ष कौन थे?", options: ["डॉ. राजेंद्र प्रसाद", "डॉ. बी. आर. अम्बेडकर", "जवाहरलाल नेहरू", "सरदार पटेल"], answer: 1 },
+        { sub: "GK", q: "पृथ्वी पर सबसे बड़ा महासागर कौन-सा है?", options: ["अटलांटिक महासागर", "हिंद महासागर", "प्रशांत महासागर", "आर्कटिक महासागर"], answer: 2 },
+        { sub: "GK", q: "भारत का राष्ट्रीय पक्षी कौन-सा है?", options: ["तोता", "मोर", "कबूतर", "हंस"], answer: 1 },
+        { sub: "GK", q: "'जय जवान जय किसान' का नारा किसने दिया?", options: ["महात्मा गांधी", "लाल बहादुर शास्त्री", "सुभाष चंद्र बोस", "भगत सिंह"], answer: 1 },
+        { sub: "GK", q: "राजस्थान की राजधानी क्या है?", options: ["उदयपुर", "जोधपुर", "जयपुर", "अजमेर"], answer: 2 },
+        { sub: "GK", q: "भारत में कुल कितने राज्य हैं?", options: ["27", "28", "29", "30"], answer: 1 },
+        { sub: "GK", q: "ताजमहल कहाँ स्थित है?", options: ["दिल्ली", "आगरा", "जयपुर", "लखनऊ"], answer: 1 },
+        { sub: "GK", q: "भारत का राष्ट्रीय फूल कौन-सा है?", options: ["गुलाब", "कमल", "सूरजमुखी", "गेंदा"], answer: 1 },
+        { sub: "GK", q: "सौरमंडल का सबसे बड़ा ग्रह कौन-सा है?", options: ["मंगल", "शनि", "बृहस्पति", "शुक्र"], answer: 2 },
+        { sub: "GK", q: "भारतीय संविधान कब लागू हुआ?", options: ["15 अगस्त 1947", "26 जनवरी 1950", "26 नवंबर 1949", "2 अक्टूबर 1950"], answer: 1 },
+        { sub: "GK", q: "'गुलाबी शहर' किस शहर को कहा जाता है?", options: ["जोधपुर", "उदयपुर", "जयपुर", "बीकानेर"], answer: 2 },
+        { sub: "GK", q: "भारत की सबसे लंबी नदी कौन-सी है?", options: ["यमुना", "गंगा", "ब्रह्मपुत्र", "गोदावरी"], answer: 1 },
+        { sub: "GK", q: "'स्वराज मेरा जन्मसिद्ध अधिकार है' किसने कहा?", options: ["बाल गंगाधर तिलक", "लाला लाजपत राय", "बिपिन चंद्र पाल", "मदन मोहन मालवीय"], answer: 0 },
+        { sub: "GK", q: "सूर्य के सबसे नजदीक ग्रह कौन-सा है?", options: ["शुक्र", "बुध", "मंगल", "पृथ्वी"], answer: 1 },
+        { sub: "GK", q: "थार मरुस्थल मुख्य रूप से किस राज्य में है?", options: ["गुजरात", "पंजाब", "राजस्थान", "हरियाणा"], answer: 2 },
+        { sub: "GK", q: "भारत का राष्ट्रीय गीत क्या है?", options: ["जन गण मन", "वंदे मातरम्", "सारे जहाँ से अच्छा", "कदम कदम बढ़ाए जा"], answer: 1 },
+        { sub: "GK", q: "नोबेल पुरस्कार पाने वाले पहले भारतीय कौन थे?", options: ["सी. वी. रमन", "रवींद्रनाथ टैगोर", "अमर्त्य सेन", "मदर टेरेसा"], answer: 1 },
+        { sub: "GK", q: "हवा महल कहाँ स्थित है?", options: ["उदयपुर", "जयपुर", "जोधपुर", "कोटा"], answer: 1 },
+        { sub: "GK", q: "क्षेत्रफल की दृष्टि से भारत का सबसे बड़ा राज्य कौन-सा है?", options: ["मध्य प्रदेश", "उत्तर प्रदेश", "राजस्थान", "महाराष्ट्र"], answer: 2 },
+        { sub: "GK", q: "महात्मा गांधी का जन्म कब हुआ था?", options: ["2 अक्टूबर 1869", "15 अगस्त 1869", "26 जनवरी 1869", "30 जनवरी 1869"], answer: 0 },
+        { sub: "GK", q: "अरावली पर्वतमाला का सबसे ऊँचा शिखर कौन-सा है?", options: ["गुरु शिखर", "अचलगढ़", "तारागढ़", "कुंभलगढ़"], answer: 0 },
+        { sub: "GK", q: "भारत का राष्ट्रगान किसने लिखा?", options: ["बंकिमचंद्र चटर्जी", "रवींद्रनाथ टैगोर", "सरोजिनी नायडू", "प्रेमचंद"], answer: 1 },
+        { sub: "GK", q: "विश्व का सबसे बड़ा महाद्वीप कौन-सा है?", options: ["अफ्रीका", "एशिया", "यूरोप", "ऑस्ट्रेलिया"], answer: 1 },
+        { sub: "GK", q: "विश्व की सबसे ऊँची पर्वत चोटी कौन-सी है?", options: ["K2", "कंचनजंगा", "माउंट एवरेस्ट", "नंदा देवी"], answer: 2 },
+        { sub: "GK", q: "भारत के पहले प्रधानमंत्री कौन थे?", options: ["सरदार पटेल", "जवाहरलाल नेहरू", "राजेंद्र प्रसाद", "लाल बहादुर शास्त्री"], answer: 1 },
+        { sub: "GK", q: "भारत के पहले राष्ट्रपति कौन थे?", options: ["डॉ. राजेंद्र प्रसाद", "डॉ. राधाकृष्णन", "जाकिर हुसैन", "वी. वी. गिरि"], answer: 0 },
+        { sub: "GK", q: "लाल किला कहाँ स्थित है?", options: ["आगरा", "दिल्ली", "जयपुर", "मुंबई"], answer: 1 },
+        { sub: "GK", q: "गेटवे ऑफ इंडिया कहाँ स्थित है?", options: ["दिल्ली", "मुंबई", "कोलकाता", "चेन्नई"], answer: 1 },
+        { sub: "GK", q: "इंडिया गेट कहाँ स्थित है?", options: ["नई दिल्ली", "मुंबई", "लखनऊ", "भोपाल"], answer: 0 },
+        { sub: "GK", q: "भारत में शिक्षक दिवस कब मनाया जाता है?", options: ["5 सितंबर", "14 नवंबर", "2 अक्टूबर", "15 जनवरी"], answer: 0 },
+        { sub: "GK", q: "बाल दिवस कब मनाया जाता है?", options: ["5 सितंबर", "14 नवंबर", "8 मार्च", "1 मई"], answer: 1 },
+        { sub: "GK", q: "अंतरराष्ट्रीय योग दिवस कब मनाया जाता है?", options: ["21 जून", "5 जून", "11 जुलाई", "10 दिसंबर"], answer: 0 },
+        { sub: "GK", q: "विश्व पर्यावरण दिवस कब मनाया जाता है?", options: ["21 जून", "5 जून", "22 अप्रैल", "16 सितंबर"], answer: 1 },
+        { sub: "GK", q: "पृथ्वी दिवस कब मनाया जाता है?", options: ["22 मार्च", "22 अप्रैल", "5 जून", "1 दिसंबर"], answer: 1 },
+        { sub: "GK", q: "जल दिवस कब मनाया जाता है?", options: ["22 मार्च", "22 अप्रैल", "8 मई", "14 सितंबर"], answer: 0 },
+        { sub: "GK", q: "हिंदी दिवस कब मनाया जाता है?", options: ["14 सितंबर", "10 जनवरी", "26 जनवरी", "15 अगस्त"], answer: 0 },
+        { sub: "GK", q: "भारत का राष्ट्रीय वृक्ष कौन-सा है?", options: ["पीपल", "बरगद", "नीम", "आम"], answer: 1 },
+        { sub: "GK", q: "भारत का राष्ट्रीय फल कौन-सा है?", options: ["केला", "सेब", "आम", "संतरा"], answer: 2 },
+        { sub: "GK", q: "भारत का राष्ट्रीय जलीय जीव कौन-सा है?", options: ["मगरमच्छ", "गंगा डॉल्फिन", "कछुआ", "व्हेल"], answer: 1 },
+        { sub: "GK", q: "'लौह पुरुष' किसे कहा जाता है?", options: ["भगत सिंह", "सरदार वल्लभभाई पटेल", "सुभाष चंद्र बोस", "बाल गंगाधर तिलक"], answer: 1 },
+        { sub: "GK", q: "'नेताजी' किसका उपनाम है?", options: ["जवाहरलाल नेहरू", "सुभाष चंद्र बोस", "चंद्रशेखर आजाद", "गोपाल कृष्ण गोखले"], answer: 1 },
+        { sub: "GK", q: "राजस्थान का राज्य पक्षी कौन-सा है?", options: ["मोर", "गोडावण", "सारस", "कबूतर"], answer: 1 },
+        { sub: "GK", q: "राजस्थान का राज्य पशु (वन्यजीव) कौन-सा है?", options: ["बाघ", "चिंकारा", "हिरण", "भालू"], answer: 1 },
+        { sub: "GK", q: "राजस्थान का राज्य वृक्ष कौन-सा है?", options: ["नीम", "खेजड़ी", "बबूल", "पीपल"], answer: 1 },
+        { sub: "GK", q: "राजस्थान का राज्य पुष्प कौन-सा है?", options: ["कमल", "रोहिड़ा", "गुलाब", "गेंदा"], answer: 1 },
+        { sub: "GK", q: "सूरतगढ़ किस जिले में स्थित है?", options: ["बीकानेर", "श्रीगंगानगर", "हनुमानगढ़", "चूरू"], answer: 1 },
+        { sub: "GK", q: "भारत की मुद्रा क्या है?", options: ["डॉलर", "रुपया", "येन", "पाउंड"], answer: 1 }
       ];
 
       const COMP_POOL = [
-        { sub: "Computer", q: "CPU ka poora naam kya hai?", options: ["Central Processing Unit", "Computer Personal Unit", "Central Print Unit", "Control Program Utility"], answer: 0 },
-        { sub: "Computer", q: "HTML ka upyog kis liye hota hai?", options: ["Database", "Web Structure", "OS", "Video Editing"], answer: 1 },
-        { sub: "Computer", q: "RAM kis prakar ki memory hai?", options: ["Permanent", "Temporary", "Secondary", "Optical"], answer: 1 },
-        { sub: "Computer", q: "MS Excel formula kis chinh se shuru hota hai?", options: ["+", "=", "@", "#"], answer: 1 },
-        { sub: "Computer", q: "IP ka poora naam kya hai?", options: ["Internet Protocol", "Internal Program", "Input Process", "Internet Provider"], answer: 0 },
-        { sub: "Computer", q: "Computer ka dimag kise kehte hain?", options: ["Monitor", "Keyboard", "CPU", "Mouse"], answer: 2 },
-        { sub: "Computer", q: "1 Byte mein kitne Bits hote hain?", options: ["4", "8", "16", "32"], answer: 1 },
-        { sub: "Computer", q: "ROM ka poora naam kya hai?", options: ["Read Only Memory", "Random Only Memory", "Run Only Memory", "Read On Memory"], answer: 0 },
-        { sub: "Computer", q: "MS Word kya hai?", options: ["Spreadsheet", "Word Processor", "Database", "Browser"], answer: 1 },
-        { sub: "Computer", q: "Ctrl + C kis liye hota hai?", options: ["Paste", "Cut", "Copy", "Undo"], answer: 2 },
-        { sub: "Computer", q: "Ctrl + V kis liye hota hai?", options: ["Paste", "Save", "Print", "Select All"], answer: 0 },
-        { sub: "Computer", q: "WWW ka poora naam kya hai?", options: ["World Wide Web", "World Web Wide", "Wide World Web", "Web World Wide"], answer: 0 },
-        { sub: "Computer", q: "Input Device kaunsa hai?", options: ["Monitor", "Printer", "Keyboard", "Speaker"], answer: 2 },
-        { sub: "Computer", q: "Output Device kaunsa hai?", options: ["Mouse", "Scanner", "Monitor", "Mic"], answer: 2 },
-        { sub: "Computer", q: "Hard Disk kis prakar ki storage hai?", options: ["Volatile", "Non-Volatile", "Cache", "Register"], answer: 1 },
-        { sub: "Computer", q: "URL ka poora naam kya hai?", options: ["Uniform Resource Locator", "Universal Resource Link", "Uniform Record Locator", "Universal Record Link"], answer: 0 },
-        { sub: "Computer", q: "Ctrl + Z kya karta hai?", options: ["Redo", "Undo", "Cut", "Find"], answer: 1 },
-        { sub: "Computer", q: "Operating System kaunsa hai?", options: ["MS Paint", "Windows", "Chrome", "Photoshop"], answer: 1 },
-        { sub: "Computer", q: "PDF ka poora naam kya hai?", options: ["Portable Document Format", "Personal Data File", "Printable Document File", "Public Document Format"], answer: 0 },
-        { sub: "Computer", q: "Email bhejne ka protocol kaunsa hai?", options: ["HTTP", "SMTP", "FTP", "DHCP"], answer: 1 },
-        { sub: "Computer", q: "Windows mein Select All shortcut?", options: ["Ctrl + A", "Ctrl + S", "Ctrl + X", "Ctrl + D"], answer: 0 },
-        { sub: "Computer", q: "Binary system mein kitne digits hote hain?", options: ["1", "2", "8", "10"], answer: 1 },
-        { sub: "Computer", q: "Pen Drive kis port mein lagti hai?", options: ["HDMI", "USB", "VGA", "LAN"], answer: 1 },
-        { sub: "Computer", q: "MS PowerPoint kis liye use hota hai?", options: ["Presentation", "Sheet", "Code", "Paint"], answer: 0 },
-        { sub: "Computer", q: "Firewall ka kaam kya hai?", options: ["Cooling", "Security", "Printing", "Scanning"], answer: 1 },
-        { sub: "Computer", q: "1 KB mein kitne Bytes hote hain?", options: ["1000", "1024", "512", "2048"], answer: 1 },
-        { sub: "Computer", q: "1 MB mein kitne KB hote hain?", options: ["1000", "1024", "500", "256"], answer: 1 },
-        { sub: "Computer", q: "1 GB mein kitne MB hote hain?", options: ["1024", "1000", "512", "128"], answer: 0 },
-        { sub: "Computer", q: "Ctrl + X kis liye hota hai?", options: ["Copy", "Cut", "Paste", "Save"], answer: 1 },
-        { sub: "Computer", q: "Ctrl + S kis liye hota hai?", options: ["Save", "Select", "Search", "Send"], answer: 0 },
-        { sub: "Computer", q: "Ctrl + P kis liye hota hai?", options: ["Paste", "Print", "Preview", "Page"], answer: 1 },
-        { sub: "Computer", q: "LAN ka poora naam kya hai?", options: ["Local Area Network", "Large Area Network", "Long Area Network", "Light Area Network"], answer: 0 },
-        { sub: "Computer", q: "WAN ka poora naam kya hai?", options: ["Wide Area Network", "World Area Network", "Web Area Network", "Wireless Area Network"], answer: 0 },
-        { sub: "Computer", q: "MAN ka poora naam kya hai?", options: ["Metropolitan Area Network", "Main Area Network", "Medium Area Network", "Mobile Area Network"], answer: 0 },
-        { sub: "Computer", q: "Wi-Fi ka poora naam kya hai?", options: ["Wireless Fidelity", "Wired Fidelity", "Wide Fidelity", "Web Fidelity"], answer: 0 },
-        { sub: "Computer", q: "USB ka poora naam kya hai?", options: ["Universal Serial Bus", "United Serial Bus", "Universal System Bus", "User Serial Bus"], answer: 0 },
-        { sub: "Computer", q: "HTTP ka poora naam kya hai?", options: ["HyperText Transfer Protocol", "HighText Transfer Protocol", "HyperText Transport Program", "HyperTool Transfer Protocol"], answer: 0 },
-        { sub: "Computer", q: "HTTPS mein 'S' ka matlab?", options: ["Secure", "System", "Server", "Simple"], answer: 0 },
-        { sub: "Computer", q: "BIOS ka poora naam kya hai?", options: ["Basic Input Output System", "Binary Input Output System", "Basic Internal Output System", "Bus Input Output System"], answer: 0 },
-        { sub: "Computer", q: "ALU ka poora naam kya hai?", options: ["Arithmetic Logic Unit", "Application Logic Unit", "Array Logic Unit", "Automatic Logic Unit"], answer: 0 },
-        { sub: "Computer", q: "CU ka poora naam kya hai?", options: ["Control Unit", "Central Unit", "Computer Unit", "Cache Unit"], answer: 0 },
-        { sub: "Computer", q: "SSD ka poora naam kya hai?", options: ["Solid State Drive", "Super State Drive", "System State Disk", "Solid Storage Disk"], answer: 0 },
-        { sub: "Computer", q: "HDD ka poora naam kya hai?", options: ["Hard Disk Drive", "High Disk Drive", "Hard Data Drive", "Hybrid Disk Drive"], answer: 0 },
-        { sub: "Computer", q: "LCD ka poora naam kya hai?", options: ["Liquid Crystal Display", "Light Crystal Display", "Liquid Clear Display", "Low Crystal Display"], answer: 0 },
-        { sub: "Computer", q: "LED ka poora naam kya hai?", options: ["Light Emitting Diode", "Liquid Emitting Diode", "Light Electronic Display", "Low Energy Diode"], answer: 0 },
-        { sub: "Computer", q: "GUI ka poora naam kya hai?", options: ["Graphical User Interface", "General User Interface", "Global User Interface", "Graphical Utility Interface"], answer: 0 },
-        { sub: "Computer", q: "OS ka poora naam kya hai?", options: ["Operating System", "Open System", "Optical System", "Output System"], answer: 0 },
-        { sub: "Computer", q: "Father of Computer kaun hai?", options: ["Charles Babbage", "Alan Turing", "Bill Gates", "Steve Jobs"], answer: 0 },
-        { sub: "Computer", q: "Web Browser kaunsa hai?", options: ["Google Chrome", "MS Excel", "Windows 11", "VLC Player"], answer: 0 },
-        { sub: "Computer", q: "Search Engine kaunsa hai?", options: ["Google", "WhatsApp", "Photoshop", "Notepad"], answer: 0 }
+        { sub: "Computer", q: "CPU का पूरा नाम क्या है?", options: ["Central Processing Unit", "Computer Personal Unit", "Central Print Unit", "Control Program Utility"], answer: 0 },
+        { sub: "Computer", q: "HTML का उपयोग किस लिए किया जाता है?", options: ["डेटाबेस", "वेब पेज संरचना", "ऑपरेटिंग सिस्टम", "वीडियो एडिटिंग"], answer: 1 },
+        { sub: "Computer", q: "RAM किस प्रकार की मेमोरी है?", options: ["स्थायी", "अस्थायी", "द्वितीयक", "ऑप्टिकल"], answer: 1 },
+        { sub: "Computer", q: "MS Excel में फ़ॉर्मूला किस चिह्न से शुरू होता है?", options: ["+", "=", "@", "#"], answer: 1 },
+        { sub: "Computer", q: "IP का पूरा नाम क्या है?", options: ["Internet Protocol", "Internal Program", "Input Process", "Internet Provider"], answer: 0 },
+        { sub: "Computer", q: "कंप्यूटर का मस्तिष्क किसे कहा जाता है?", options: ["मॉनिटर", "कीबोर्ड", "CPU", "माउस"], answer: 2 },
+        { sub: "Computer", q: "1 Byte में कितने Bits होते हैं?", options: ["4 Bits", "8 Bits", "16 Bits", "32 Bits"], answer: 1 },
+        { sub: "Computer", q: "ROM का पूरा नाम क्या है?", options: ["Read Only Memory", "Random Only Memory", "Run Only Memory", "Read On Memory"], answer: 0 },
+        { sub: "Computer", q: "MS Word किस प्रकार का सॉफ्टवेयर है?", options: ["स्प्रेडशीट", "वर्ड प्रोसेसर", "डेटाबेस", "ब्राउज़र"], answer: 1 },
+        { sub: "Computer", q: "Ctrl + C शॉर्टकट का उपयोग किस लिए होता है?", options: ["पेस्ट", "कट", "कॉपी", "अंडू"], answer: 2 },
+        { sub: "Computer", q: "Ctrl + V शॉर्टकट का उपयोग किस लिए होता है?", options: ["पेस्ट", "सेव", "प्रिंट", "सिलेक्ट ऑल"], answer: 0 },
+        { sub: "Computer", q: "WWW का पूरा नाम क्या है?", options: ["World Wide Web", "World Web Wide", "Wide World Web", "Web World Wide"], answer: 0 },
+        { sub: "Computer", q: "इनमें से Input Device कौन-सा है?", options: ["मॉनिटर", "प्रिंटर", "कीबोर्ड", "स्पीकर"], answer: 2 },
+        { sub: "Computer", q: "इनमें से Output Device कौन-सा है?", options: ["माउस", "स्कैनर", "मॉनिटर", "माइक्रोफ़ोन"], answer: 2 },
+        { sub: "Computer", q: "Hard Disk किस प्रकार की स्टोरेज है?", options: ["अस्थायी", "स्थायी", "कैश", "रजिस्टर"], answer: 1 },
+        { sub: "Computer", q: "URL का पूरा नाम क्या है?", options: ["Uniform Resource Locator", "Universal Resource Link", "Uniform Record Locator", "Universal Record Link"], answer: 0 },
+        { sub: "Computer", q: "Ctrl + Z शॉर्टकट क्या कार्य करता है?", options: ["रीडू", "अंडू", "कट", "फाइंड"], answer: 1 },
+        { sub: "Computer", q: "इनमें से Operating System कौन-सा है?", options: ["MS Paint", "Windows", "Google Chrome", "Photoshop"], answer: 1 },
+        { sub: "Computer", q: "PDF का पूरा नाम क्या है?", options: ["Portable Document Format", "Personal Data File", "Printable Document File", "Public Document Format"], answer: 0 },
+        { sub: "Computer", q: "Email भेजने के लिए कौन-सा प्रोटोकॉल उपयोग होता है?", options: ["HTTP", "SMTP", "FTP", "DHCP"], answer: 1 },
+        { sub: "Computer", q: "Windows में Select All का शॉर्टकट क्या है?", options: ["Ctrl + A", "Ctrl + S", "Ctrl + X", "Ctrl + D"], answer: 0 },
+        { sub: "Computer", q: "Binary प्रणाली में कितने अंक होते हैं?", options: ["1", "2", "8", "10"], answer: 1 },
+        { sub: "Computer", q: "Pen Drive किस पोर्ट में लगाई जाती है?", options: ["HDMI", "USB", "VGA", "LAN"], answer: 1 },
+        { sub: "Computer", q: "MS PowerPoint मुख्य रूप से किस लिए उपयोग होता है?", options: ["प्रेजेंटेशन", "स्प्रेडशीट", "कोडिंग", "पेंटिंग"], answer: 0 },
+        { sub: "Computer", q: "Firewall का मुख्य कार्य क्या है?", options: ["कूलिंग", "सुरक्षा", "प्रिंटिंग", "स्कैनिंग"], answer: 1 },
+        { sub: "Computer", q: "1 KB (Kilobyte) में कितने Bytes होते हैं?", options: ["1000", "1024", "512", "2048"], answer: 1 },
+        { sub: "Computer", q: "1 MB में कितने KB होते हैं?", options: ["1000", "1024", "500", "256"], answer: 1 },
+        { sub: "Computer", q: "1 GB में कितने MB होते हैं?", options: ["1024", "1000", "512", "128"], answer: 0 },
+        { sub: "Computer", q: "Ctrl + X शॉर्टकट का उपयोग किस लिए होता है?", options: ["कॉपी", "कट", "पेस्ट", "सेव"], answer: 1 },
+        { sub: "Computer", q: "Ctrl + S शॉर्टकट का उपयोग किस लिए होता है?", options: ["सेव", "सिलेक्ट", "सर्च", "सेंड"], answer: 0 },
+        { sub: "Computer", q: "Ctrl + P शॉर्टकट का उपयोग किस लिए होता है?", options: ["पेस्ट", "प्रिंट", "प्रीव्यू", "पेज"], answer: 1 },
+        { sub: "Computer", q: "LAN का पूरा नाम क्या है?", options: ["Local Area Network", "Large Area Network", "Long Area Network", "Light Area Network"], answer: 0 },
+        { sub: "Computer", q: "WAN का पूरा नाम क्या है?", options: ["Wide Area Network", "World Area Network", "Web Area Network", "Wireless Area Network"], answer: 0 },
+        { sub: "Computer", q: "MAN का पूरा नाम क्या है?", options: ["Metropolitan Area Network", "Main Area Network", "Medium Area Network", "Mobile Area Network"], answer: 0 },
+        { sub: "Computer", q: "Wi-Fi का पूरा नाम क्या है?", options: ["Wireless Fidelity", "Wired Fidelity", "Wide Fidelity", "Web Fidelity"], answer: 0 },
+        { sub: "Computer", q: "USB का पूरा नाम क्या है?", options: ["Universal Serial Bus", "United Serial Bus", "Universal System Bus", "User Serial Bus"], answer: 0 },
+        { sub: "Computer", q: "HTTP का पूरा नाम क्या है?", options: ["HyperText Transfer Protocol", "HighText Transfer Protocol", "HyperText Transport Program", "HyperTool Transfer Protocol"], answer: 0 },
+        { sub: "Computer", q: "HTTPS में 'S' का अर्थ क्या है?", options: ["Secure", "System", "Server", "Simple"], answer: 0 },
+        { sub: "Computer", q: "BIOS का पूरा नाम क्या है?", options: ["Basic Input Output System", "Binary Input Output System", "Basic Internal Output System", "Bus Input Output System"], answer: 0 },
+        { sub: "Computer", q: "ALU का पूरा नाम क्या है?", options: ["Arithmetic Logic Unit", "Application Logic Unit", "Array Logic Unit", "Automatic Logic Unit"], answer: 0 },
+        { sub: "Computer", q: "CU का पूरा नाम क्या है?", options: ["Control Unit", "Central Unit", "Computer Unit", "Cache Unit"], answer: 0 },
+        { sub: "Computer", q: "SSD का पूरा नाम क्या है?", options: ["Solid State Drive", "Super State Drive", "System State Disk", "Solid Storage Disk"], answer: 0 },
+        { sub: "Computer", q: "HDD का पूरा नाम क्या है?", options: ["Hard Disk Drive", "High Disk Drive", "Hard Data Drive", "Hybrid Disk Drive"], answer: 0 },
+        { sub: "Computer", q: "LCD का पूरा नाम क्या है?", options: ["Liquid Crystal Display", "Light Crystal Display", "Liquid Clear Display", "Low Crystal Display"], answer: 0 },
+        { sub: "Computer", q: "LED का पूरा नाम क्या है?", options: ["Light Emitting Diode", "Liquid Emitting Diode", "Light Electronic Display", "Low Energy Diode"], answer: 0 },
+        { sub: "Computer", q: "GUI का पूरा नाम क्या है?", options: ["Graphical User Interface", "General User Interface", "Global User Interface", "Graphical Utility Interface"], answer: 0 },
+        { sub: "Computer", q: "OS का पूरा नाम क्या है?", options: ["Operating System", "Open System", "Optical System", "Output System"], answer: 0 },
+        { sub: "Computer", q: "कंप्यूटर का जनक किसे कहा जाता है?", options: ["चार्ल्स बैबेज", "एलन ट्यूरिंग", "बिल गेट्स", "स्टीव जॉब्स"], answer: 0 },
+        { sub: "Computer", q: "इनमें से Web Browser कौन-सा है?", options: ["Google Chrome", "MS Excel", "Windows 11", "VLC Player"], answer: 0 },
+        { sub: "Computer", q: "इनमें से Search Engine कौन-सा है?", options: ["Google", "WhatsApp", "Photoshop", "Notepad"], answer: 0 }
       ];
             let sessionId = null, userId = "", student = null, activeQ = [];
       let timerInterval = null, remainingSeconds = 1800, examStartTime = 0, examSubmitted = false;
 
-      const nowStr = () => new Date().toLocaleString("hi-IN");
+      const nowStr = () => new Date().toLocaleString("en-IN");
       const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
 
       function formatSec(sec) {
@@ -366,23 +366,21 @@
         const adminVal = admInp ? (admInp.value.trim() || saved.adminName) : saved.adminName;
 
         const modeLabel = modeVal === "gk"
-          ? "सामान्य ज्ञान (GK Random)"
+          ? "GK Only (Random)"
           : modeVal === "computer"
-          ? "कंप्यूटर (Computer Random)"
+          ? "Computer Only (Random)"
           : "50 GK + 50 Computer (Random Mix)";
 
-        const portalLink = window.location.href;
-
         ta.value = [
-          `🎓 *${adminVal} — ऑनलाइन परीक्षा सूचना*`,
+          `🎓 *${adminVal} — Online Exam Notice*`,
           `━━━━━━━━━━━━━━━━━━`,
-          `📚 *विषय / मोड:* ${modeLabel}`,
-          `❓ *कुल प्रश्न:* ${countVal} प्रश्न`,
-          `⏱️ *परीक्षा समय:* ${minVal} मिनट`,
-          `👤 *User ID:* ${userIdVal || "कोई भी User ID दर्ज करें"}`,
-          `🔑 *Password:* ${userPassVal || "आवश्यक नहीं (वैकल्पिक)"}`,
-          `📝 *नियम:* लॉगिन के बाद अपना नाम व पिता का नाम भरकर परीक्षा शुरू करें।`,
-          `🔗 *पोर्टल लिंक:* ${portalLink}`
+          `📚 *Subject / Mode:* ${modeLabel}`,
+          `❓ *Total Questions:* ${countVal}`,
+          `⏱️ *Exam Duration:* ${minVal} Minutes`,
+          `👤 *User ID:* ${userIdVal || "Any User ID"}`,
+          `🔑 *Password:* ${userPassVal || "Optional"}`,
+          `📝 *Instructions:* Enter User ID & Password, fill Name & Father's Name, then start the exam.`,
+          `🔗 *Portal Link:* ${window.location.href}`
         ].join("\n");
       }
 
@@ -425,11 +423,11 @@
         const box = document.getElementById("adminQuestionPreviewList");
         if (!meta || !box) return;
         if (!qData || !Array.isArray(qData.questions) || qData.questions.length === 0) {
-          meta.textContent = "Abhi koi Random Set taiyar nahi hai.";
+          meta.textContent = "No random set generated yet.";
           box.innerHTML = "";
           return;
         }
-        meta.textContent = `Time: ${qData.generatedAt} | Questions: ${qData.questions.length} | Duration: ${qData.minutes} min`;
+        meta.textContent = `Generated: ${qData.generatedAt} | Questions: ${qData.questions.length} | Time: ${qData.minutes} min`;
         box.innerHTML = qData.questions.map(item => `
           <div class="preview-item">
             <strong>${esc(item.q)}</strong><br/>
@@ -480,9 +478,9 @@
         const id = document.getElementById("studentUserId").value.trim();
         const pw = document.getElementById("studentUserPass").value;
         const msg = document.getElementById("step1Msg");
-        if (!id) { msg.textContent = "User ID bharein."; msg.className = "status err"; return; }
-        if (c.studentUserId && id !== c.studentUserId) { msg.textContent = "Galat User ID."; msg.className = "status err"; return; }
-        if (c.studentUserPass && pw !== c.studentUserPass) { msg.textContent = "Galat Password."; msg.className = "status err"; return; }
+        if (!id) { msg.textContent = "Please enter User ID."; msg.className = "status err"; return; }
+        if (c.studentUserId && id !== c.studentUserId) { msg.textContent = "Invalid User ID."; msg.className = "status err"; return; }
+        if (c.studentUserPass && pw !== c.studentUserPass) { msg.textContent = "Invalid Password."; msg.className = "status err"; return; }
         userId = id; msg.textContent = "";
         document.getElementById("step1Card").classList.add("hidden");
         document.getElementById("step2Card").classList.remove("hidden");
@@ -494,7 +492,7 @@
         const name = document.getElementById("studentName").value.trim();
         const father = document.getElementById("studentFatherName").value.trim();
         const msg = document.getElementById("step2Msg");
-        if (!name || !father) { msg.textContent = "Naam aur papa ka naam dono bharein."; msg.className = "status err"; return; }
+        if (!name || !father) { msg.textContent = "Please enter Student Name and Father's Name."; msg.className = "status err"; return; }
 
         activeQ = buildRandomSet(c);
         const subLbl = c.subject === "gk" ? "GK Random" : c.subject === "computer" ? "Computer Random" : "50 GK + 50 Computer";
@@ -567,7 +565,7 @@
         saveRecs(recs);
 
         const resEl = document.getElementById("examResult");
-        resEl.textContent = autoByTime ? "Time khatam — Paper auto-submit ho gaya!" : "Paper poora hua — Result neeche box mein hai!";
+        resEl.textContent = autoByTime ? "Time up — Exam auto-submitted!" : "Exam submitted — Summary box below!";
         resEl.className = "status ok";
 
         const box = document.getElementById("finalSummaryBox");
@@ -625,7 +623,7 @@
           renderAdminPreview();
           renderTable();
         } else {
-          document.getElementById("adminAuthMsg").textContent = "Galat PIN ya Password.";
+          document.getElementById("adminAuthMsg").textContent = "Invalid PIN or Password.";
           document.getElementById("adminAuthMsg").className = "status err";
         }
       };
@@ -643,12 +641,12 @@
         const msg = document.getElementById("whatsappCopyMsg");
         try {
           await navigator.clipboard.writeText(ta.value);
-          msg.textContent = "WhatsApp मैसेज कॉपी हो गया! अब ग्रुप में पेस्ट करें।";
+          msg.textContent = "WhatsApp message copied!";
           msg.className = "status ok";
         } catch {
           ta.select();
           document.execCommand("copy");
-          msg.textContent = "WhatsApp मैसेज कॉपी हो गया!";
+          msg.textContent = "WhatsApp message copied!";
           msg.className = "status ok";
         }
       };
@@ -689,7 +687,7 @@
         const recs = getRecs();
         document.getElementById("adminTableBody").innerHTML = recs.length
           ? recs.map((r, i) => `<tr><td>${i+1}</td><td>${esc(r.name)}</td><td>${esc(r.father||"-")}</td><td>${esc(r.userId||"-")}</td><td>${esc(r.subject||"-")}</td><td>${r.correct}</td><td>${r.wrong}</td><td>${r.score}</td><td>${esc(r.duration||"-")}</td><td>${esc(r.submitTime||"-")}</td></tr>`).join("")
-          : '<tr><td colspan="10">Koi record nahi hai.</td></tr>';
+          : '<tr><td colspan="10">No records found.</td></tr>';
       }
 
       document.getElementById("downloadCsvBtn").onclick = () => {
